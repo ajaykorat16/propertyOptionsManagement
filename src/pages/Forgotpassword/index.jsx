@@ -6,13 +6,13 @@ const ForgotpasswordPage = () => {
   return (
     <>
       <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-10 md:gap-10 gap-16 items-center mx-auto md:pr-10 pr-16 sm:pr-5 w-full">
-        <div className="h-[768px] relative rotate-[180deg] rounded-bl-[100px] rounded-tl-[100px] w-[69%] md:w-full">
+      <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full">
           <Img
-            className="h-[768px] m-auto object-cover rounded-bl-[100px] rounded-tl-[100px] w-full"
+            className="h-[100vh] m-auto rounded-br-[100px] rounded-tr-[100px] w-full"
             src="images/img_unsplashjvq0q5ikemm.png"
             alt="unsplashjvq0q5i"
           />
-          <div className="absolute bg-blue_gray-900_90 flex flex-col h-full inset-[0] items-start justify-center m-auto p-[27px] sm:px-5 rounded-bl-[100px] rounded-tl-[100px] w-full">
+          <div className="absolute bg-blue_gray-900_90 flex flex-col h-full inset-[0] items-start justify-center m-auto p-[27px] sm:px-5 rounded-br-[100px] rounded-tr-[100px] w-full">
             <Text
               className="mb-[667px] text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
               size="txtOrbitronRegular36"

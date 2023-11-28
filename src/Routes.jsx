@@ -8,8 +8,7 @@ const Contractspage = React.lazy(() => import("pages/Contractspage"));
 const Finishespage = React.lazy(() => import("pages/Finishespage"));
 const Forgotpassword = React.lazy(() => import("pages/Forgotpassword"));
 const Signin = React.lazy(() => import("pages/Signin"));
-const Verification = React.lazy(() => import("pages/Verification"));
-const SigninOne = React.lazy(() => import("pages/SigninOne"));
+
 const ProjectRoutes = () => {
   return (
     <React.Suspense fallback={<>Loading...</>}>
@@ -17,8 +16,6 @@ const ProjectRoutes = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/signinone" element={<SigninOne />} />
-          <Route path="/verification" element={<Verification />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/finishespage" element={<Finishespage />} />

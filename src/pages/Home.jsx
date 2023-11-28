@@ -11,12 +11,6 @@ const Home = () => {
       </p>
       <ul>
         <li>
-          <Link to="/signinone">SigninOne</Link>
-        </li>
-        <li>
-          <Link to="/verification">Verification</Link>
-        </li>
-        <li>
           <Link to="/signin">Signin</Link>
         </li>
         <li>
