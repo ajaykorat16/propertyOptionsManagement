@@ -44,14 +44,14 @@ const ContractfullviewPage = () => {
   return (
     <>
       <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
-        <div className="h-[768px] md:px-5 relative w-[17%] md:w-full">
-          <Text
+      <div className="h-[100vh] md:px-5 relative w-[17%] md:w-full">
+          {/* <Text
             className="ml-[29px] mt-[27px] text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
             size="txtOrbitronRegular36"
           >
             LOGO
-          </Text>
-          <Sidebar2 className="!sticky !w-[232px] bg-gray-900_03 flex h-screen md:hidden inset-[0] justify-center m-auto overflow-auto top-[0]" />
+          </Text> */}
+          <Sidebar2 className="!sticky w-[232px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
         </div>
         <div className="bg-white-A700 flex flex-col md:gap-10 gap-[71px] items-center justify-end p-10 md:px-5 w-[84%] md:w-full">
           <div className="border border-gray-500 border-solid flex flex-col justify-start mt-[63px] p-[7px] w-[39%] md:w-full">

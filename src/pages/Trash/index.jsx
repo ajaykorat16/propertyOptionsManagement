@@ -44,18 +44,18 @@ const TrashPage = () => {
   return (
     <>
       <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
-        <div className="h-[768px] md:px-5 relative w-[17%] md:w-full">
-          <Text
+        <div className="h-[100vh] md:px-5 relative w-[17%] md:w-full">
+          {/* <Text
             className="ml-[29px] mt-[27px] text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
             size="txtOrbitronRegular36"
           >
             LOGO
-          </Text>
-          <Sidebar2 className="!sticky !w-[232px] bg-gray-900_03 flex h-screen md:hidden inset-[0] justify-center m-auto overflow-auto top-[0]" />
+          </Text> */}
+          <Sidebar2 className="!sticky w-[232px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
         </div>
         <div className="bg-white-A700 flex flex-col font-montserrat justify-end p-10 md:px-5 w-[84%] md:w-full">
           <Text
-            className="md:ml-[0] mt-[19px] mx-[482px] md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
+            className="md:ml-[0] mt-[19px] mx-[482px] md:text-3xl sm:text-[28px] text-[32px] text-gray-900 text-center"
             size="txtMontserratRomanSemiBold32"
           >
             Trash

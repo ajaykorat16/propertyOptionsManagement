@@ -2,49 +2,16 @@ import React from "react";
 
 import { Menu, MenuItem } from "react-pro-sidebar";
 
-import { Button, Img, List, Text } from "components";
+import { Button, Img, List, SelectBox, Text } from "components";
 import Sidebar2 from "components/Sidebar2";
 
-const FinishespagePage = () => {
-  const sideBarMenu = [
-    {
-      icon: (
-        <Img
-          className="h-5 w-5"
-          src="images/img_television.svg"
-          alt="television"
-        />
-      ),
-      label: "Finishes",
-      href: "/finishespage",
-      active: window.location.pathname === "/finishespage",
-    },
-    {
-      icon: (
-        <Img
-          className="h-5 mt-[3px] w-5"
-          src="images/img_claritycontractline.svg"
-          alt="claritycontract"
-        />
-      ),
-      label: "Contract",
-      href: "/contractspage",
-      active: window.location.pathname === "/contractspage",
-    },
-    {
-      icon: (
-        <Img
-          className="h-5 w-5"
-          src="images/img_materialsymbol_white_a700.svg"
-          alt="materialsymbol"
-        />
-      ),
-      label: "Trash",
-      href: "/trash",
-      active: window.location.pathname === "/trash",
-    },
-  ];
+const dateOptionsList = [
+  { label: "Option1", value: "option1" },
+  { label: "Option2", value: "option2" },
+  { label: "Option3", value: "option3" },
+];
 
+const FinishespagePage = () => {
   return (
     <>
       <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
@@ -60,7 +27,7 @@ const FinishespagePage = () => {
         <div className="bg-white-A700 flex flex-col font-montserrat items-center justify-start p-10 md:px-5 w-[84%] md:w-full">
           <div className="flex flex-col justify-start mb-[159px] mt-[18px] w-full">
             <Text
-              className="md:ml-[0] ml-[459px] md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
+              className="md:ml-[0] text-center md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
               size="txtMontserratRomanSemiBold32"
             >
               Finishes
@@ -78,21 +45,23 @@ const FinishespagePage = () => {
                 >
                   Category
                 </Text>
-                <div className="bg-white-A700 border border-gray-500_7f border-solid flex flex-row items-center justify-between p-2 rounded-lg shadow-bs w-[71%] sm:w-full">
-                  <Text
-                    className="ml-4 text-base text-gray-900_01"
-                    size="txtMontserratRomanRegular16"
-                  >
-                    All
-                  </Text>
-                  <div className="flex flex-col h-6 items-center justify-start mr-4 p-[7px] w-6">
+                <SelectBox
+                  className="border border-gray-500_7f border-solid text-base text-left w-[81%] sm:w-full shadow-bs"
+                  placeholderClassName="text-gray-900_01"
+                  indicator={
                     <Img
-                      className="h-[5px] my-0.5"
+                      className="h-[5px] mr-[0] w-2.5"
                       src="images/img_vector.svg"
-                      alt="vector"
+                      alt="Vector"
                     />
-                  </div>
-                </div>
+                  }
+                  isMulti={false}
+                  name="groupTwenty"
+                  options={dateOptionsList}
+                  isSearchable={false}
+                  placeholder="Date"
+                  color="white_A700"
+                />
               </div>
               <Button className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center">
                 Add new
