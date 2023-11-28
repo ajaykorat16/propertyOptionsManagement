@@ -28,6 +28,15 @@ const Home = () => {
         <li>
           <Link to="/trash">Trash</Link>
         </li>
+        <li>
+          <Link to="/editcategory">editcategory</Link>
+        </li>
+        <li>
+          <Link to="/editfinish">editfinish</Link>
+        </li>
+        <li>
+          <Link to="/newfinishes">NewFinish</Link>
+        </li>
       </ul>
     </div>
   );

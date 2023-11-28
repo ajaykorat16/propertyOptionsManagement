@@ -2,6 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "pages/Home";
 import NotFound from "pages/NotFound";
+import AddnewfinishesPage from "pages/Addnewfinishes";
+import EditcategorypagePage from "pages/Editcategorypage";
+import EditPage from "pages/EditPage";
 const Trash = React.lazy(() => import("pages/Trash"));
 const Contractfullview = React.lazy(() => import("pages/Contractfullview"));
 const Contractspage = React.lazy(() => import("pages/Contractspage"));
@@ -22,6 +25,9 @@ const ProjectRoutes = () => {
           <Route path="/contractspage" element={<Contractspage />} />
           <Route path="/contractfullview" element={<Contractfullview />} />
           <Route path="/trash" element={<Trash />} />
+          <Route path="/newfinishes" element={<AddnewfinishesPage />} />
+          <Route path="/editcategory" element={<EditcategorypagePage />} />
+          <Route path="/editfinish" element={<EditPage />} />
         </Routes>
       </Router>
     </React.Suspense>
