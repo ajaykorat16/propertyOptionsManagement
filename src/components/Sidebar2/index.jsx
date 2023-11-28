@@ -13,7 +13,7 @@ const Sidebar2 = (props) => {
         <Img className="h-5 w-5" src="images/img_thumbsup.svg" alt="thumbsup" />
       ),
       label: "Finishes",
-      href: "/finishespage",
+      href: "/",
       active: window.location.pathname === "/finishespage",
     },
     {
