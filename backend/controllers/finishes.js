@@ -3,7 +3,7 @@ const fs = require("fs");
 const mimeTypes = require('mime-types');
 const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
-const { capitalizeFLetter, formattedDate } = require("../helper/helper");
+const { capitalizeFLetter } = require("../helper/helper");
 
 function decodeBase64Image(dataString) {
     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
@@ -41,19 +41,18 @@ const createFinishes = asyncHandler(async (req, res) => {
             const extension = mimeTypes.extension(type) || 'png';
             const fileName = `${name}.${extension}`;
 
+            const uploadPath = "./uploads/images/"
             if (!fs.existsSync(uploadPath)) {
                 fs.mkdirSync(uploadPath);
             }
 
             try {
-                fs.writeFileSync("./uploads/" + fileName, imageBuffer, 'utf8');
+                fs.writeFileSync(uploadPath + fileName, imageBuffer, 'utf8');
                 finishesObj.photo = fileName;
             } catch (err) {
                 console.error("Image upload error", err);
             }
-        }   
-
-        console.log(finishesObj);
+        }
 
         const finishesName = await Finishes.findOne({ name: finishesObj.name });
         if (finishesName) {
