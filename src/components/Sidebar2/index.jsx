@@ -49,15 +49,43 @@ const Sidebar2 = (props) => {
         className={props.className}
       >
         <Text
-          className="ml-6 md:ml-[0] mr-[90px] mt-6 text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
+          className="text-4xl sm:text-[32px] md:text-[34px] text-white-A700 mb-[2rem] text-center mt-10"
           size="txtOrbitronRegular36"
         >
           LOGO
         </Text>
-        <div className="mt-[141px] overflow-x-auto w-full">
-          <div className="h-[556px] relative w-full">
+        <Menu
+          menuItemStyles={{
+            button: {
+              padding: "9px 9px 9px 16px",
+              gap: "14px",
+              borderColor: "transparent",
+              borderWidth: "1px",
+              borderStyle: "solid",
+              marginTop: "34px",
+              color: "#ffffff",
+              fontWeight: 600,
+              fontSize: "16px",
+              fontFamily: "Montserrat",
+              borderRadius: "8px",
+              [`&:hover, &.ps-active`]: {
+                color: "#0d99ff",
+                borderColor: "#a5a5a54c",
+              },
+            },
+          }}
+          className="flex flex-col items-center justify-start mb-[10px] pt-[5rem] px-[7px] w-[94%]"
+        >
+          {sideBarMenu?.map((menu, i) => (
+            <MenuItem key={`sideBarMenuItem${i}`} {...menu}>
+              {menu.label}
+            </MenuItem>
+          ))}
+        </Menu>
+        <div className="mt-[10px] w-full">
+          <div className="relative w-full">
             <Img
-              className="h-[556px] ml-auto my-auto object-cover"
+              className="h-[462px] ml-auto my-auto object-cover"
               src="images/img_clippathgroup.png"
               alt="clippathgroup"
             />
@@ -83,34 +111,6 @@ const Sidebar2 = (props) => {
             </div>
           </div>
         </div>
-        <Menu
-          menuItemStyles={{
-            button: {
-              padding: "9px 9px 9px 16px",
-              gap: "14px",
-              borderColor: "transparent",
-              borderWidth: "1px",
-              borderStyle: "solid",
-              marginTop: "24px",
-              color: "#ffffff",
-              fontWeight: 600,
-              fontSize: "16px",
-              fontFamily: "Montserrat",
-              borderRadius: "8px",
-              [`&:hover, &.ps-active`]: {
-                color: "#0d99ff",
-                borderColor: "#a5a5a54c",
-              },
-            },
-          }}
-          className="flex flex-col items-center justify-start mb-[450px] pt-[9px] px-[7px] w-[94%]"
-        >
-          {sideBarMenu?.map((menu, i) => (
-            <MenuItem key={`sideBarMenuItem${i}`} {...menu}>
-              {menu.label}
-            </MenuItem>
-          ))}
-        </Menu>
       </Sidebar>
     </>
   );

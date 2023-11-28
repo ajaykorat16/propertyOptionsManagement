@@ -17,29 +17,6 @@ const Home = () => {
           <Link to="/verification">Verification</Link>
         </li>
         <li>
-          <Link to="/finishingpage">Finishingpage</Link>
-        </li>
-        <li>
-          <Link to="/finishingpageone">FinishingpageOne</Link>
-        </li>
-        <li>
-          <Link to="/finishingpagethree">FinishingpageThree</Link>
-        </li>
-        <li>
-          <Link to="/signaturepage">Signaturepage</Link>
-        </li>
-        <li>
-          <Link to="/thankyoupage">Thankyoupage</Link>
-        </li>
-        <li>
-          <Link to="/finishingpagetwo">FinishingpageTwo</Link>
-        </li>
-        <li>
-          <Link to="/signaturedocusignintegrationdisplay">
-            SignatureDocusignintegrationdisplay
-          </Link>
-        </li>
-        <li>
           <Link to="/signin">Signin</Link>
         </li>
         <li>
@@ -56,15 +33,6 @@ const Home = () => {
         </li>
         <li>
           <Link to="/trash">Trash</Link>
-        </li>
-        <li>
-          <Link to="/finishespageone">FinishespageOne</Link>
-        </li>
-        <li>
-          <Link to="/contractspageone">ContractspageOne</Link>
-        </li>
-        <li>
-          <Link to="/contractspagetwo">ContractspageTwo</Link>
         </li>
       </ul>
     </div>

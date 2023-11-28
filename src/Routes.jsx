@@ -2,24 +2,12 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "pages/Home";
 import NotFound from "pages/NotFound";
-const ContractspageTwo = React.lazy(() => import("pages/ContractspageTwo"));
-const ContractspageOne = React.lazy(() => import("pages/ContractspageOne"));
-const FinishespageOne = React.lazy(() => import("pages/FinishespageOne"));
 const Trash = React.lazy(() => import("pages/Trash"));
 const Contractfullview = React.lazy(() => import("pages/Contractfullview"));
 const Contractspage = React.lazy(() => import("pages/Contractspage"));
 const Finishespage = React.lazy(() => import("pages/Finishespage"));
 const Forgotpassword = React.lazy(() => import("pages/Forgotpassword"));
 const Signin = React.lazy(() => import("pages/Signin"));
-const SignatureDocusignintegrationdisplay = React.lazy(
-  () => import("pages/SignatureDocusignintegrationdisplay"),
-);
-const FinishingpageTwo = React.lazy(() => import("pages/FinishingpageTwo"));
-const Thankyoupage = React.lazy(() => import("pages/Thankyoupage"));
-const Signaturepage = React.lazy(() => import("pages/Signaturepage"));
-const FinishingpageThree = React.lazy(() => import("pages/FinishingpageThree"));
-const FinishingpageOne = React.lazy(() => import("pages/FinishingpageOne"));
-const Finishingpage = React.lazy(() => import("pages/Finishingpage"));
 const Verification = React.lazy(() => import("pages/Verification"));
 const SigninOne = React.lazy(() => import("pages/SigninOne"));
 const ProjectRoutes = () => {
@@ -31,25 +19,12 @@ const ProjectRoutes = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/signinone" element={<SigninOne />} />
           <Route path="/verification" element={<Verification />} />
-          <Route path="/finishingpage" element={<Finishingpage />} />
-          <Route path="/finishingpageone" element={<FinishingpageOne />} />
-          <Route path="/finishingpagethree" element={<FinishingpageThree />} />
-          <Route path="/signaturepage" element={<Signaturepage />} />
-          <Route path="/thankyoupage" element={<Thankyoupage />} />
-          <Route path="/finishingpagetwo" element={<FinishingpageTwo />} />
-          <Route
-            path="/signaturedocusignintegrationdisplay"
-            element={<SignatureDocusignintegrationdisplay />}
-          />
           <Route path="/signin" element={<Signin />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/finishespage" element={<Finishespage />} />
           <Route path="/contractspage" element={<Contractspage />} />
           <Route path="/contractfullview" element={<Contractfullview />} />
           <Route path="/trash" element={<Trash />} />
-          <Route path="/finishespageone" element={<FinishespageOne />} />
-          <Route path="/contractspageone" element={<ContractspageOne />} />
-          <Route path="/contractspagetwo" element={<ContractspageTwo />} />
         </Routes>
       </Router>
     </React.Suspense>
