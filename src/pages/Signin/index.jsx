@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Button, Img, Input, Text } from "components";
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from "contexts/AuthContext";
+import { Toast } from 'primereact/toast';
 
 const SigninPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { auth, login } = useAuth()
+  const { auth, login, toast } = useAuth()
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
@@ -26,6 +27,7 @@ const SigninPage = () => {
 
   return (
     <>
+      <Toast ref={toast} />
       <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-10 md:gap-10 gap-[71px] items-center mx-auto md:pr-10 sm:pr-5 pr-[71px] w-full">
         <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full">
           <Img

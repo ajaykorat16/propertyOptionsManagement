@@ -82,7 +82,12 @@ const getAllFinishes = asyncHandler(async (req, res) => {
         return res.status(200).json({
             error: false,
             message: "All Finishes retrieved successfully.",
-            finishes: getAllFinishes,
+            finishes: getAllFinishes.map(finish => {
+                return {
+                    ...finish,
+                    photo: !finish.photo ? null : `${DOMAIN}/images/${finish.photo}`
+                }
+            }),
         });
     } catch (error) {
         console.log(error.message);

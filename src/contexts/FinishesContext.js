@@ -1,5 +1,7 @@
 import { useContext, createContext } from "react";
 import { useAuth } from "./AuthContext";
+import { baseURL } from "../lib";
+import axios from 'axios'
 
 const FinishesContext = createContext()
 
@@ -75,6 +77,6 @@ const FinishesProvider = ({ children }) => {
     )
 }
 
-const useHelper = () => useContext(FinishesContext)
+const useFinishes = () => useContext(FinishesContext)
 
-export { useHelper, FinishesProvider }
+export { useFinishes, FinishesProvider }
