@@ -183,3 +183,8 @@ ul li a{
   background: #6b6b6b;
   border-radius: 10px;
 }
+
+.mainBody .modal-content {
+  width: 80%;
+  height: 30% !important;
+}

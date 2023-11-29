@@ -1,3 +1,4 @@
+import './scss/style.scss';
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "pages/Home";
@@ -11,6 +12,9 @@ const Contractspage = React.lazy(() => import("pages/Contractspage"));
 const Finishespage = React.lazy(() => import("pages/Finishespage"));
 const Forgotpassword = React.lazy(() => import("pages/Forgotpassword"));
 const Signin = React.lazy(() => import("pages/Signin"));
+import "primereact/resources/themes/rhea/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 const ProjectRoutes = () => {
   return (

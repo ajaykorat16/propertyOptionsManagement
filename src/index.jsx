@@ -8,14 +8,20 @@ import "./styles/tailwind.css";
 import store from "store";
 import { Provider } from "react-redux";
 import { AuthProvider } from "contexts/AuthContext";
+import { CategoryProvider } from "contexts/CategoryContext";
+import { FinishesProvider } from "contexts/FinishesContext";
 
 ReactDOM.render(
   <AuthProvider>
-    <Provider store={store}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </Provider>
+    <FinishesProvider>
+      <CategoryProvider>
+        <Provider store={store}>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </Provider>
+      </CategoryProvider>
+    </FinishesProvider>
   </AuthProvider>,
   document.getElementById("root")
 );
