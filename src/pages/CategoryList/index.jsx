@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Img, Input, List, SelectBox, Text } from "components";
-
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
-
+import {useCategory} from '../../contexts/CategoryContext'
 
 const CategoryList = ({showCategory,setShowCategory}) => {
+  const [categories, setCateories] = useState([])
+  const {getCateories} = useCategory()
+
+  const fetchDepartments = async () => {
+    let categoryData = await getCateories();
+    setCateories(categoryData.category)
+  };
+
+  useEffect(() => {
+    fetchDepartments()
+  }, [])
+  
+
 
   return (
     <>
@@ -33,12 +45,14 @@ const CategoryList = ({showCategory,setShowCategory}) => {
               className="flex flex-col gap-4 items-center w-full"
               orientation="vertical"
             >
-              <div className="flex flex-1 flex-row items-start justify-start my-0 w-full">
+              {categories && categories.map((c) => {
+                return (
+                  <div className="flex flex-1 flex-row items-start justify-start my-0 w-full">
                 <Text
                   className="text-gray-900_02 text-sm"
                   size="txtMontserratRomanMedium14"
                 >
-                  Kitchen
+                 {c.name}
                 </Text>
                 <Img
                   className="h-5 mb-0.5 ml-[178px] w-5"
@@ -51,29 +65,21 @@ const CategoryList = ({showCategory,setShowCategory}) => {
                   alt="materialsymbol"
                 />
               </div>
-              <div className="flex flex-1 flex-row items-center justify-start my-0 w-full">
-                <Text
-                  className="text-gray-900_02 text-sm"
-                  size="txtMontserratRomanMedium14"
-                >
-                  Bathroom
-                </Text>
-                <Img
-                  className="h-5 ml-40 w-5"
-                  src="images/img_edit.svg"
-                  alt="edit"
-                />
-                <Img
-                  className="h-5 ml-3 w-5"
-                  src="images/img_materialsymbol_gray_900.svg"
-                  alt="materialsymbol"
-                />
-              </div>
+                )
+              })}
             </List>
             <div
               className="bg-cover bg-no-repeat flex flex-col h-[30px] items-start justify-start p-[3px] w-full"
               style={{ backgroundImage: "url('images/img_group57.svg')" }}
             >
+               <div className="flex flex-col gap-[9px] items-start justify-start mt-[18px] w-full w-[32vh]">
+              <Input
+                name="rectangleTwo"
+                placeholder="Enter new category"
+                className="p-0 w-full"
+                wrapClassName="border border-gray-500 border-solid flex h-10 w-full"
+              ></Input>
+            </div>
               <div className="flex flex-row gap-[7px] items-center justify-start md:ml-[0] ml-[3px] w-[35%] md:w-full">
                 <Img
                   className="h-6 w-6"
@@ -81,7 +87,7 @@ const CategoryList = ({showCategory,setShowCategory}) => {
                   alt="gridiconsadd"
                 />
                 <Text
-                  className="text-gray-900_02 text-sm"
+                  className="text-gray-900_02 text-sm w-[20px]"
                   size="txtMontserratRomanMedium14"
                 >
                   Add new
@@ -91,11 +97,6 @@ const CategoryList = ({showCategory,setShowCategory}) => {
           </div>
         </div>
         </CModalBody>
-        {/* <CModalFooter>
-          <CButton color="secondary" onClick={() => setShowCategory(false)}>
-            Ok
-          </CButton>
-        </CModalFooter> */}
       </CModal>
     </>
   );
