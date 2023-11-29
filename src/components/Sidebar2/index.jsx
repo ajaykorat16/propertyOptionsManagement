@@ -74,7 +74,7 @@ const Sidebar2 = (props) => {
               },
             },
           }}
-          className="flex flex-col items-center justify-start mb-[10px] pt-[5rem] px-[7px] w-[94%]"
+          className="flex flex-col items-center justify-start mb-[450px] pt-[9px] px-[7px] w-[94%]"
         >
           {sideBarMenu?.map((menu, i) => (
             <MenuItem key={`sideBarMenuItem${i}`} {...menu}>
@@ -82,8 +82,8 @@ const Sidebar2 = (props) => {
             </MenuItem>
           ))}
         </Menu>
-        <div className="mt-[10px] w-full">
-          <div className="relative w-full">
+        <div className="mt-[141px] overflow-x-auto w-full">
+          <div className="h-[556px] relative w-full">
             <Img
               className="h-[462px] ml-auto my-auto object-cover"
               src="images/img_clippathgroup.png"
