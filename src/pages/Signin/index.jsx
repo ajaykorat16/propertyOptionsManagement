@@ -1,12 +1,33 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import { Button, Img, Input, Text } from "components";
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from "contexts/AuthContext";
 
 const SigninPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { auth, login } = useAuth()
+  const navigate = useNavigate()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    try {
+      login(email, password)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (auth?.token) {
+      navigate("/")
+    }
+  }, [auth?.token, navigate])
+
   return (
     <>
       <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-10 md:gap-10 gap-[71px] items-center mx-auto md:pr-10 sm:pr-5 pr-[71px] w-full">
-      <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full">
+        <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full">
           <Img
             className="h-[100vh] m-auto rounded-br-[100px] rounded-tr-[100px] w-full"
             src="images/img_unsplashjvq0q5ikemm.png"
@@ -34,48 +55,52 @@ const SigninPage = () => {
           >
             Access the Administraton page{" "}
           </Text>
-          <div className="flex flex-col items-center justify-start mt-[31px] w-full">
-            <div className="flex flex-col gap-1.5 items-start justify-start w-full">
-              <Text
-                className="text-base text-gray-900_02"
-                size="txtMontserratRomanSemiBold16"
-              >
-                Email{" "}
-              </Text>
-              <Input
-                name="enteremailaddress"
-                placeholder="Enter your email address"
-                className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
-                wrapClassName="border border-gray-500 border-solid w-full"
-                type="email"
-              ></Input>
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col items-center justify-start mt-[31px] w-full">
+              <div className="flex flex-col gap-1.5 items-start justify-start w-full">
+                <Text
+                  className="text-base text-gray-900_02"
+                  size="txtMontserratRomanSemiBold16"
+                >
+                  Email{" "}
+                </Text>
+                <Input
+                  placeholder="Enter your email address"
+                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
+                  wrapClassName="border border-gray-500 border-solid w-full"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e)}
+                />
+              </div>
+              <div className="flex flex-col gap-[5px] items-start justify-start mt-6 w-full">
+                <Text
+                  className="text-base text-gray-900_02"
+                  size="txtMontserratRomanSemiBold16"
+                >
+                  Password
+                </Text>
+                <Input
+                  placeholder="Password"
+                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
+                  wrapClassName="border border-gray-500 border-solid w-full"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e)}
+                />
+              </div>
+              <div className="flex flex-col gap-[29px] items-end justify-start mt-[9px] w-full">
+                <a href="javascript:" className="text-blue-A700 text-sm">
+                  <Text size="txtMontserratRomanBold14">Forgot password?</Text>
+                </a>
+                <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center" type='submit'>
+                  Access
+                </Button>
+              </div>
             </div>
-            <div className="flex flex-col gap-[5px] items-start justify-start mt-6 w-full">
-              <Text
-                className="text-base text-gray-900_02"
-                size="txtMontserratRomanSemiBold16"
-              >
-                Password
-              </Text>
-              <Input
-                name="password_One"
-                placeholder="Password"
-                className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
-                wrapClassName="border border-gray-500 border-solid w-full"
-                type="password"
-              ></Input>
-            </div>
-            <div className="flex flex-col gap-[29px] items-end justify-start mt-[9px] w-full">
-              <a href="javascript:" className="text-blue-A700 text-sm">
-                <Text size="txtMontserratRomanBold14">Forgot password?</Text>
-              </a>
-              <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center">
-                Access
-              </Button>
-            </div>
-          </div>
+          </form>
         </div>
-      </div>
+      </div >
     </>
   );
 };

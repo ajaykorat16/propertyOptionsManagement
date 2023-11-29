@@ -7,7 +7,8 @@ const category = require("./routers/category")
 const user = require("./routers/user")
 
 const app = express()
-
+var cors = require('cors')
+app.use(cors())
 app.use(express.json())
 
 app.use("/images/", express.static('uploads/images'))
