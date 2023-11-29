@@ -4,6 +4,8 @@ import { Button, Img, List, SelectBox, Text } from "components";
 import { CButton, CForm, CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from "@coreui/react";
 import { useFinishes } from "contexts/FinishesContext";
 import { useCategory } from "contexts/CategoryContext";
+import { cilImage, cilXCircle } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
 import Sidebar2 from "components/Sidebar2";
 import CategoryList from "pages/CategoryList"
 import Loader from '../../components/Loader/Loader';
@@ -16,12 +18,14 @@ const dateOptionsList = [
 
 const FinishespagePage = () => {
 
-  const { getAllFinishes } = useFinishes()
+  const { getAllFinishes, addFinishes } = useFinishes()
   const { getCateories } = useCategory();
+  const [finishesValue, setFinishesValue] = useState({ category: "", name: "", photo: "" });
   const [cateories, setCateories] = useState([]);
   const [visible, setVisible] = useState(false);
   const [finishes, setFinishes] = useState([])
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [showCategory, setShowCategory] = useState(false)
 
   const fetchFinishes = async () => {
@@ -38,14 +42,39 @@ const FinishespagePage = () => {
   }, []);
 
   const handleModal = async () => {
-    console.log("hello");
     setVisible(true)
+    setFinishesValue({ category: "", name: "", photo: "" })
+    setSelectedImage(null)
   }
 
   const getCateory = async () => {
     const { category } = await getCateories()
     setCateories(category)
-    console.log(category);
+  }
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFinishesValue({ ...finishesValue, photo: reader.result })
+      };
+      reader.readAsDataURL(file);
+    }
+    setSelectedImage(file)
+  };
+
+  const createFinishes = async () => {
+    try {
+      const data = await addFinishes(finishesValue)
+      if (data.error === false) {
+        console.log(data);
+        setFinishesValue({ user: "", monthly: "", leave: "", })
+        setVisible(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -59,21 +88,29 @@ const FinishespagePage = () => {
             <CModal
               alignment="center"
               visible={visible}
+              size="l"
               onClose={() => setVisible(false)}
             >
-              <CModalHeader>
-                <CModalTitle>Create New Finihes</CModalTitle>
+              <div className="modelCloseButton">
+                <CIcon
+                  icon={cilXCircle}
+                  size="xl"
+                  onClick={() => setVisible(false)}
+                />
+              </div>
+              <CModalHeader closeButton={false}>
+                <CModalTitle>Create New Finishes</CModalTitle>
               </CModalHeader>
-              <CForm>
+              <CForm onSubmit={createFinishes}>
                 <CModalBody>
                   <CFormSelect
                     id="inputUserName"
                     label="Select Category"
-                    className="mb-2"
-                  // value={manageLeave.user}
-                  // onChange={(e) => setManageLeave({ ...manageLeave, user: e.target.value })}
+                    className="mb-4"
+                    value={finishesValue.category}
+                    onChange={(e) => setFinishesValue({ ...finishesValue, category: e.target.value })}
                   >
-                    <option value="" disabled selected>
+                    <option value="" disabled >
                       Select Category
                     </option>
                     {cateories.map((c) => (
@@ -83,29 +120,48 @@ const FinishespagePage = () => {
                     ))}
                   </CFormSelect>
                   <CFormInput
-                    type="number"
-                    id="leave"
+                    type=""
+                    id="inputName"
                     label="Name"
-                  // value={manageLeave.leave}
-                  // onChange={(e) => setManageLeave({ ...manageLeave, leave: e.target.value })}
+                    className="mb-4"
+                    value={finishesValue.name}
+                    onChange={(e) => setFinishesValue({ ...finishesValue, name: e.target.value })}
                   />
+                  <div className=" text-center">
+                    <label htmlFor="fileInput" className="custom-file-input-label mb-2">
+                      Click to Upload Image
+                    </label>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="custom-file-input"
+                    />
+                  </div>
+                  <div className="border mb-2 ">
+                    {selectedImage ? (
+                      <img
+                        alt="not found"
+                        width={"250px"}
+                        style={{ padding: "10px" }}
+                        src={URL.createObjectURL(selectedImage)}
+                      />
+                    ) : (
+                      <CIcon width={250} style={{ padding: "70px" }} icon={cilImage} size="xl" />
+                    )}
+                    {selectedImage && <button onClick={() => setSelectedImage(null)}>Remove</button>}
+                  </div>
                 </CModalBody>
-                <CModalFooter>
-                  <CButton color="secondary" onClick={() => setVisible(false)}> Close</CButton>
-                  <CButton color="primary" type="submit">Submit</CButton>
+                <CModalFooter className="mb-3">
+                  <Button className="modelButton" type="submit">Submit</Button>
                 </CModalFooter>
               </CForm>
             </CModal>
           </div>
           <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
-            <div className="h-[100vh] md:px-5 relative w-[17%] md:w-full">
-              {/* <Text
-            className="ml-[29px] mt-[27px] text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
-            size="txtOrbitronRegular36"
-          >
-            LOGO
-          </Text> */}
-              <Sidebar2 className="!sticky w-[232px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
+            <div className="md:px-5 relative w-[17%] md:w-full">
+              <Sidebar2 className="!sticky !w-[232px] md:!w-[80px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
             </div>
             <div className="bg-white-A700 flex flex-col font-montserrat items-center justify-start p-10 md:px-5 w-[84%] md:w-full">
               <div className="flex flex-col justify-start mb-[159px] mt-[18px] w-full">
@@ -121,12 +177,13 @@ const FinishespagePage = () => {
                       className="h-6 w-6"
                       src="images/img_gridiconsadd.svg"
                       alt="gridiconsadd"
+                      onClick={() => { setShowCategory(true) }}
                     />
                     <Text
                       className="text-base text-gray-900_03"
                       size="txtMontserratRomanSemiBold16Gray90003"
                     >
-
+                      Category
                     </Text>
                     <SelectBox
                       className="border border-gray-500_7f border-solid text-base text-left w-[81%] sm:w-full shadow-bs"
@@ -150,195 +207,30 @@ const FinishespagePage = () => {
                     Add new
                   </Button>
                 </div>
-                <div className="flex flex-col items-center justify-start ml-10 md:ml-[0] mt-14 w-[86%] md:w-full">
-                  <List
-                    className="flex flex-col gap-4 items-center w-full"
-                    orientation="vertical"
-                  >
-                    <div className="flex flex-1 md:flex-col flex-row gap-2 items-center justify-between my-0 w-full">
-                      <div className="flex md:flex-1 sm:flex-col flex-row gap-2 items-center justify-between w-[67%] md:w-full">
-                        <div className="flex flex-row gap-2 items-center justify-between w-1/2 sm:w-full">
-                          {finishes.length !== 0 ? (
-                            finishes.map((f) => (
-                              <div key={f._id} className="flex flex-col gap-2 items-center justify-start w-[49%]">
-                                <Img
-                                  className="h-[89px] md:h-auto object-cover w-[89px]"
-                                  src="images/img_image5.png"
-                                  alt="imageFive"
-                                />
-                                <Text
-                                  className="leading-[22.00px] text-center text-gray-900_03 text-sm w-full"
-                                  size="txtMontserratRomanRegular14"
-                                >
-                                  {f?.name}
-                                </Text>
-                              </div>
-                            ))
-                          ) : (
-                            "Finishes Not Found"
-                          )}
-                        </div>
-                        {/* <div className="flex flex-col gap-2 items-center justify-start w-[49%]">
-                        <Img
-                          className="h-[89px] md:h-auto object-cover w-[89px]"
-                          src="images/img_image6.png"
-                          alt="imageSix"
-                        />
-                        <Text
-                          className="leading-[22.00px] text-center text-gray-900_03 text-sm w-full"
-                          size="txtMontserratRomanRegular14"
-                        >
-                          MARGRES PURE STONE GREY
-                        </Text>
-                      </div>
+                <div className="container flex flex-col items-center justify-start ml-10 md:ml-[0] mt-14 w-[86%] md:w-full ">
+                  <div className="inner-container flex flex-col gap-4 items-center w-full " orientation="vertical">
+                    <div className="items-container flex flex-1 md:flex-col flex-row gap-2 items-center justify-between my- w-full ">
+                      {finishes.length !== 0 ? (
+                        finishes.map((f) => (
+                          <div key={f._id} className="item flex flex-col gap-2 items-center justify-start w-full sm:w-1/2 md:w-1/3 ">
+                            <Img
+                              className="md:h-auto"
+                              src={f.photo === null ? `images/noimage.png` : f.photo}
+                              alt="imageFive"
+                            />
+                            <Text
+                              className="text-center w-full"
+                              size="txtMontserratRomanRegular14"
+                            >
+                              {f?.name}
+                            </Text>
+                          </div>
+                        ))
+                      ) : (
+                        "Finishes Not Found"
+                      )}
                     </div>
-                    <div className="flex flex-row gap-[9px] items-start justify-between w-1/2 sm:w-full">
-                      <div className="flex flex-col gap-2.5 items-center justify-start w-[49%]">
-                        <Img
-                          className="h-[89px] md:h-auto object-cover w-[89px]"
-                          src="images/img_image7.png"
-                          alt="imageSeven"
-                        />
-                        <Text
-                          className="text-center text-gray-900_03 text-sm"
-                          size="txtMontserratRomanRegular14"
-                        >
-                          ALELUIA KALACATA
-                        </Text>
-                      </div>
-                      <div className="flex flex-col gap-2 items-center justify-start w-[49%]">
-                        <Img
-                          className="h-[89px] md:h-auto object-cover w-[89px]"
-                          src="images/img_image8.png"
-                          alt="imageEight"
-                        />
-                        <Text
-                          className="leading-[22.00px] text-center text-gray-900_03 text-sm w-full"
-                          size="txtMontserratRomanRegular14"
-                        >
-                          ALELUIA KALACATA GREY
-                        </Text>
-                      </div> */}
-                        {/* </div>
-                </div> */}
-                        {/* <div className="flex md:flex-1 flex-row gap-2 items-center justify-between w-[33%] md:w-full">
-                  <div className="flex flex-col gap-2 items-center justify-start w-[49%]">
-                    <Img
-                      className="h-[89px] md:h-auto object-cover w-[89px]"
-                      src="images/img_image5.png"
-                      alt="imageFive_One"
-                    />
-                    <Text
-                      className="leading-[22.00px] text-center text-gray-900_03 text-sm w-full"
-                      size="txtMontserratRomanRegular14"
-                    >
-                      MARGRES PURE STONE LIGHT GREY
-                    </Text>
                   </div>
-                  <div className="flex flex-col gap-2 items-center justify-start w-[49%]">
-                    <Img
-                      className="h-[89px] md:h-auto object-cover w-[89px]"
-                      src="images/img_image6.png"
-                      alt="imageSix_One"
-                    />
-                    <Text
-                      className="leading-[22.00px] text-center text-gray-900_03 text-sm w-full"
-                      size="txtMontserratRomanRegular14"
-                    >
-                      MARGRES PURE STONE GREY
-                    </Text>
-                  </div>
-                </div> */}
-                        {/* </div> */}
-                        {/* <div className="flex flex-1 md:flex-col flex-row gap-2 items-center justify-between my-0 w-full">
-              <div className="flex md:flex-1 sm:flex-col flex-row gap-2 items-center justify-between w-[67%] md:w-full">
-                <div className="flex flex-row gap-[9px] items-start justify-between w-1/2 sm:w-full">
-                  <div className="flex flex-col gap-2.5 items-center justify-start w-[49%]">
-                    <Img
-                      className="h-[89px] md:h-auto object-cover w-[89px]"
-                      src="images/img_image7.png"
-                      alt="imageSeven"
-                    />
-                    <Text
-                      className="text-center text-gray-900_03 text-sm"
-                      size="txtMontserratRomanRegular14"
-                    >
-                      ALELUIA KALACATA
-                    </Text>
-                  </div>
-                  <div className="flex flex-col gap-2 items-center justify-start w-[49%]">
-                    <Img
-                      className="h-[89px] md:h-auto object-cover w-[89px]"
-                      src="images/img_image8.png"
-                      alt="imageEight"
-                    />
-                    <Text
-                      className="leading-[22.00px] text-center text-gray-900_03 text-sm w-full"
-                      size="txtMontserratRomanRegular14"
-                    >
-                      ALELUIA KALACATA GREY
-                    </Text>
-                  </div>
-                </div>
-                <div className="flex flex-row gap-2 items-center justify-between w-1/2 sm:w-full">
-                  <div className="flex flex-col gap-2 items-center justify-start w-[49%]">
-                    <Img
-                      className="h-[89px] md:h-auto object-cover w-[89px]"
-                      src="images/img_image5.png"
-                      alt="imageFive"
-                    />
-                    <Text
-                      className="leading-[22.00px] text-center text-gray-900_03 text-sm w-full"
-                      size="txtMontserratRomanRegular14"
-                    >
-                      MARGRES PURE STONE LIGHT GREY
-                    </Text>
-                  </div>
-                  <div className="flex flex-col gap-2 items-center justify-start w-[49%]">
-                    <Img
-                      className="h-[89px] md:h-auto object-cover w-[89px]"
-                      src="images/img_image6.png"
-                      alt="imageSix"
-                    />
-                    <Text
-                      className="leading-[22.00px] text-center text-gray-900_03 text-sm w-full"
-                      size="txtMontserratRomanRegular14"
-                    >
-                      MARGRES PURE STONE GREY
-                    </Text>
-                  </div>
-                </div>
-              </div>
-              <div className="flex md:flex-1 flex-row gap-[9px] items-start justify-between w-[33%] md:w-full">
-                <div className="flex flex-col gap-2.5 items-center justify-start w-[49%]">
-                  <Img
-                    className="h-[89px] md:h-auto object-cover w-[89px]"
-                    src="images/img_image7.png"
-                    alt="imageSeven_One"
-                  />
-                  <Text
-                    className="text-center text-gray-900_03 text-sm"
-                    size="txtMontserratRomanRegular14"
-                  >
-                    ALELUIA KALACATA
-                  </Text>
-                </div>
-                <div className="flex flex-col gap-2 items-center justify-start w-[49%]">
-                  <Img
-                    className="h-[89px] md:h-auto object-cover w-[89px]"
-                    src="images/img_image8.png"
-                    alt="imageEight_One"
-                  />
-                  <Text
-                    className="leading-[22.00px] text-center text-gray-900_03 text-sm w-full"
-                    size="txtMontserratRomanRegular14"
-                  >
-                    ALELUIA KALACATA GREY
-                  </Text>
-                </div> */}
-                      </div>
-                    </div>
-                  </List>
                 </div>
               </div>
             </div >
