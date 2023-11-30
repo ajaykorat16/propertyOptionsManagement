@@ -154,11 +154,14 @@ const getSingleFinishes = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params;
 
-        const finishes = await Finishes.findById(id);
+        const finishes = await Finishes.findById(id).lean();
         return res.status(200).json({
             error: false,
             message: "Single finishes getting successfully.",
-            finishes,
+            finishes: {
+                ...finishes,
+                photo: !finishes.photo ? null : `${DOMAIN}/images/${finishes.photo}`
+            },
         });
     } catch (error) {
         console.error(error.message);
