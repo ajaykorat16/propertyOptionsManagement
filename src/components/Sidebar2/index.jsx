@@ -1,8 +1,7 @@
 import React from "react";
-
 import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
-
 import { Img, Text } from "components";
+import { Link } from "react-router-dom";
 
 const Sidebar2 = (props) => {
   const { collapseSidebar, collapsed } = useProSidebar();
@@ -13,19 +12,19 @@ const Sidebar2 = (props) => {
         <Img className="h-5 w-5" src="images/img_thumbsup.svg" alt="thumbsup" />
       ),
       label: "Finishes",
-      href: "/",
-      active: window.location.pathname === "/finishespage",
+      to: "/",
+      active: window.location.pathname === "/",
     },
     {
       icon: (
         <Img
           className="h-5 mt-[3px] w-5"
-          src="images/img_claritycontractline_light_blue_500.svg"
+          src="images/img_claritycontractline.svg"
           alt="claritycontract"
         />
       ),
       label: "Contract",
-      href: "/contractspage",
+      to: "/contractspage",
       active: window.location.pathname === "/contractspage",
     },
     {
@@ -37,7 +36,7 @@ const Sidebar2 = (props) => {
         />
       ),
       label: "Trash",
-      href: "/trash",
+      to: "/trash",
       active: window.location.pathname === "/trash",
     },
   ];
@@ -47,6 +46,7 @@ const Sidebar2 = (props) => {
       <Sidebar
         onClick={() => collapseSidebar(!collapsed)}
         className={props.className}
+        style={{ position: "fixed", top: 0, left: 0, height: "100%" }}
       >
         <Text
           className="text-4xl sm:text-[32px] md:text-[34px] text-white-A700 mb-[2rem] text-center mt-10"
@@ -77,38 +77,34 @@ const Sidebar2 = (props) => {
           className="flex flex-col items-center justify-start mb-[450px] pt-[9px] px-[7px] w-[94%]"
         >
           {sideBarMenu?.map((menu, i) => (
-            <MenuItem key={`sideBarMenuItem${i}`} {...menu}>
-              {menu.label}
-            </MenuItem>
+            <Link to={menu.to} key={`sideBarMenuItem${i}`}>
+              <MenuItem {...menu}>{menu.label}</MenuItem>
+            </Link>
           ))}
         </Menu>
         <div className="mt-[141px] overflow-x-auto w-full">
-          <div className="h-[556px] relative w-full">
+          <div className="h-[100%] relative w-full">
             <Img
               className="h-[462px] ml-auto my-auto object-cover"
               src="images/img_clippathgroup.png"
               alt="clippathgroup"
             />
-            <div className="absolute bottom-[5%] flex flex-row gap-[11px] inset-x-[0] items-start justify-between mx-auto w-[87%]">
-              <Img
-                className="h-8 md:h-auto rounded-[50%] w-8"
+            <div className="fixed bottom-5 left-5 flex flex-row gap-4 items-center w-4/5">
+              <img
+                className="h-8 w-8 rounded-full"
                 src="images/img_ellipse4.png"
                 alt="ellipseFour"
               />
-              <div className="flex flex-row items-start justify-between mt-[3px] w-[79%]">
-                <Text
-                  className="mt-[3px] text-base text-white-A700"
-                  size="txtMontserratRomanSemiBold16WhiteA700"
-                >
-                  Harry123
-                </Text>
-                <Img
-                  className="h-6 w-6"
+              <div className="flex flex-row items-center justify-between w-[fit-content]">
+                <span className="text-base text-white-A700">Harry123</span>
+                <img
+                  className="h-6 w-6 ml-[20%]"
                   src="images/img_linemdlogout.svg"
                   alt="linemdlogout"
                 />
               </div>
             </div>
+
           </div>
         </div>
       </Sidebar>
