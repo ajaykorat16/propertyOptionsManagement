@@ -12,16 +12,24 @@ const ContractProvider = ({ children }) => {
         Authorization: auth?.token,
     };
 
-    const getAllContract = async (query) => {
+    const getAllContract = async (query, sortField) => {
         try {
-            let res;
-            if (query) {
-                res = await axios.post(`${baseURL}/contract/search-contract`, { filter: query }, { headers });
-            } else {
-                res = await axios.get(`${baseURL}/contract/list`, { headers });
-            }
+            const res = await axios.post(`${baseURL}/contract/search-contract`, { filter: query, sortField }, { headers });
+
             if (res.data.error === false) {
                 return res.data
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getAllTrashContract = async () => {
+        try {
+            const { data } = await axios.get(`${baseURL}/contract/trash/list`, { headers });
+
+            if (data.error === false) {
+                return data
             }
         } catch (error) {
             console.log(error);
@@ -51,8 +59,42 @@ const ContractProvider = ({ children }) => {
         }
     };
 
+    const deleteContracts = async (contracts) => {
+        try {
+            const { data } = await axios.delete(`${baseURL}/contract/delete`, { headers, data: { contracts }, });
+
+            if (data.error === false) {
+                console.log("Contracts deleted successfully");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const restoreContracts = async (contracts) => {
+        try {
+            const { data } = await axios.put(`${baseURL}/contract/trash/restore`, { contracts }, { headers });
+            if (data.error === false) {
+                console.log("contracts restore success")
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const moveToTrash = async (id) => {
+        try {
+            const { data } = await axios.post(`${baseURL}/contract/move-to-trash`,{id}, { headers });
+            if (data.error === false) {
+                return data
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
-        <ContractContext.Provider value={{ getAllContract, addContract, getContractById }}>
+        <ContractContext.Provider value={{ getAllContract, addContract, getContractById, getAllTrashContract, deleteContracts, restoreContracts, moveToTrash }}>
             {children}
         </ContractContext.Provider>
     )

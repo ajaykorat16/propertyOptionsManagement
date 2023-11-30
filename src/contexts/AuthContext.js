@@ -64,6 +64,61 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    //reset password
+    const resetPassword = async (password, token) => {
+        try {
+            const { data } = await axios.put(`${baseURL}/user/resetPassword?token=${token}`, { password })
+            if (data.error === false) {
+                setTimeout(function () {
+                    toast.current.show({ severity: 'success', summary: 'Password', detail: data.message, life: 3000 })
+                }, 1000);
+                return data;
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Password', detail: data.message, life: 3000 })
+            }
+        } catch (error) {
+            if (error.response) {
+                const errors = error.response.data.errors;
+                if (errors && Array.isArray(errors) && errors.length > 0) {
+                    if (errors.length > 1) {
+                        toast.current.show({ severity: 'error', summary: 'Password', detail: "Please fill all fields.", life: 3000 })
+                    } else {
+                        toast.current.show({ severity: 'error', summary: 'Password', detail: errors[0].msg, life: 3000 })
+                    }
+                }
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Password', detail: 'An error occurred. Please try again later.', life: 3000 })
+            }
+        }
+    }
+
+    const forgotPassword = async (email) => {
+        try {
+            const { data } = await axios.post(`${baseURL}/user/forgotPassword`, { email })
+            if (data.error === false) {
+                setTimeout(function () {
+                    toast.current.show({ severity: 'success', summary: 'Forgot Password', detail: data.message, life: 3000 })
+                }, 1000);
+                return data;
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Forgot Password', detail: data.message, life: 3000 })
+            }
+        } catch (error) {
+            if (error.response) {
+                const errors = error.response.data.errors;
+                if (errors && Array.isArray(errors) && errors.length > 0) {
+                    if (errors.length > 1) {
+                        toast.current.show({ severity: 'error', summary: 'Forgot Password', detail: "Please fill all fields.", life: 3000 })
+                    } else {
+                        toast.current.show({ severity: 'error', summary: 'Forgot Password', detail: errors[0].msg, life: 3000 })
+                    }
+                }
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Forgot Password', detail: 'An error occurred. Please try again later.', life: 3000 })
+            }
+        }
+    }
+
     useEffect(() => {
         const data = localStorage.getItem('auth')
         if (data) {
@@ -78,7 +133,7 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ auth, login, logout, isLoggedIn, toast }}>
+        <AuthContext.Provider value={{ auth, login, logout, isLoggedIn, toast, resetPassword, forgotPassword }}>
             {children}
         </AuthContext.Provider>
     )

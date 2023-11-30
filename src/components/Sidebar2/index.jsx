@@ -1,11 +1,23 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
 import { Img, Text } from "components";
 import { Link } from "react-router-dom";
+import { useAuth } from "contexts/AuthContext";
 
 const Sidebar2 = (props) => {
+  const navigate = useNavigate();
   const { collapseSidebar, collapsed } = useProSidebar();
+  const { logout } = useAuth()
 
+  const handleLogout = () => {
+    try {
+      logout();
+      navigate('/Signin');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const sideBarMenu = [
     {
       icon: (
@@ -95,7 +107,7 @@ const Sidebar2 = (props) => {
                 src="images/img_ellipse4.png"
                 alt="ellipseFour"
               />
-              <div className="flex flex-row items-center justify-between w-[fit-content]">
+              <div className="flex flex-row items-center justify-between w-[fit-content]" onClick={handleLogout}>
                 <span className="text-base text-white-A700">Harry123</span>
                 <img
                   className="h-6 w-6 ml-[20%]"

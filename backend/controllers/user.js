@@ -1,10 +1,75 @@
 const Users = require("../models/user");
+const nodemailer = require("nodemailer")
 const { validationResult } = require("express-validator");
 const { capitalizeFLetter } = require("../helper/helper");
+const { promisify } = require('util');
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+
+const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.MAIL_AUTH_USER,
+        pass: process.env.MAIL_AUTH_PASS,
+    },
+});
+
+const resetPasswordURL = 'http://localhost:3000/reset-password';
+
+const sendMailAsync = promisify(transporter.sendMail).bind(transporter);
+
+const forgotPassword = asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({
+                error: true,
+                message: 'Please provide a valid email for password reset.',
+            });
+        }
+
+        const userData = await Users.findOne({ email });
+
+        if (!userData) {
+            return res.status(404).json({
+                error: true,
+                message: 'User not found. Please provide a valid email for password reset.',
+            });
+        }
+
+        const { fullName, token } = userData;
+
+        const mailOptions = {
+            from: process.env.MAIL_FROM_EMAIL,
+            to: email,
+            subject: 'Password Reset',
+            html: `<h5>Hello ${fullName},</h5> 
+        <p>We have received a password reset request from you. Kindly click on this URL to reset your password. <a href="${resetPasswordURL}?token=${token}">Reset your password</a></p>`,
+        };
+
+        await sendMailAsync(mailOptions);
+
+        res.status(200).json({
+            error: false,
+            message: 'Email sent successfully. Please check your email for further instructions.',
+        });
+    } catch (error) {
+        console.error('Error in forgotPassword:', error);
+        res.status(500).json({
+            error: true,
+            message: 'Internal server error. Please try again later.',
+        });
+    }
+})
 
 const hashPassword = async (password) => {
     try {
@@ -29,15 +94,7 @@ const createUser = asyncHandler(async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        const { employeeNumber, firstname, lastname, email, password, phone, address, dateOfBirth, dateOfJoining, } = req.body;
-
-        const existingEmployeeNumber = await Users.findOne({ employeeNumber });
-        if (existingEmployeeNumber) {
-            return res.status(200).json({
-                error: true,
-                message: "Employee Number should be unique.",
-            });
-        }
+        const { firstname, lastname, email, password, phone, address } = req.body;
 
         const existingUser = await Users.findOne({ email });
         if (existingUser) {
@@ -58,15 +115,12 @@ const createUser = asyncHandler(async (req, res) => {
         const hashedPassword = await hashPassword(password);
 
         const newUser = await new Users({
-            employeeNumber,
             firstname: capitalizeFLetter(firstname),
             lastname: capitalizeFLetter(lastname),
             email,
             password: hashedPassword,
             phone,
-            address,
-            dateOfBirth: dateOfBirth,
-            dateOfJoining: dateOfJoining,
+            address
         }).save();
 
         return res.status(201).json({
@@ -123,11 +177,11 @@ const changePasswordController = asyncHandler(async (req, res) => {
         return res.status(400).json({ error: true, errors: errors.array() });
     }
     try {
-        const user = req.user._id;
+        const { token } = req.query;
         const { password } = req.body;
 
         const hashed = await hashPassword(password);
-        await Users.findByIdAndUpdate(user, { password: hashed });
+        await Users.findOneAndUpdate({ token: token }, { $set: { password: hashed } }, { new: true });
         res.status(200).send({
             error: false,
             message: "Password Reset Successfully.",
@@ -142,4 +196,4 @@ const changePasswordController = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = { createUser, loginUser, changePasswordController }
+module.exports = { createUser, loginUser, changePasswordController, forgotPassword }

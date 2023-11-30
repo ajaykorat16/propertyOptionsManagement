@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    employeeNumber: {
-        type: Number,
-        required: true,
-        unique: true,
-    },
     firstname: {
         type: String,
         required: true,
@@ -38,17 +33,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    dateOfBirth: {
-        type: Date,
-        require: true
-    },
-    dateOfJoining: {
-        type: Date,
-        require: true
-    },
     status: {
         type: String,
         default: "Active"
+    },
+    token: {
+        type: String
     }
 }, {
     timestamps: true,
