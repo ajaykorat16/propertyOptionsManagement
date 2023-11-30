@@ -3,7 +3,7 @@ const fs = require("fs");
 const mimeTypes = require('mime-types');
 const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
-const { capitalizeFLetter } = require("../helper/helper");
+const { capitalizeFLetter, formattedDate } = require("../helper/helper");
 
 function decodeBase64Image(dataString) {
     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
@@ -94,7 +94,7 @@ const getAllFinishes = asyncHandler(async (req, res) => {
             finishes: getAllFinishes.map(finish => {
                 return {
                     ...finish,
-                    photo: !finish.photo ? null : `${DOMAIN}/images/${finish.photo}`
+                    photo: !finish.photo ? null : `${DOMAIN}/images/${finish.photo}`,
                 }
             }),
         });
@@ -127,14 +127,26 @@ const updateFinishes = asyncHandler(async (req, res) => {
             name: name ? capitalizeFLetter(name) : existingFinishes.name,
             description: description ? capitalizeFLetter(description) : existingFinishes.description,
             category: category || existingFinishes.category,
-            photo: photo || existingFinishes.photo
         };
 
         if (photo) {
-            finishesObj.photo = {
-                data: fs.readFileSync(photo.path),
-                contentType: photo.type,
-            };
+            const decodedImg = decodeBase64Image(photo);
+            const imageBuffer = decodedImg.data;
+            const type = decodedImg.type;
+            const extension = mimeTypes.extension(type) || 'png';
+            const fileName = `${name}.${extension}`;
+
+            const uploadPath = "./uploads/images/"
+            if (!fs.existsSync(uploadPath)) {
+                fs.mkdirSync(uploadPath);
+            }
+
+            try {
+                fs.writeFileSync(uploadPath + fileName, imageBuffer, 'utf8');
+                finishesObj.photo = fileName;
+            } catch (err) {
+                console.error("Image upload error", err);
+            }
         }
 
         const updatedFinishes = await Finishes.findByIdAndUpdate(id, finishesObj, { new: true, });

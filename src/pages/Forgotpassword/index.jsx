@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, Img, Input, Text } from "components";
+import { useAuth } from "contexts/AuthContext";
+import { Toast } from "primereact/toast";
+import { useNavigate } from "react-router-dom";
 
 const ForgotpasswordPage = () => {
+  const { logout, toast, forgotPassword } = useAuth()
+
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      console.log("email---", email)
+      const data = await forgotPassword(email)
+      if (!data.error) {
+        logout()
+        navigate("/Signin")
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
+      <Toast ref={toast} />
       <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-10 md:gap-10 gap-16 items-center mx-auto md:pr-10 pr-16 sm:pr-5 w-full">
-      <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full">
+        <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full">
           <Img
             className="h-[100vh] m-auto rounded-br-[100px] rounded-tr-[100px] w-full"
             src="images/img_unsplashjvq0q5ikemm.png"
@@ -34,28 +56,32 @@ const ForgotpasswordPage = () => {
           >
             No worries a reset instructions will be sent to your email address
           </Text>
-          <div className="flex flex-col gap-8 items-center justify-start mt-[23px] w-[96%] md:w-full">
-            <div className="flex flex-col gap-1.5 items-start justify-start w-full">
-              <Text
-                className="text-base text-gray-900_02"
-                size="txtMontserratRomanSemiBold16"
-              >
-                Email{" "}
-              </Text>
-              <Input
-                name="emailplaceholder"
-                placeholder="Enter your email address"
-                className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
-                wrapClassName="border border-gray-500 border-solid w-full"
-                type="email"
-              ></Input>
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-8 items-center justify-start mt-[23px] w-[96%] md:w-full">
+              <div className="flex flex-col gap-1.5 items-start justify-start w-full">
+                <Text
+                  className="text-base text-gray-900_02"
+                  size="txtMontserratRomanSemiBold16"
+                >
+                  Email{" "}
+                </Text>
+                <Input
+                  name="emailplaceholder"
+                  placeholder="Enter your email address"
+                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
+                  wrapClassName="border border-gray-500 border-solid w-full"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e)}
+                ></Input>
+              </div>
+              <div className="flex flex-col items-center justify-start w-full">
+                <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center" type='submit'>
+                  Reset password
+                </Button>
+              </div>
             </div>
-            <div className="flex flex-col items-center justify-start w-full">
-              <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center">
-                Reset password
-              </Button>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </>

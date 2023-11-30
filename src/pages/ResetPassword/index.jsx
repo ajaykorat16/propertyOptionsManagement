@@ -1,30 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { Button, Img, Input, Text } from "components";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from "contexts/AuthContext";
 import { Toast } from 'primereact/toast';
 import { Link } from "react-router-dom";
 
-const SigninPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { auth, login, toast } = useAuth()
-  const navigate = useNavigate()
+const ResetPasswordPage = () => {
 
-  const handleSubmit = (e) => {
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [token, settoken] = useState("");
+  const { logout, toast, resetPassword } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation();
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      login(email, password)
+      if (password !== confirmPassword) {
+        toast.current.show({ severity: 'error', summary: 'Password', detail: "Password and Confirm Password must be same", life: 3000 })
+      } else {
+        const data = await resetPassword(password, token)
+        if (!data.error) {
+          logout()
+          navigate("/Signin")
+        }
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   useEffect(() => {
-    if (auth?.token) {
-      navigate("/")
-    }
-  }, [auth?.token, navigate])
+    const queryParams = new URLSearchParams(location.search);
+    const token = queryParams.get('token');
+    settoken(token)
+  }, [location.search]);
 
   return (
     <>
@@ -50,7 +61,7 @@ const SigninPage = () => {
             className="md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
             size="txtMontserratRomanSemiBold32"
           >
-            Welcome Back
+            Reset Password
           </Text>
           <Text
             className="mt-4 text-base text-center text-gray-900_01"
@@ -65,23 +76,7 @@ const SigninPage = () => {
                   className="text-base text-gray-900_02"
                   size="txtMontserratRomanSemiBold16"
                 >
-                  Email{" "}
-                </Text>
-                <Input
-                  placeholder="Enter your email address"
-                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
-                  wrapClassName="border border-gray-500 border-solid w-full"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e)}
-                />
-              </div>
-              <div className="flex flex-col gap-[5px] items-start justify-start mt-6 w-full">
-                <Text
-                  className="text-base text-gray-900_02"
-                  size="txtMontserratRomanSemiBold16"
-                >
-                  Password
+                  New Password
                 </Text>
                 <Input
                   placeholder="Password"
@@ -90,6 +85,22 @@ const SigninPage = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e)}
+                />
+              </div>
+              <div className="flex flex-col gap-[5px] items-start justify-start mt-6 w-full">
+                <Text
+                  className="text-base text-gray-900_02"
+                  size="txtMontserratRomanSemiBold16"
+                >
+                  Confirm Password
+                </Text>
+                <Input
+                  placeholder="Password"
+                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
+                  wrapClassName="border border-gray-500 border-solid w-full"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e)}
                 />
               </div>
               <div className="flex flex-col gap-[29px] items-end justify-start mt-[9px] w-full">
@@ -108,4 +119,4 @@ const SigninPage = () => {
   );
 };
 
-export default SigninPage;
+export default ResetPasswordPage;

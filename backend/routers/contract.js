@@ -7,13 +7,21 @@ const { auth } = require('../middleware/auth');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const { createDocuments, getAllDocuments, getSingleContract } = require('../controllers/contract');
+const { createDocuments, getAllDocuments, getSingleContract, delelteContrats, trashContracts, restoreTrashDocuments, moveToTrash } = require('../controllers/contract');
 
 router.get("/list", auth, getAllDocuments)
+
+router.post("/search-contract", auth, getAllDocuments)
+
+router.get("/trash/list", auth, trashContracts)
 
 router.get("/getSingleContract/:id", auth, getSingleContract)
 
 router.post("/search-contract", auth, getAllDocuments)
+
+router.post("/move-to-trash", auth, moveToTrash)
+
+router.put("/trash/restore", auth, restoreTrashDocuments)
 
 router.post(
     '/create',
@@ -25,5 +33,7 @@ router.post(
     ],
     createDocuments
 );
+
+router.delete("/delete", auth, delelteContrats)
 
 module.exports = router;

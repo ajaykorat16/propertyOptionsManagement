@@ -9,6 +9,7 @@ import NotFound from "pages/NotFound";
 import AddnewfinishesPage from "pages/Addnewfinishes";
 import EditcategorypagePage from "pages/Editcategorypage";
 import EditPage from "pages/EditPage";
+import ResetPasswordPage from 'pages/ResetPassword';
 const Trash = React.lazy(() => import("pages/Trash"));
 const Contractfullview = React.lazy(() => import("pages/Contractfullview"));
 const Contractspage = React.lazy(() => import("pages/Contractspage"));
@@ -25,8 +26,9 @@ const ProjectRoutes = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/contractspage" element={<Contractspage />} />
-          <Route path="/contractfullview" element={<Contractfullview />} />
+          <Route path="/contractfullview/:id" element={<Contractfullview />} />
           <Route path="/trash" element={<Trash />} />
           <Route path="/newfinishes" element={<AddnewfinishesPage />} />
           <Route path="/editcategory" element={<EditcategorypagePage />} />
