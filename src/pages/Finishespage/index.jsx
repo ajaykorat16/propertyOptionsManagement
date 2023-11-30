@@ -12,17 +12,20 @@ import Loader from '../../components/Loader/Loader';
 
 const FinishespagePage = () => {
 
-  const { getAllFinishes, addFinishes, getFinishesById } = useFinishes()
+  const { getAllFinishes, addFinishes, getFinishesById, updateFinishes, deleteFinishes } = useFinishes()
   const { getCategories } = useCategory();
-  const [finishesValue, setFinishesValue] = useState({ category: "", name: "", photo: "" });
-  const [categories, setCategories] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const [finishes, setFinishes] = useState([])
   const [isLoading, setIsLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [filter, setFilter] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [finishes, setFinishes] = useState([])
+  const [finishesValue, setFinishesValue] = useState({ category: "", name: "", photo: "" });
   const [selectedImage, setSelectedImage] = useState(null);
   const [showCategory, setShowCategory] = useState(false);
-  const [filter, setFilter] = useState(null);
   const [hoveredItemId, setHoveredItemId] = useState(null);
+  const [createFinishes, setCreateFinishes] = useState(false);
+  const [editFinishes, setEditFinishes] = useState(false);
+  const [finishesId, setFinishesId] = useState(null);
 
   const fetchFinishes = async () => {
     setIsLoading(true);
@@ -32,23 +35,57 @@ const FinishespagePage = () => {
   };
 
   const fetchSingleFinishes = async (id) => {
-    let { finishes } = await getFinishesById(id);
-    console.log(finishes);
-    setFinishesValue({ ...finishesValue, category: finishes.category, name: finishes.name, photo: finishes.photo })
+    try {
+      let { finishes } = await getFinishesById(id);
+      // setSelectedImage(finishes.photo);
+      if (finishes.photo !== null) {
+        const response = await fetch(finishes.photo);
+        const blob = await response.blob();
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result;
+
+          setFinishesValue({
+            ...finishesValue,
+            category: finishes.category,
+            name: finishes.name,
+            photo: base64String,
+          });
+          setSelectedImage(base64String);
+
+        };
+        reader.readAsDataURL(blob);
+      } else {
+        setFinishesValue({ ...finishesValue, category: finishes.category, name: finishes.name, photo: finishes.photo })
+        setSelectedImage(finishes.photo)
+      }
+    } catch (error) {
+      console.error('Error fetching single finishes:', error);
+    }
+
   };
+
   const handleEditFinishes = async (id) => {
     try {
       setVisible(true)
+      setEditFinishes(true)
+      setFinishesId(id)
       await fetchSingleFinishes(id);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleModal = async () => {
-    setVisible(true)
-    setFinishesValue({ category: "", name: "", photo: "" })
-    setSelectedImage(null)
+  const handleDeleteFinishes = async (id) => {
+    try {
+      console.log("hello");
+      console.log(id);
+      await deleteFinishes(id)
+      fetchFinishes()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const getCategory = async () => {
@@ -70,13 +107,23 @@ const FinishespagePage = () => {
     setSelectedImage(file)
   };
 
-  const createFinishes = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const data = await addFinishes(finishesValue)
-      if (data.error === false) {
-        console.log(data);
-        setFinishesValue({ user: "", monthly: "", leave: "", })
+      if (createFinishes) {
+        await addFinishes(finishesValue)
+        setFinishesValue({ category: "", name: "", photo: "" })
         setVisible(false);
+        setCreateFinishes(false)
+      } else if (editFinishes) {
+        await updateFinishes(finishesValue, finishesId)
+        setFinishesValue({ category: "", name: "", photo: "" })
+        setVisible(false);
+        setEditFinishes(false)
+        setFinishesId(null)
+      }
+      if (!editFinishes) {
+        fetchFinishes();
       }
     } catch (error) {
       console.log(error);
@@ -91,6 +138,19 @@ const FinishespagePage = () => {
     getCategory()
   }, []);
 
+  const handleModal = async () => {
+    setVisible(true)
+    setCreateFinishes(true);
+    setFinishesValue({ category: "", name: "", photo: "" })
+    setSelectedImage(null)
+  }
+
+  const handleClose = async () => {
+    setVisible(false);
+    setFinishesId(null)
+    setEditFinishes(false)
+  }
+
   return (
     <>
       {isLoading ? (
@@ -102,19 +162,19 @@ const FinishespagePage = () => {
             <CModal
               alignment="center"
               visible={visible}
-              onClose={() => setVisible(false)}
+              onClose={handleClose}
             >
               <div className="modelCloseButton">
                 <CIcon
                   icon={cilXCircle}
                   size="xl"
-                  onClick={() => setVisible(false)}
+                  onClick={handleClose}
                 />
               </div>
               <CModalHeader closeButton={false}>
-                <CModalTitle>Create New Finishes</CModalTitle>
+                <CModalTitle>{editFinishes ? ("Edit Finishes") : ("Create New Finishes")}</CModalTitle>
               </CModalHeader>
-              <CForm onSubmit={createFinishes}>
+              <CForm onSubmit={handleSubmit}>
                 <CModalBody>
                   <CFormSelect
                     id="inputUserName"
@@ -160,7 +220,7 @@ const FinishespagePage = () => {
                             alt="not found"
                             width={"250px"}
                             style={{ padding: "10px" }}
-                            src={URL.createObjectURL(selectedImage)}
+                            src={finishesValue.photo ? finishesValue.photo : selectedImage}
                           />
                         ) : (
                           <CIcon width={250} style={{ padding: "70px" }} icon={cilImage} size="xl" />
@@ -171,6 +231,7 @@ const FinishespagePage = () => {
                   </div>
                 </CModalBody>
                 <CModalFooter className="mb-3">
+                  {editFinishes && <Button className="deleteButton me-5" onClick={() => handleDeleteFinishes(finishesId)}>Delete</Button>}
                   <Button className="modelButton" type="submit">Submit</Button>
                 </CModalFooter>
               </CForm>
@@ -218,7 +279,7 @@ const FinishespagePage = () => {
                       options={categoryOptions}
                       onChange={(e) => setFilter(e)}
                       isSearchable={false}
-                      placeholder="Date"
+                      placeholder="Select Category"
                       color="white_A700"
                     />
                   </div>

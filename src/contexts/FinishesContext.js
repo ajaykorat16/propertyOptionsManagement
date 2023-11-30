@@ -42,8 +42,7 @@ const FinishesProvider = ({ children }) => {
 
     const updateFinishes = async (finishesData, id) => {
         try {
-            const { data } = await axios.put(`${baseURL}finishes/update/${id}`, finishesData, { headers });
-
+            const { data } = await axios.put(`${baseURL}/finishes/update/${id}`, finishesData, { headers });
             if (data.error === false) {
                 console.log("Finishes update success")
             }
