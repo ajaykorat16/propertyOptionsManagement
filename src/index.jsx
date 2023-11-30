@@ -10,17 +10,20 @@ import { Provider } from "react-redux";
 import { AuthProvider } from "contexts/AuthContext";
 import { CategoryProvider } from "contexts/CategoryContext";
 import { FinishesProvider } from "contexts/FinishesContext";
+import { ContractProvider } from "contexts/ContractContext";
 
 ReactDOM.render(
   <AuthProvider>
     <FinishesProvider>
-      <CategoryProvider>
-        <Provider store={store}>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
-        </Provider>
-      </CategoryProvider>
+      <ContractProvider>
+        <CategoryProvider>
+          <Provider store={store}>
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>
+          </Provider>
+        </CategoryProvider>
+      </ContractProvider>
     </FinishesProvider>
   </AuthProvider>,
   document.getElementById("root")

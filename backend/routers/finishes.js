@@ -7,6 +7,8 @@ const { createFinishes, updateFinishes, getAllFinishes, getSingleFinishes, delel
 
 router.get("/list", auth, getAllFinishes)
 
+router.post("/search-finishes", auth, getAllFinishes)
+
 router.post("/create",
     check('name', 'Finishes name is required.').notEmpty(),
     check('category', 'Finishes category is required.').notEmpty(),

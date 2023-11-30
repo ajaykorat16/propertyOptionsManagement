@@ -7,7 +7,7 @@ import { cilPencil, cilTrash, cilXCircle } from '@coreui/icons';
 
 
 const CategoryList = ({ showCategory, setShowCategory }) => {
-  const { getCateories, createCategory, deleteCategory, updateCategory, getSingleCategory } = useCategory()
+  const { getCategories, createCategory, deleteCategory, updateCategory, getSingleCategory } = useCategory()
   const [categories, setCateories] = useState([])
   const [newCategory, setNewCategory] = useState("")
   const [addNew, setAddNew] = useState(false)
@@ -15,7 +15,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
   const [editingCategoryId, setEditingCategoryId] = useState(null);
 
   const fetchCategory = async () => {
-    let categoryData = await getCateories();
+    let categoryData = await getCategories();
     setCateories(categoryData.category)
   };
 
