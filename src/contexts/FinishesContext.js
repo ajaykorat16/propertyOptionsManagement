@@ -12,11 +12,16 @@ const FinishesProvider = ({ children }) => {
         Authorization: auth?.token,
     };
 
-    const getAllFinishes = async () => {
+    const getAllFinishes = async (query) => {
         try {
-            const { data } = await axios.get(`${baseURL}/finishes/list`, { headers });
-            if (data.error === false) {
-                return data
+            let res;
+            if (query) {
+                res = await axios.post(`${baseURL}/finishes/search-finishes`, { filter: query }, { headers });
+            } else {
+                res = await axios.get(`${baseURL}/finishes/list`, { headers });
+            }
+            if (res.data.error === false) {
+                return res.data
             }
         } catch (error) {
             console.log(error);
@@ -58,7 +63,7 @@ const FinishesProvider = ({ children }) => {
         }
     };
 
-    const deleteLeave = async (id) => {
+    const deleteFinishes = async (id) => {
         try {
             const { data } = await axios.delete(`${baseURL}/finishes/delete/${id}`, { headers });
 
@@ -71,7 +76,7 @@ const FinishesProvider = ({ children }) => {
     };
 
     return (
-        <FinishesContext.Provider value={{ getAllFinishes, addFinishes, updateFinishes, getFinishesById, deleteLeave }}>
+        <FinishesContext.Provider value={{ getAllFinishes, addFinishes, updateFinishes, getFinishesById, deleteFinishes }}>
             {children}
         </FinishesContext.Provider>
     )

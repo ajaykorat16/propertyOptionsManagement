@@ -327,3 +327,38 @@ ul li a {
   color: #007bff;
   cursor: pointer;
 }
+
+.finishesImg{
+  width: 10rem;
+  height: 10rem;
+}
+
+.edit-icon-container {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.edit-icon {
+  color: white;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.edit-icon-shadow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px !important;
+  height: 30px !important;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.css-dip3t8 {
+  overflow-y: hidden !important;
+}

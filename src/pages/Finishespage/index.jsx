@@ -4,42 +4,46 @@ import { Button, Img, List, SelectBox, Text } from "components";
 import { CButton, CForm, CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from "@coreui/react";
 import { useFinishes } from "contexts/FinishesContext";
 import { useCategory } from "contexts/CategoryContext";
-import { cilImage, cilXCircle } from "@coreui/icons";
+import { cilImage, cilPencil, cilXCircle } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import Sidebar2 from "components/Sidebar2";
 import CategoryList from "pages/CategoryList"
 import Loader from '../../components/Loader/Loader';
 
-const dateOptionsList = [
-  { label: "Option1", value: "option1" },
-  { label: "Option2", value: "option2" },
-  { label: "Option3", value: "option3" },
-];
-
 const FinishespagePage = () => {
 
-  const { getAllFinishes, addFinishes } = useFinishes()
-  const { getCateories } = useCategory();
+  const { getAllFinishes, addFinishes, getFinishesById } = useFinishes()
+  const { getCategories } = useCategory();
   const [finishesValue, setFinishesValue] = useState({ category: "", name: "", photo: "" });
-  const [cateories, setCateories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [visible, setVisible] = useState(false);
   const [finishes, setFinishes] = useState([])
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [showCategory, setShowCategory] = useState(false)
+  const [showCategory, setShowCategory] = useState(false);
+  const [filter, setFilter] = useState(null);
+  const [hoveredItemId, setHoveredItemId] = useState(null);
 
   const fetchFinishes = async () => {
     setIsLoading(true);
-    const finishes = await getAllFinishes();
-    console.log(finishes.finishes)
+    const finishes = await getAllFinishes(filter);
     setFinishes(finishes.finishes);
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    fetchFinishes();
-    getCateory()
-  }, []);
+  const fetchSingleFinishes = async (id) => {
+    let { finishes } = await getFinishesById(id);
+    console.log(finishes);
+    setFinishesValue({ ...finishesValue, category: finishes.category, name: finishes.name, photo: finishes.photo })
+  };
+  const handleEditFinishes = async (id) => {
+    try {
+      setVisible(true)
+      await fetchSingleFinishes(id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleModal = async () => {
     setVisible(true)
@@ -47,10 +51,12 @@ const FinishespagePage = () => {
     setSelectedImage(null)
   }
 
-  const getCateory = async () => {
-    const { category } = await getCateories()
-    setCateories(category)
+  const getCategory = async () => {
+    const { category } = await getCategories()
+    setCategories(category)
   }
+
+  const categoryOptions = categories.map((category) => ({ label: category.name, value: category._id, }));
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -77,6 +83,14 @@ const FinishespagePage = () => {
     }
   }
 
+  useEffect(() => {
+    fetchFinishes();
+  }, [filter]);
+
+  useEffect(() => {
+    getCategory()
+  }, []);
+
   return (
     <>
       {isLoading ? (
@@ -88,7 +102,6 @@ const FinishespagePage = () => {
             <CModal
               alignment="center"
               visible={visible}
-              size="l"
               onClose={() => setVisible(false)}
             >
               <div className="modelCloseButton">
@@ -113,7 +126,7 @@ const FinishespagePage = () => {
                     <option value="" disabled >
                       Select Category
                     </option>
-                    {cateories.map((c) => (
+                    {categories.map((c) => (
                       <option key={c._id} value={c._id}>
                         {c.name}
                       </option>
@@ -139,18 +152,22 @@ const FinishespagePage = () => {
                       className="custom-file-input"
                     />
                   </div>
-                  <div className="border mb-2 ">
-                    {selectedImage ? (
-                      <img
-                        alt="not found"
-                        width={"250px"}
-                        style={{ padding: "10px" }}
-                        src={URL.createObjectURL(selectedImage)}
-                      />
-                    ) : (
-                      <CIcon width={250} style={{ padding: "70px" }} icon={cilImage} size="xl" />
-                    )}
-                    {selectedImage && <button onClick={() => setSelectedImage(null)}>Remove</button>}
+                  <div className="d-flex align-items-center justify-content-center ">
+                    <div className="border mb-2 w-75">
+                      <div className="d-flex justify-content-center">
+                        {selectedImage ? (
+                          <img
+                            alt="not found"
+                            width={"250px"}
+                            style={{ padding: "10px" }}
+                            src={URL.createObjectURL(selectedImage)}
+                          />
+                        ) : (
+                          <CIcon width={250} style={{ padding: "70px" }} icon={cilImage} size="xl" />
+                        )}
+                      </div>
+                      {selectedImage && <button onClick={() => setSelectedImage(null)}>Remove</button>}
+                    </div>
                   </div>
                 </CModalBody>
                 <CModalFooter className="mb-3">
@@ -161,7 +178,7 @@ const FinishespagePage = () => {
           </div>
           <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
             <div className="md:px-5 relative w-[17%] md:w-full">
-              <Sidebar2 className="!sticky !w-[232px] md:!w-[80px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
+              <Sidebar2 className="!w-[232px] md:!w-[80px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
             </div>
             <div className="bg-white-A700 flex flex-col font-montserrat items-center justify-start p-10 md:px-5 w-[84%] md:w-full">
               <div className="flex flex-col justify-start mb-[159px] mt-[18px] w-full">
@@ -197,7 +214,9 @@ const FinishespagePage = () => {
                       }
                       isMulti={false}
                       name="groupTwenty"
-                      options={dateOptionsList}
+                      value={filter}
+                      options={categoryOptions}
+                      onChange={(e) => setFilter(e)}
                       isSearchable={false}
                       placeholder="Date"
                       color="white_A700"
@@ -212,16 +231,25 @@ const FinishespagePage = () => {
                     <div className="items-container flex flex-1 md:flex-col flex-row gap-2 items-center justify-between my- w-full ">
                       {finishes.length !== 0 ? (
                         finishes.map((f) => (
-                          <div key={f._id} className="item flex flex-col gap-2 items-center justify-start w-full sm:w-1/2 md:w-1/3 ">
+                          <div
+                            key={f._id}
+                            className="item relative flex flex-col gap-2 items-center justify-start w-full sm:w-1/2 md:w-1/3"
+                            onMouseEnter={() => setHoveredItemId(f._id)}
+                            onMouseLeave={() => setHoveredItemId(null)}
+                          >
                             <Img
                               className="md:h-auto"
                               src={f.photo === null ? `images/noimage.png` : f.photo}
                               alt="imageFive"
                             />
-                            <Text
-                              className="text-center w-full"
-                              size="txtMontserratRomanRegular14"
-                            >
+                            {hoveredItemId === f._id && (
+                              <div className="edit-icon-container">
+                                <div className="edit-icon-shadow">
+                                  <CIcon icon={cilPencil} className="edit-icon" onClick={() => handleEditFinishes(f._id)} />
+                                </div>
+                              </div>
+                            )}
+                            <Text className="text-center w-full" size="txtMontserratRomanRegular14">
                               {f?.name}
                             </Text>
                           </div>

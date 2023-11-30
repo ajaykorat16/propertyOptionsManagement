@@ -13,7 +13,7 @@ const CategoryProvider = ({ children }) => {
     };
 
     //Get Category List
-    const getCateories = async () => {
+    const getCategories = async () => {
         try {
             const { data } = await axios.get(`${baseURL}/category/list`, { headers });
             if (data.error === false) {
@@ -30,7 +30,7 @@ const CategoryProvider = ({ children }) => {
             const { data } = await axios.post(`${baseURL}/category/create`, { name }, { headers });
 
             if (data.error === false) {
-                getCateories()
+                getCategories()
                 return data;
             }
         } catch (error) {
@@ -43,7 +43,7 @@ const CategoryProvider = ({ children }) => {
         try {
             const { data } = await axios.delete(`${baseURL}/category/delete/${id}`, { headers })
             if (data.error === false) {
-                getCateories()
+                getCategories()
             }
         } catch (error) {
             console.log(error);
@@ -55,7 +55,7 @@ const CategoryProvider = ({ children }) => {
         try {
             const { data } = await axios.put(`${baseURL}/category/update/${id}`, { name }, { headers })
             if (data.error === false) {
-                getCateories()
+                getCategories()
             }
         } catch (error) {
             console.log(error);
@@ -73,7 +73,7 @@ const CategoryProvider = ({ children }) => {
     }
 
     return (
-        <CategoryContext.Provider value={{ getCateories, createCategory, deleteCategory, updateCategory, getSingleCategory }}>
+        <CategoryContext.Provider value={{ getCategories, createCategory, deleteCategory, updateCategory, getSingleCategory }}>
             {children}
         </CategoryContext.Provider>
     );

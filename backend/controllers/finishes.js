@@ -77,7 +77,16 @@ const createFinishes = asyncHandler(async (req, res) => {
 
 const getAllFinishes = asyncHandler(async (req, res) => {
     try {
-        const getAllFinishes = await Finishes.find().lean();
+        const filter = req.body.filter;
+        
+        let query = {}
+        if (filter) {
+            query = {
+                category: filter
+            }
+        }
+
+        const getAllFinishes = await Finishes.find(query).lean();
 
         return res.status(200).json({
             error: false,
