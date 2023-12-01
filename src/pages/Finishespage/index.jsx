@@ -174,6 +174,11 @@ const FinishespagePage = () => {
     setEditFinishes(false)
   }
 
+  const handleRemove = async () =>{
+    setSelectedImage(null);
+    setFinishesValue({...finishesValue, photo: "" })
+  }
+
   return (
     <>
       {isLoading ? (
@@ -252,7 +257,7 @@ const FinishespagePage = () => {
                           <CIcon width={250} style={{ padding: "70px" }} icon={cilImage} size="xl" />
                         )}
                       </div>
-                      {selectedImage && <button onClick={() => setSelectedImage(null)}>Remove</button>}
+                      {selectedImage && <button onClick={handleRemove}>Remove</button>}
                     </div>
                   </div>
                 </CModalBody>
