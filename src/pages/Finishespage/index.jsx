@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Menu, MenuItem } from "react-pro-sidebar";
-import { Button, Img, List, SelectBox, Text } from "components";
-import { CButton, CForm, CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from "@coreui/react";
+import { Button, Img, SelectBox, Text } from "components";
+import { CForm, CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from "@coreui/react";
 import { useFinishes } from "contexts/FinishesContext";
 import { useCategory } from "contexts/CategoryContext";
 import { useAuth } from "contexts/AuthContext";

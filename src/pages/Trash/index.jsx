@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Menu, MenuItem } from "react-pro-sidebar";
 import { Button, Img, Text } from "components";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { useContract } from "contexts/ContractContext";

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Menu, MenuItem } from "react-pro-sidebar";
-import { Button, Img, Text } from "components";
+import { Button } from "components";
 import Sidebar2 from "components/Sidebar2";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useContract } from "contexts/ContractContext";
@@ -29,7 +28,7 @@ const ContractfullviewPage = () => {
 
   const moveContractToTrash = async (id) => {
     await moveToTrash(id);
-    navigate('/contractspage')
+    navigate('/dashboard/contractspage')
   };
 
   const downloadPdf = async () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Img, Input, List, SelectBox, Text } from "components";
-import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import { Button, Input, Text } from "components";
+import { CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 import { useCategory } from '../../contexts/CategoryContext'
 import CIcon from "@coreui/icons-react";
 import { cilPencil, cilTrash, cilXCircle } from '@coreui/icons';
