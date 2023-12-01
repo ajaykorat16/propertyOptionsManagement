@@ -72,7 +72,7 @@ const TrashPage = () => {
           },
         });
       } else {
-        toast.current.show({ severity: 'error', summary: 'Trash', detail: 'Please select documents first.', life: 3000 })
+        toast.current?.show({ severity: 'error', summary: 'Trash', detail: 'Please select documents first.', life: 3000 })
       }
     } catch (error) {
       console.log("Error [Delete Trash]", error.message);
@@ -86,7 +86,7 @@ const TrashPage = () => {
         await restoreContracts(seleteDocuments)
         fetchTrashContracts()
       } else {
-        toast.current.show({ severity: 'error', summary: 'Trash', detail: 'Please select documents first.', life: 3000 })
+        toast.current?.show({ severity: 'error', summary: 'Trash', detail: 'Please select documents first.', life: 3000 })
       }
     } catch (error) {
       console.log("Error [Restore Trash]", error.message)
