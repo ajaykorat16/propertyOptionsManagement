@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { Img, SelectBox, Text } from "components";
+import { Img, Text } from "components";
 import { Toast } from "primereact/toast";
 import { useContract } from "contexts/ContractContext";
 import { useAuth } from "contexts/AuthContext";

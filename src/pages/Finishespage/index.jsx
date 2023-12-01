@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Img, SelectBox, Text } from "components";
+import { Button, Img, Text } from "components";
 import { CForm, CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from "@coreui/react";
 import { useFinishes } from "contexts/FinishesContext";
 import { useCategory } from "contexts/CategoryContext";

@@ -3,7 +3,6 @@ import { Button, Img, Input, Text } from "components";
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from "contexts/AuthContext";
 import { Toast } from 'primereact/toast';
-import { Link } from "react-router-dom";
 
 const ResetPasswordPage = () => {
 

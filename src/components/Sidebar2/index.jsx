@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
+import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { Img, Text } from "components";
 import { Link } from "react-router-dom";
 import { useAuth } from "contexts/AuthContext";
@@ -8,7 +8,6 @@ import { Avatar } from "primereact/avatar";
 
 const Sidebar2 = (props) => {
   const navigate = useNavigate();
-  const { collapseSidebar, collapsed } = useProSidebar();
   const { logout, auth } = useAuth()
 
   const handleLogout = () => {
