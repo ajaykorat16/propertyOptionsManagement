@@ -19,7 +19,7 @@ const ResetPasswordPage = () => {
     e.preventDefault()
     try {
       if (password !== confirmPassword) {
-        toast.current.show({ severity: 'error', summary: 'Password', detail: "Password and Confirm Password must be same", life: 3000 })
+        toast.current?.show({ severity: 'error', summary: 'Password', detail: "Password and Confirm Password must be same", life: 3000 })
       } else {
         const data = await resetPassword(password, token)
         if (!data.error) {

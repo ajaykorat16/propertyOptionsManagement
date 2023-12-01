@@ -65,7 +65,7 @@ const ContractProvider = ({ children }) => {
 
             if (data.error === false) {
                 setTimeout(function () {
-                    toast.current.show({ severity: 'success', summary: 'Trash', detail: data.message, life: 3000 })
+                    toast.current?.show({ severity: 'success', summary: 'Trash', detail: data.message, life: 3000 })
                 }, 1000);
             }
         } catch (error) {
@@ -78,7 +78,7 @@ const ContractProvider = ({ children }) => {
             const { data } = await axios.put(`${baseURL}/contract/trash/restore`, { contracts }, { headers });
             if (data.error === false) {
                 setTimeout(function () {
-                    toast.current.show({ severity: 'success', summary: 'Trash', detail: data.message, life: 3000 })
+                    toast.current?.show({ severity: 'success', summary: 'Trash', detail: data.message, life: 3000 })
                 }, 1000);
             }
         } catch (error) {
@@ -91,7 +91,7 @@ const ContractProvider = ({ children }) => {
             const { data } = await axios.post(`${baseURL}/contract/move-to-trash`, { id }, { headers });
             if (data.error === false) {
                 setTimeout(function () {
-                    toast.current.show({ severity: 'success', summary: 'Contracts', detail: data.message, life: 3000 })
+                    toast.current?.show({ severity: 'success', summary: 'Contracts', detail: data.message, life: 3000 })
                 }, 1000);
                 return data
             }

@@ -31,23 +31,23 @@ const CategoryProvider = ({ children }) => {
 
             if (data.error === false) {
                 getCategories()
-                toast.current.show({ severity: 'success', summary: 'Category', detail: data.message, life: 3000 })
+                toast.current?.show({ severity: 'success', summary: 'Category', detail: data.message, life: 3000 })
                 return data;
             } else {
-                toast.current.show({ severity: 'error', summary: 'Category', detail: data.message, life: 3000 })
+                toast.current?.show({ severity: 'error', summary: 'Category', detail: data.message, life: 3000 })
             }
         } catch (error) {
             if (error.response) {
                 const errors = error.response.data.errors;
                 if (errors && Array.isArray(errors) && errors.length > 0) {
                     if (errors.length > 1) {
-                        toast.current.show({ severity: 'error', summary: 'Category', detail: "Please fill all fields.", life: 3000 })
+                        toast.current?.show({ severity: 'error', summary: 'Category', detail: "Please fill all fields.", life: 3000 })
                     } else {
-                        toast.current.show({ severity: 'error', summary: 'Category', detail: errors[0].msg, life: 3000 })
+                        toast.current?.show({ severity: 'error', summary: 'Category', detail: errors[0].msg, life: 3000 })
                     }
                 }
             } else {
-                toast.current.show({ severity: 'error', summary: 'Category', detail: 'An error occurred. Please try again later.', life: 3000 })
+                toast.current?.show({ severity: 'error', summary: 'Category', detail: 'An error occurred. Please try again later.', life: 3000 })
             }
         }
     };
@@ -58,7 +58,7 @@ const CategoryProvider = ({ children }) => {
             const { data } = await axios.delete(`${baseURL}/category/delete/${id}`, { headers })
             if (data.error === false) {
                 getCategories()
-                toast.current.show({ severity: 'success', summary: 'Category', detail: data.message, life: 3000 })
+                toast.current?.show({ severity: 'success', summary: 'Category', detail: data.message, life: 3000 })
             }
         } catch (error) {
             console.log(error);
@@ -71,10 +71,10 @@ const CategoryProvider = ({ children }) => {
             const { data } = await axios.put(`${baseURL}/category/update/${id}`, { name }, { headers })
             if (data.error === false) {
                 getCategories()
-                toast.current.show({ severity: 'success', summary: 'Category', detail: data.message, life: 3000 })
+                toast.current?.show({ severity: 'success', summary: 'Category', detail: data.message, life: 3000 })
                 return data
             } else {
-                toast.current.show({ severity: 'error', summary: 'Category', detail: data.message, life: 3000 })
+                toast.current?.show({ severity: 'error', summary: 'Category', detail: data.message, life: 3000 })
             }
         } catch (error) {
             console.log(error);
