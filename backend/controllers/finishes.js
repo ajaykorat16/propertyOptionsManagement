@@ -3,7 +3,7 @@ const fs = require("fs");
 const mimeTypes = require('mime-types');
 const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
-const { capitalizeFLetter, formattedDate } = require("../helper/helper");
+const { capitalizeFLetter } = require("../helper/helper");
 
 function decodeBase64Image(dataString) {
     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
@@ -187,7 +187,7 @@ const delelteFinishes = asyncHandler(async (req, res) => {
 
         const existingFinishes = await Finishes.findById({ _id: id })
         if (!existingFinishes) {
-            return res.status(400).json({
+            return res.status(200).json({
                 error: true,
                 message: "Finishes is not existing."
             })

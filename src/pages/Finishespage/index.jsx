@@ -4,17 +4,21 @@ import { Button, Img, List, SelectBox, Text } from "components";
 import { CButton, CForm, CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from "@coreui/react";
 import { useFinishes } from "contexts/FinishesContext";
 import { useCategory } from "contexts/CategoryContext";
+import { useAuth } from "contexts/AuthContext";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { cilImage, cilPencil, cilXCircle } from "@coreui/icons";
+import { Toast } from "primereact/toast";
 import CIcon from "@coreui/icons-react";
 import Sidebar2 from "components/Sidebar2";
 import CategoryList from "pages/CategoryList"
 import Loader from '../../components/Loader/Loader';
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 const FinishespagePage = () => {
 
   const { getAllFinishes, addFinishes, getFinishesById, updateFinishes, deleteFinishes } = useFinishes()
   const { getCategories } = useCategory();
+  const { toast } = useAuth()
+
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [filter, setFilter] = useState(null);
@@ -26,6 +30,7 @@ const FinishespagePage = () => {
   const [hoveredItemId, setHoveredItemId] = useState(null);
   const [createFinishes, setCreateFinishes] = useState(false);
   const [editFinishes, setEditFinishes] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [finishesId, setFinishesId] = useState(null);
 
   const fetchFinishes = async () => {
@@ -38,7 +43,6 @@ const FinishespagePage = () => {
   const fetchSingleFinishes = async (id) => {
     try {
       let { finishes } = await getFinishesById(id);
-      // setSelectedImage(finishes.photo);
       if (finishes.photo !== null) {
         const response = await fetch(finishes.photo);
         const blob = await response.blob();
@@ -72,22 +76,30 @@ const FinishespagePage = () => {
       setVisible(true)
       setEditFinishes(true)
       setFinishesId(id)
+      setConfirmDelete(false);
       await fetchSingleFinishes(id);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleDeleteFinishes = async (e, id) => {
+  const handleDeleteFinishes = async () => {
     try {
+      setConfirmDelete(true);
+
       confirmDialog({
         message: 'Are you sure you want to delete this Finishes?',
         header: 'Delete Confirmation',
         icon: 'pi pi-info-circle',
         position: 'top',
         accept: async () => {
-          await deleteFinishes(id)
+          await deleteFinishes(finishesId)
           fetchFinishes()
+          setFinishesId(null)
+          setVisible(false)
+        },
+        reject: () => {
+          setConfirmDelete(false);
         },
       });
     } catch (error) {
@@ -122,12 +134,14 @@ const FinishespagePage = () => {
         setFinishesValue({ category: "", name: "", photo: "" })
         setVisible(false);
         setCreateFinishes(false)
-      } else if (editFinishes) {
+        fetchFinishes();
+      } else if (editFinishes && finishesId) {
         await updateFinishes(finishesValue, finishesId)
         setFinishesValue({ category: "", name: "", photo: "" })
         setVisible(false);
         setEditFinishes(false)
         setFinishesId(null)
+        fetchFinishes();
       }
       if (!editFinishes) {
         fetchFinishes();
@@ -164,7 +178,8 @@ const FinishespagePage = () => {
         <Loader />
       ) : (
         <>
-          {editFinishes && <ConfirmDialog />}
+          <Toast ref={toast} />
+          {editFinishes && confirmDelete && !showCategory && <ConfirmDialog />}
           <CategoryList showCategory={showCategory} setShowCategory={setShowCategory} />
           <div>
             <CModal
@@ -172,7 +187,7 @@ const FinishespagePage = () => {
               visible={visible}
               onClose={handleClose}
               backdrop="static"
-            >
+            >``
               <div className="modelCloseButton">
                 <CIcon
                   icon={cilXCircle}
@@ -240,7 +255,7 @@ const FinishespagePage = () => {
                   </div>
                 </CModalBody>
                 <CModalFooter className="mb-3">
-                  {editFinishes && <Button className="deleteButton me-5" onClick={() => handleDeleteFinishes(finishesId)}>Delete</Button>}
+                  {editFinishes && !confirmDelete && <Button className="deleteButton me-5" onClick={() => handleDeleteFinishes(finishesId)}>Delete</Button>}
                   <Button className="modelButton" type="submit">Submit</Button>
                 </CModalFooter>
               </CForm>

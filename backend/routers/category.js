@@ -10,7 +10,7 @@ router.get("/list", auth, getCategoryList)
 router.get("/getSingleCategory/:id", auth, getSingleCategory)
 
 router.post("/create",
-    check('name', 'Department name is required.').notEmpty(),
+    check('name', 'Category name is required.').notEmpty(),
     auth, createCategory)
 
 router.put("/update/:id", auth, updateCategory)

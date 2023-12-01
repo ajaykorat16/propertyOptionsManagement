@@ -4,6 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT
 global.DOMAIN = process.env.DOMAIN
+global.BASEURL = process.env.BASEURL
 
 const finishes = require("./routers/finishes")
 const category = require("./routers/category")

@@ -3,7 +3,7 @@ const fs = require("fs");
 const mimeTypes = require('mime-types');
 const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
-const { capitalizeFLetter, formattedDate } = require("../helper/helper");
+const { formattedDate } = require("../helper/helper");
 
 
 function decodeBase64File(dataString) {
@@ -35,7 +35,7 @@ const createDocuments = asyncHandler(async (req, res) => {
             const decodedDoc = decodeBase64File(pdf);
 
             if (decodedDoc instanceof Error) {
-                return res.status(400).json({
+                return res.status(200).json({
                     error: true,
                     message: 'Invalid PDF data string',
                 });
@@ -58,7 +58,7 @@ const createDocuments = asyncHandler(async (req, res) => {
                 console.error("Document upload error", err);
             }
         } else {
-            return res.status(400).json({
+            return res.status(200).json({
                 error: true,
                 message: 'PDF field is required.',
             });
@@ -153,6 +153,8 @@ const getSingleContract = asyncHandler(async (req, res) => {
                 message: "Document Not Found.",
             });
         }
+        
+        await Contract.updateOne({ _id: id }, { $set: { isRead: 1 } }, { new: true });
 
         return res.status(200).json({
             error: false,
@@ -171,10 +173,9 @@ const getSingleContract = asyncHandler(async (req, res) => {
 const delelteContrats = asyncHandler(async (req, res) => {
     try {
         const contracts = req.body.contracts;
-        console.log(contracts)
 
         if (!Array.isArray(contracts)) {
-            return res.status(400).json({
+            return res.status(200).json({
                 error: true,
                 message: "Invalid contracts format. Expecting an array.",
             });
@@ -203,7 +204,7 @@ const restoreTrashDocuments = asyncHandler(async (req, res) => {
         const contracts = req.body.contracts;
 
         if (!Array.isArray(contracts)) {
-            return res.status(400).json({
+            return res.status(200).json({
                 error: true,
                 message: "Invalid contracts format. Expecting an array.",
             });

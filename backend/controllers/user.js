@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-const resetPasswordURL = 'http://localhost:3000/reset-password';
+const resetPasswordURL = `${BASEURL}/reset-password`;
 
 const sendMailAsync = promisify(transporter.sendMail).bind(transporter);
 
@@ -31,7 +31,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
         const { email } = req.body;
 
         if (!email) {
-            return res.status(400).json({
+            return res.status(200).json({
                 error: true,
                 message: 'Please provide a valid email for password reset.',
             });
@@ -40,7 +40,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
         const userData = await Users.findOne({ email });
 
         if (!userData) {
-            return res.status(404).json({
+            return res.status(200).json({
                 error: true,
                 message: 'User not found. Please provide a valid email for password reset.',
             });
@@ -144,7 +144,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
         const user = await Users.findOne({ email }).select("-photo");
         if (!user) {
-            return res.status(401).json({
+            return res.status(200).json({
                 error: true,
                 message: "Invalid Email. Please sign up first.",
             });
@@ -152,7 +152,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
         const match = await comparePassword(password, user.password);
         if (!match) {
-            return res.status(401).json({
+            return res.status(200).json({
                 error: true,
                 message: "Invalid Password.",
             });

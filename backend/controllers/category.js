@@ -14,7 +14,7 @@ const createCategory = asyncHandler(async (req, res) => {
 
         const existingCategory = await Category.findOne({ name: capitalizeFLetter(name) })
         if (existingCategory) {
-            return res.status(400).json({
+            return res.status(200).json({
                 error: true,
                 message: "Category Is Already Existing."
             })
@@ -39,7 +39,7 @@ const updateCategory = asyncHandler(async (req, res) => {
 
         const existingCategory = await Category.findById({ _id: id })
         if (!existingCategory) {
-            return res.status(400).json({
+            return res.status(200).json({
                 error: true,
                 message: "Category is not existing."
             })
@@ -63,7 +63,7 @@ const deleteCategory = asyncHandler(async (req, res) => {
 
         const existingCategory = await Category.findById({ _id: id })
         if (!existingCategory) {
-            return res.status(400).json({
+            return res.status(200).json({
                 error: true,
                 message: "Category is not existing"
             })
@@ -101,7 +101,7 @@ const getSingleCategory = asyncHandler(async (req, res) => {
 
         const existingCategory = await Category.findById({ _id: id })
         if (!existingCategory) {
-            return res.status(400).json({
+            return res.status(200).json({
                 error: true,
                 message: "Category is not existing."
             })
