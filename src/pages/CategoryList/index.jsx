@@ -17,10 +17,13 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
   const [addNew, setAddNew] = useState(false)
   const [editCategory, setEditCategory] = useState(false);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
+  let isMounted = true;
 
   const fetchCategory = async () => {
     let categoryData = await getCategories();
-    setCateories(categoryData.category)
+    if (isMounted) {
+      setCateories(categoryData.category)
+    }
   };
 
   const fetchSingleCategory = async (id) => {
@@ -73,6 +76,8 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
       setEditCategory(true);
       setEditingCategoryId(id);
       await fetchSingleCategory(id);
+      setEditCategory(true);
+      setEditingCategoryId(id);
     } catch (error) {
       console.error(error);
     }
@@ -92,6 +97,12 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
   useEffect(() => {
     fetchCategory()
   }, [])
+
+  useEffect(() => {
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <>
