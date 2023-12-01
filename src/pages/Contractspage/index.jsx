@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Img, SelectBox, Text } from "components";
-import Sidebar2 from "components/Sidebar2";
+import { Toast } from "primereact/toast";
 import { useContract } from "contexts/ContractContext";
+import { useAuth } from "contexts/AuthContext";
+import Sidebar2 from "components/Sidebar2";
 import Loader from "components/Loader/Loader";
 
 const sortOptionList = [
@@ -18,6 +20,8 @@ const filterOptionList = [
 
 const ContractspagePage = () => {
   const { getAllContract } = useContract()
+  const { toast } = useAuth()
+
   const [contarcts, setContarcts] = useState()
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState('all')
@@ -41,6 +45,7 @@ const ContractspagePage = () => {
         <Loader />
       ) : (
         <>
+          <Toast ref={toast} />
           <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
             <div className="h-[100vh] md:px-5 relative w-[17%] md:w-full">
               <Sidebar2 className="w-[232px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
@@ -112,12 +117,12 @@ const ContractspagePage = () => {
                     contarcts.map((c) => (
                       <div key={c.id} className="flex flex-1 flex-col items-center justify-start w-full md:w-1/2"
                         style={c.isRead === 1 ? ({ opacity: 0.7 }) : null}
-                        onDoubleClick={() => navigate(`/contractfullview/${c._id}`)}
+                        onClick={() => navigate(`/dashboard/contractfullview/${c._id}`)}
                       >
-                        <div className="flex flex-row items-end justify-evenly w-full">
+                        <div className="flex flex-row items-end justify-evenly w-full cursor-pointer">
                           <Img
                             className="h-14 w-14"
-                            src="images/img_lafilecontract.svg"
+                            src="/images/img_lafilecontract.svg"
                             alt="lafilecontract"
                           />
                           <div className="flex flex-col gap-1.5 items-start justify-start mt-[7px]">

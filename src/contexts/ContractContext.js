@@ -6,7 +6,7 @@ import axios from 'axios'
 const ContractContext = createContext()
 
 const ContractProvider = ({ children }) => {
-    const { auth } = useAuth();
+    const { auth, toast } = useAuth();
 
     const headers = {
         Authorization: auth?.token,
@@ -64,7 +64,9 @@ const ContractProvider = ({ children }) => {
             const { data } = await axios.delete(`${baseURL}/contract/delete`, { headers, data: { contracts }, });
 
             if (data.error === false) {
-                console.log("Contracts deleted successfully");
+                setTimeout(function () {
+                    toast.current.show({ severity: 'success', summary: 'Trash', detail: data.message, life: 3000 })
+                }, 1000);
             }
         } catch (error) {
             console.log(error);
@@ -75,7 +77,9 @@ const ContractProvider = ({ children }) => {
         try {
             const { data } = await axios.put(`${baseURL}/contract/trash/restore`, { contracts }, { headers });
             if (data.error === false) {
-                console.log("contracts restore success")
+                setTimeout(function () {
+                    toast.current.show({ severity: 'success', summary: 'Trash', detail: data.message, life: 3000 })
+                }, 1000);
             }
         } catch (error) {
             console.log(error);
@@ -84,8 +88,11 @@ const ContractProvider = ({ children }) => {
 
     const moveToTrash = async (id) => {
         try {
-            const { data } = await axios.post(`${baseURL}/contract/move-to-trash`,{id}, { headers });
+            const { data } = await axios.post(`${baseURL}/contract/move-to-trash`, { id }, { headers });
             if (data.error === false) {
+                setTimeout(function () {
+                    toast.current.show({ severity: 'success', summary: 'Contracts', detail: data.message, life: 3000 })
+                }, 1000);
                 return data
             }
         } catch (error) {

@@ -19,7 +19,7 @@ const FinishespagePage = () => {
   const { getCategories } = useCategory();
   const { toast } = useAuth()
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [filter, setFilter] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -130,21 +130,22 @@ const FinishespagePage = () => {
     e.preventDefault();
     try {
       if (createFinishes) {
-        await addFinishes(finishesValue)
-        setFinishesValue({ category: "", name: "", photo: "" })
-        setVisible(false);
-        setCreateFinishes(false)
-        fetchFinishes();
+        const data = await addFinishes(finishesValue)
+        if (typeof data !== 'undefined' && !data.error) {
+          setFinishesValue({ category: "", name: "", photo: "" })
+          setVisible(false);
+          setCreateFinishes(false)
+          fetchFinishes();
+        }
       } else if (editFinishes && finishesId) {
-        await updateFinishes(finishesValue, finishesId)
-        setFinishesValue({ category: "", name: "", photo: "" })
-        setVisible(false);
-        setEditFinishes(false)
-        setFinishesId(null)
-        fetchFinishes();
-      }
-      if (!editFinishes) {
-        fetchFinishes();
+        const data = await updateFinishes(finishesValue, finishesId)
+        if (typeof data !== 'undefined' && !data.error) {
+          setFinishesValue({ category: "", name: "", photo: "" })
+          setVisible(false);
+          setEditFinishes(false)
+          setFinishesId(null)
+          fetchFinishes();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -168,6 +169,7 @@ const FinishespagePage = () => {
 
   const handleClose = async () => {
     setVisible(false);
+    setCreateFinishes(false);
     setFinishesId(null)
     setEditFinishes(false)
   }
@@ -276,8 +278,8 @@ const FinishespagePage = () => {
                 <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mt-[76px] w-full">
                   <div className="flex md:flex-1 sm:flex-col flex-row sm:gap-10 items-center justify-between w-[42%] md:w-full">
                     <Img
-                      className="h-6 w-6"
-                      src="images/img_gridiconsadd.svg"
+                      className="h-6 w-6 cursor-pointer"
+                      src="/images/img_gridiconsadd.svg"
                       alt="gridiconsadd"
                       onClick={() => { setShowCategory(true) }}
                     />
@@ -288,12 +290,12 @@ const FinishespagePage = () => {
                       Category
                     </Text>
                     <SelectBox
-                      className="border border-gray-500_7f border-solid text-base text-left w-[81%] sm:w-full shadow-bs"
+                      className="border border-gray-500_7f border-solid text-base text-left w-[81%] sm:w-full shadow-bs cursor-pointer"
                       placeholderClassName="text-gray-900_01"
                       indicator={
                         <Img
-                          className="h-[5px] mr-[0] w-2.5"
-                          src="images/img_vector.svg"
+                          className="h-[5px] mr-[0] w-2.5 cursor-pointer"
+                          src="/images/img_vector.svg"
                           alt="Vector"
                         />
                       }
@@ -324,7 +326,7 @@ const FinishespagePage = () => {
                           >
                             <Img
                               className="md:h-auto"
-                              src={f.photo === null ? `images/noimage.png` : f.photo}
+                              src={f.photo === null ? `/images/noimage.png` : f.photo}
                               alt="imageFive"
                             />
                             {hoveredItemId === f._id && (

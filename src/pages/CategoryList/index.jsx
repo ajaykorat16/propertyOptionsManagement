@@ -127,7 +127,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
                     {c.name}
                   </Text>
                 </div>
-                <div className="d-flex">
+                <div className="d-flex cursor-pointer">
                   <CIcon icon={cilPencil}
                     size="xl"
                     style={{

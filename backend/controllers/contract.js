@@ -101,7 +101,7 @@ const getAllDocuments = asyncHandler(async (req, res) => {
             }
         }
 
-        const getAllContracts = await Contract.find({ ...query, isTransh: 0 }).sort({ [sortField]: -1 }).lean();
+        const getAllContracts = await Contract.find({ ...query, isTrash: 0 }).sort({ [sortField]: -1 }).lean();
 
         return res.status(200).json({
             error: false,
@@ -123,7 +123,7 @@ const getAllDocuments = asyncHandler(async (req, res) => {
 const trashContracts = asyncHandler(async (req, res) => {
     try {
 
-        const getTrashContracts = await Contract.find({ isTransh: 1 }).lean();
+        const getTrashContracts = await Contract.find({ isTrash: 1 }).lean();
 
         return res.status(200).json({
             error: false,
@@ -153,7 +153,7 @@ const getSingleContract = asyncHandler(async (req, res) => {
                 message: "Document Not Found.",
             });
         }
-        
+
         await Contract.updateOne({ _id: id }, { $set: { isRead: 1 } }, { new: true });
 
         return res.status(200).json({
@@ -210,7 +210,7 @@ const restoreTrashDocuments = asyncHandler(async (req, res) => {
             });
         }
 
-        const contractsRestore = await Contract.updateMany({ _id: { $in: contracts } }, { $set: { isTransh: 0 } }, { new: true })
+        const contractsRestore = await Contract.updateMany({ _id: { $in: contracts } }, { $set: { isTrash: 0 } }, { new: true })
         if (contractsRestore) {
             return res.status(200).json({
                 error: false,
@@ -232,7 +232,7 @@ const moveToTrash = asyncHandler(async (req, res) => {
     try {
         const { id } = req.body;
 
-        const movetoTrash = await Contract.updateOne({ _id: id }, { $set: { isTransh: 1 } }, { new: true });
+        const movetoTrash = await Contract.updateOne({ _id: id }, { $set: { isTrash: 1 } }, { new: true });
         if (movetoTrash) {
             return res.status(200).json({
                 error: false,

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { Button, Img, Input, Text } from "components";
 import { useAuth } from "contexts/AuthContext";
 import { Toast } from "primereact/toast";
@@ -14,7 +13,6 @@ const ForgotpasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      console.log("email---", email)
       const data = await forgotPassword(email)
       if (!data.error) {
         logout()
