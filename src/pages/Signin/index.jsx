@@ -6,9 +6,10 @@ import { Toast } from 'primereact/toast';
 import { Link } from "react-router-dom";
 
 const SigninPage = () => {
+  const { auth, login, toast } = useAuth()
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { auth, login, toast } = useAuth()
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
@@ -22,7 +23,7 @@ const SigninPage = () => {
 
   useEffect(() => {
     if (auth?.token) {
-      navigate("/")
+      navigate("/dashboard/finishes")
     }
   }, [auth?.token, navigate])
 

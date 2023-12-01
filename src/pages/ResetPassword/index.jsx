@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 
 const ResetPasswordPage = () => {
 
+  const { logout, toast, resetPassword } = useAuth()
+  
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
   const [token, settoken] = useState("");
-  const { logout, toast, resetPassword } = useAuth()
   const navigate = useNavigate()
   const location = useLocation();
 
