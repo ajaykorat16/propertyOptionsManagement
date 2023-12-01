@@ -31,4 +31,8 @@ router.put("/resetPassword/",
     changePasswordController
 )
 
+router.get('/user-auth', auth, (req, res) => {
+    res.status(200).json({ ok: true })
+})
+
 module.exports = router    

@@ -4,16 +4,17 @@ import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
 import { Img, Text } from "components";
 import { Link } from "react-router-dom";
 import { useAuth } from "contexts/AuthContext";
+import { Avatar } from "primereact/avatar";
 
 const Sidebar2 = (props) => {
   const navigate = useNavigate();
   const { collapseSidebar, collapsed } = useProSidebar();
-  const { logout } = useAuth()
+  const { logout, auth } = useAuth()
 
   const handleLogout = () => {
     try {
       logout();
-      navigate('/Signin');
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -21,35 +22,35 @@ const Sidebar2 = (props) => {
   const sideBarMenu = [
     {
       icon: (
-        <Img className="h-5 w-5" src="images/img_thumbsup.svg" alt="thumbsup" />
+        <Img className="h-5 w-5" src="/images/img_thumbsup.svg" alt="thumbsup" />
       ),
       label: "Finishes",
-      to: "/",
-      active: window.location.pathname === "/",
+      to: "/dashboard/finishes",
+      active: window.location.pathname === "/dashboard/finishes",
     },
     {
       icon: (
         <Img
           className="h-5 mt-[3px] w-5"
-          src="images/img_claritycontractline.svg"
+          src="/images/img_claritycontractline.svg"
           alt="claritycontract"
         />
       ),
-      label: "Contract",
-      to: "/contractspage",
-      active: window.location.pathname === "/contractspage",
+      label: "Contracts",
+      to: "/dashboard/contracts",
+      active: window.location.pathname === "/dashboard/contracts",
     },
     {
       icon: (
         <Img
           className="h-5 w-5"
-          src="images/img_materialsymbol_white_a700.svg"
+          src="/images/img_materialsymbol_white_a700.svg"
           alt="materialsymbol"
         />
       ),
       label: "Trash",
-      to: "/trash",
-      active: window.location.pathname === "/trash",
+      to: "/dashboard/trash",
+      active: window.location.pathname === "/dashboard/trash",
     },
   ];
 
@@ -102,16 +103,12 @@ const Sidebar2 = (props) => {
               alt="clippathgroup"
             />
             <div className="fixed bottom-5 left-5 flex flex-row gap-4 items-center w-4/5">
-              <img
-                className="h-8 w-8 rounded-full"
-                src="images/img_ellipse4.png"
-                alt="ellipseFour"
-              />
-              <div className="flex flex-row items-center justify-between w-[fit-content]" onClick={handleLogout}>
-                <span className="text-base text-white-A700">Harry123</span>
+            <Avatar icon="pi pi-user" size="large" shape="circle" className="h-8 w-8 rounded-full" />
+              <div className="flex flex-row items-center justify-between w-[fit-content] cursor-pointer" onClick={handleLogout}>
+                <span className="text-base text-white-A700">{auth.user?.fullName}</span>
                 <img
                   className="h-6 w-6 ml-[20%]"
-                  src="images/img_linemdlogout.svg"
+                  src="/images/img_linemdlogout.svg"
                   alt="linemdlogout"
                 />
               </div>

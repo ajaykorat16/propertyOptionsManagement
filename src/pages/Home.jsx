@@ -20,7 +20,7 @@ const Home = () => {
           <Link to="/finishespage">Finishespage</Link>
         </li>
         <li>
-          <Link to="/contractspage">Contractspage</Link>
+          <Link to="/contracts">Contractspage</Link>
         </li>
         <li>
           <Link to="/contractfullview">Contractfullview</Link>

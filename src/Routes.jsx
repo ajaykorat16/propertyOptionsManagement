@@ -10,6 +10,8 @@ import AddnewfinishesPage from "pages/Addnewfinishes";
 import EditcategorypagePage from "pages/Editcategorypage";
 import EditPage from "pages/EditPage";
 import ResetPasswordPage from 'pages/ResetPassword';
+import Loader from 'components/Loader/Loader';
+import AuthRoutes from 'pages/AuthRoutes/index'
 const Trash = React.lazy(() => import("pages/Trash"));
 const Contractfullview = React.lazy(() => import("pages/Contractfullview"));
 const Contractspage = React.lazy(() => import("pages/Contractspage"));
@@ -19,20 +21,23 @@ const Signin = React.lazy(() => import("pages/Signin"));
 
 const ProjectRoutes = () => {
   return (
-    <React.Suspense fallback={<>Loading...</>}>
+    <React.Suspense fallback={<Loader />}>
       <Router>
         <Routes>
-          <Route path="/" element={<Finishespage />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/signin" element={<Signin />} />
+          <Route path="/" element={<Signin />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/contractspage" element={<Contractspage />} />
-          <Route path="/contractfullview/:id" element={<Contractfullview />} />
-          <Route path="/trash" element={<Trash />} />
-          <Route path="/newfinishes" element={<AddnewfinishesPage />} />
-          <Route path="/editcategory" element={<EditcategorypagePage />} />
-          <Route path="/editfinish" element={<EditPage />} />
+
+          <Route path='/dashboard' element={<AuthRoutes />}>
+            <Route path="finishes" element={<Finishespage />} />
+            <Route path="contracts" element={<Contractspage />} />
+            <Route path="contractfullview/:id" element={<Contractfullview />} />
+            <Route path="trash" element={<Trash />} />
+            <Route path="newfinishes" element={<AddnewfinishesPage />} />
+            <Route path="editcategory" element={<EditcategorypagePage />} />
+            <Route path="editfinish" element={<EditPage />} />
+          </Route>
         </Routes>
       </Router>
     </React.Suspense>
