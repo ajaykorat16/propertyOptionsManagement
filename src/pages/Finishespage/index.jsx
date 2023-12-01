@@ -9,6 +9,7 @@ import CIcon from "@coreui/icons-react";
 import Sidebar2 from "components/Sidebar2";
 import CategoryList from "pages/CategoryList"
 import Loader from '../../components/Loader/Loader';
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 const FinishespagePage = () => {
 
@@ -77,12 +78,18 @@ const FinishespagePage = () => {
     }
   };
 
-  const handleDeleteFinishes = async (id) => {
+  const handleDeleteFinishes = async (e, id) => {
     try {
-      console.log("hello");
-      console.log(id);
-      await deleteFinishes(id)
-      fetchFinishes()
+      confirmDialog({
+        message: 'Are you sure you want to delete this Finishes?',
+        header: 'Delete Confirmation',
+        icon: 'pi pi-info-circle',
+        position: 'top',
+        accept: async () => {
+          await deleteFinishes(id)
+          fetchFinishes()
+        },
+      });
     } catch (error) {
       console.log(error)
     }
@@ -157,12 +164,14 @@ const FinishespagePage = () => {
         <Loader />
       ) : (
         <>
+          {editFinishes && <ConfirmDialog />}
           <CategoryList showCategory={showCategory} setShowCategory={setShowCategory} />
           <div>
             <CModal
               alignment="center"
               visible={visible}
               onClose={handleClose}
+              backdrop="static"
             >
               <div className="modelCloseButton">
                 <CIcon

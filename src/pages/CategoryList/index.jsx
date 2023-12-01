@@ -4,6 +4,7 @@ import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } 
 import { useCategory } from '../../contexts/CategoryContext'
 import CIcon from "@coreui/icons-react";
 import { cilPencil, cilTrash, cilXCircle } from '@coreui/icons';
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 
 const CategoryList = ({ showCategory, setShowCategory }) => {
@@ -45,8 +46,16 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
 
   const handleDeleteCategory = async (id) => {
     try {
-      await deleteCategory(id)
-      fetchCategory()
+      confirmDialog({
+        message: 'Are you sure you want to delete this Category?',
+        header: 'Delete Confirmation',
+        icon: 'pi pi-info-circle',
+        position: 'top',
+        accept: async () => {
+          await deleteCategory(id)
+          fetchCategory()
+        },
+      });
     } catch (error) {
       console.log(error)
     }
@@ -79,11 +88,13 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
 
   return (
     <>
+      <ConfirmDialog />
       <CModal
         alignment="center"
         visible={showCategory}
         onClose={() => setShowCategory(false)}
         className="mainBody"
+        backdrop="static"
       >
         <div className="modelCloseButton">
           <CIcon
