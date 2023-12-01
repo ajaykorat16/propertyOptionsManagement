@@ -24,7 +24,7 @@ const ResetPasswordPage = () => {
         const data = await resetPassword(password, token)
         if (!data.error) {
           logout()
-          navigate("/Signin")
+          navigate("/")
         }
       }
     } catch (error) {
@@ -104,10 +104,7 @@ const ResetPasswordPage = () => {
                   onChange={(e) => setConfirmPassword(e)}
                 />
               </div>
-              <div className="flex flex-col gap-[29px] items-end justify-start mt-[9px] w-full">
-                <Link to="/forgotpassword">
-                  <Text size="txtMontserratRomanBold14">Forgot password?</Text>
-                </Link>
+              <div className="flex flex-col gap-[29px] items-end justify-start mt-[20px] w-full">
                 <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center" type='submit'>
                   Access
                 </Button>
