@@ -16,7 +16,7 @@ const ForgotpasswordPage = () => {
       const data = await forgotPassword(email)
       if (!data.error) {
         logout()
-        navigate("/Signin")
+        navigate("/")
       }
     } catch (error) {
       console.log(error);

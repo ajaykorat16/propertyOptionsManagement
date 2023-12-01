@@ -35,6 +35,7 @@ const ContractfullviewPage = () => {
     const pdfUrl = contract.pdf;
     const link = document.createElement("a");
     link.href = pdfUrl;
+    link.target = '_blank'
     link.download = `${contract.id}.pdf`;
     document.body.appendChild(link);
     link.click();

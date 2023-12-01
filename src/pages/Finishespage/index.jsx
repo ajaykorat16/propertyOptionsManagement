@@ -319,7 +319,7 @@ const FinishespagePage = () => {
                             <Img
                               className="finishesImg"
                               src={f.photo === null ? `/images/noImageAvailable.jpg` : f.photo}
-                              alt="imageFive"
+                              alt={f.name}
                             />
                             {hoveredItemId === f._id && (
                               <div className="edit-icon-container">
