@@ -7,6 +7,7 @@ import { useAuth } from "contexts/AuthContext";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { cilImage, cilPencil, cilXCircle } from "@coreui/icons";
 import { Toast } from "primereact/toast";
+import { Dropdown } from "primereact/dropdown";
 import CIcon from "@coreui/icons-react";
 import Sidebar2 from "components/Sidebar2";
 import CategoryList from "pages/CategoryList"
@@ -288,25 +289,12 @@ const FinishespagePage = () => {
                     >
                       Category
                     </Text>
-                    <SelectBox
-                      className="border border-gray-500_7f border-solid text-base text-left w-[81%] sm:w-full shadow-bs cursor-pointer"
-                      placeholderClassName="text-gray-900_01"
-                      indicator={
-                        <Img
-                          className="h-[5px] mr-[0] w-2.5 cursor-pointer"
-                          src="/images/img_vector.svg"
-                          alt="Vector"
-                        />
-                      }
-                      isMulti={false}
-                      name="groupTwenty"
+                    <Dropdown
                       value={filter}
-                      options={categoryOptions}
-                      onChange={(e) => setFilter(e)}
-                      isSearchable={false}
                       placeholder="Select Category"
-                      color="white_A700"
-                    />
+                      options={categoryOptions}
+                      onChange={(e) => setFilter(e.target.value)}
+                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[81%] sm:w-full" />
                   </div>
                   <Button className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center" onClick={handleModal}>
                     Add new
@@ -314,7 +302,7 @@ const FinishespagePage = () => {
                 </div>
                 <div className="container flex flex-col items-center justify-start ml-10 md:ml-[0] mt-14 w-[86%] md:w-full ">
                   <div className="inner-container flex flex-col gap-4 items-center w-full " orientation="vertical">
-                    <div className="items-container flex flex-1 md:flex-col flex-row gap-2 items-center justify-between my- w-full ">
+                    <div className="items-container">
                       {finishes.length !== 0 ? (
                         finishes.map((f) => (
                           <div
@@ -324,8 +312,8 @@ const FinishespagePage = () => {
                             onMouseLeave={() => setHoveredItemId(null)}
                           >
                             <Img
-                              className="md:h-auto"
-                              src={f.photo === null ? `/images/noimage.png` : f.photo}
+                              className="finishesImg"
+                              src={f.photo === null ? `/images/noImageAvailable.jpg` : f.photo}
                               alt="imageFive"
                             />
                             {hoveredItemId === f._id && (

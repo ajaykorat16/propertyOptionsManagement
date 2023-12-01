@@ -247,9 +247,9 @@ ul li a {
 .items-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 40px !important;
+  margin-left: 9rem;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
 }
 
@@ -328,8 +328,8 @@ ul li a {
   cursor: pointer;
 }
 
-.finishesImg{
-  width: 10rem;
+.finishesImg {
+  width: 14rem;
   height: 10rem;
 }
 
@@ -375,12 +375,12 @@ ul li a {
   color: black !important;
 }
 
-.p-dialog-title{
+.p-dialog-title {
   font-size: 25px !important;
   font-weight: 700;
 }
 
-.p-confirm-dialog-message{
+.p-confirm-dialog-message {
   font-size: 20px !important;
   font-weight: 600;
 }
@@ -406,11 +406,11 @@ ul li a {
   border-radius: 5px !important;
 }
 
-.p-dialog-header-icon{
+.p-dialog-header-icon {
   color: rgb(131, 131, 131) !important;
 }
 
-.p-dialog{
+.p-dialog {
   width: 35rem !important;
   height: 15rem !important;
   border-radius: 6px !important;
@@ -423,7 +423,7 @@ ul li a {
   background-color: red !important;
 }
 
-.react-pdf__Page{
+.react-pdf__Page {
   height: 600px;
   overflow: scroll;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Img, Text } from "components";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { Checkbox } from 'primereact/checkbox';
 import { useContract } from "contexts/ContractContext";
 import { useAuth } from "contexts/AuthContext";
 import { Toast } from "primereact/toast";
@@ -13,6 +14,7 @@ const TrashPage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [trashList, setTrashList] = useState()
+  const [checked, setChecked] = useState(false)
   const [seleteDocuments, setSeleteDocuments] = useState([])
   const [selectedItemStyle, setSelectedItemStyle] = useState({
     cursor: "pointer",
@@ -35,8 +37,10 @@ const TrashPage = () => {
   const handleSelectAll = () => {
     if (seleteDocuments.length === trashList.length) {
       setSeleteDocuments([]);
+      setChecked(false)
     } else {
       const allIds = trashList.map((t) => t._id);
+      setChecked(true)
       setSeleteDocuments(allIds);
     }
   };
@@ -67,6 +71,8 @@ const TrashPage = () => {
             fetchTrashContracts();
           },
         });
+      } else {
+        toast.current.show({ severity: 'error', summary: 'Trash', detail: 'Please select documents first.', life: 3000 })
       }
     } catch (error) {
       console.log("Error [Delete Trash]", error.message);
@@ -79,8 +85,9 @@ const TrashPage = () => {
       if (seleteDocuments.length !== 0) {
         await restoreContracts(seleteDocuments)
         fetchTrashContracts()
+      } else {
+        toast.current.show({ severity: 'error', summary: 'Trash', detail: 'Please select documents first.', life: 3000 })
       }
-      fetchTrashContracts()
     } catch (error) {
       console.log("Error [Restore Trash]", error.message)
     }
@@ -118,7 +125,7 @@ const TrashPage = () => {
                 >
                   Select
                 </Text>
-                <div className="border border-gray-500 border-solid h-6 rounded-sm w-6" onClick={handleSelectAll} ></div>
+                <Checkbox className="border border-gray-500 border-solid h-6 rounded-sm w-6" onClick={handleSelectAll} checked={checked}></Checkbox>
               </div>
               <div className="flex flex-col items-center justify-start mt-6 mx-auto w-[98%] md:w-full">
                 <div className="flex flex-col items-center justify-start mb-[329px] mt-12 w-[98%] md:w-full">
@@ -166,8 +173,8 @@ const TrashPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex sm:flex-col flex-row md:gap-10 items-center justify-between mt-[269px] w-full cursor-pointer">
-                <div className="flex flex-col items-center justify-end p-[9px] rounded-lg cursor-pointer">
+              <div className="flex sm:flex-col flex-row md:gap-10 items-center justify-between mt-[60px] w-full  ">
+                <div className="flex flex-col items-center justify-end p-[9px] rounded-lg">
                   <Button className="bg-red-A400 cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center" onClick={handleDeleteContracts}>
                     Delete
                   </Button>
