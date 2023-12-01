@@ -6,7 +6,7 @@ import axios from 'axios'
 const FinishesContext = createContext()
 
 const FinishesProvider = ({ children }) => {
-    const { auth } = useAuth();
+    const { auth, toast } = useAuth();
 
     const headers = {
         Authorization: auth?.token,
@@ -31,12 +31,28 @@ const FinishesProvider = ({ children }) => {
     const addFinishes = async (finishesData) => {
         try {
             const { data } = await axios.post(`${baseURL}/finishes/create`, finishesData, { headers });
-
             if (data.error === false) {
-                console.log("Finishes added success")
+                getAllFinishes()
+                setTimeout(function () {
+                    toast.current.show({ severity: 'success', summary: 'Finishes', detail: data.message, life: 3000 })
+                }, 500);
+                return data;
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Finishes', detail: data.message, life: 3000 })
             }
         } catch (error) {
-            console.log(error);
+            if (error.response) {
+                const errors = error.response.data.errors;
+                if (errors && Array.isArray(errors) && errors.length > 0) {
+                    if (errors.length > 1) {
+                        toast.current.show({ severity: 'error', summary: 'Finishes', detail: "Please fill all fields.", life: 3000 })
+                    } else {
+                        toast.current.show({ severity: 'error', summary: 'Finishes', detail: errors[0].msg, life: 3000 })
+                    }
+                }
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Finishes', detail: 'An error occurred. Please try again later.', life: 3000 })
+            }
         }
     };
 
@@ -44,7 +60,13 @@ const FinishesProvider = ({ children }) => {
         try {
             const { data } = await axios.put(`${baseURL}/finishes/update/${id}`, finishesData, { headers });
             if (data.error === false) {
-                console.log("Finishes update success")
+                getAllFinishes()
+                setTimeout(function () {
+                    toast.current.show({ severity: 'success', summary: 'Finishes', detail: data.message, life: 3000 })
+                }, 500);
+                return data;
+            } else {
+                toast.current.show({ severity: 'error', summary: 'Finishes', detail: data.message, life: 3000 })
             }
         } catch (error) {
             console.log(error);
@@ -65,9 +87,11 @@ const FinishesProvider = ({ children }) => {
     const deleteFinishes = async (id) => {
         try {
             const { data } = await axios.delete(`${baseURL}/finishes/delete/${id}`, { headers });
-
             if (data.error === false) {
-                console.log("Finishes deleted success")
+                getAllFinishes()
+                setTimeout(function () {
+                    toast.current.show({ severity: 'success', summary: 'Finishes', detail: data.message, life: 3000 })
+                }, 300)
             }
         } catch (error) {
             console.log(error);

@@ -5,10 +5,13 @@ import { useCategory } from '../../contexts/CategoryContext'
 import CIcon from "@coreui/icons-react";
 import { cilPencil, cilTrash, cilXCircle } from '@coreui/icons';
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { Toast } from "primereact/toast";
+import { useAuth } from "contexts/AuthContext";
 
 
 const CategoryList = ({ showCategory, setShowCategory }) => {
   const { getCategories, createCategory, deleteCategory, updateCategory, getSingleCategory } = useCategory()
+  const { toast } = useAuth()
   const [categories, setCateories] = useState([])
   const [newCategory, setNewCategory] = useState("")
   const [addNew, setAddNew] = useState(false)
@@ -29,18 +32,22 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
     e.preventDefault();
     try {
       if (addNew) {
-        await createCategory(newCategory);
-        setNewCategory("")
-        setAddNew(false);
+        const data = await createCategory(newCategory);
+        if (typeof data !== 'undefined' && data.error === false) {
+          setNewCategory("")
+          setAddNew(false);
+        }
       } else if (editCategory && editingCategoryId) {
-        await updateCategory(newCategory, editingCategoryId);
-        setNewCategory("")
-        setEditCategory(false);
-        setEditingCategoryId(null);
+        const data = await updateCategory(newCategory, editingCategoryId);
+        if (typeof data !== 'undefined' && data.error === false) {
+          setNewCategory("")
+          setEditCategory(false);
+          setEditingCategoryId(null);
+        }
       }
       fetchCategory();
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -88,6 +95,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
 
   return (
     <>
+      <Toast ref={toast} />
       <ConfirmDialog />
       <CModal
         alignment="center"

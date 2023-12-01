@@ -115,9 +115,24 @@ const updateFinishes = asyncHandler(async (req, res) => {
         const { name, description, category, photo } = req.body;
         const { id } = req.params;
 
+        if (name === '') {
+            return res.status(200).json({
+                error: true,
+                message: "Please write proper finishes name.",
+            });
+        }
+
+        const finishesName = await Finishes.findOne({ _id: { $ne: id }, name: capitalizeFLetter(name) });
+        if (finishesName) {
+            return res.status(200).json({
+                error: true,
+                message: "Finishes has already created.",
+            });
+        }
+
         const existingFinishes = await Finishes.findById(id);
         if (!existingFinishes) {
-            return res.status(404).json({
+            return res.status(200).json({
                 error: true,
                 message: "This finishes is not existing in the database.",
             });
@@ -134,7 +149,7 @@ const updateFinishes = asyncHandler(async (req, res) => {
             const imageBuffer = decodedImg.data;
             const type = decodedImg.type;
             const extension = mimeTypes.extension(type) || 'png';
-            const fileName = `${name}.${extension}`;
+            const fileName = `${finishesObj.name}.${extension}`;
 
             const uploadPath = "./uploads/images/"
             if (!fs.existsSync(uploadPath)) {

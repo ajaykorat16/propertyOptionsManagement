@@ -45,6 +45,14 @@ const updateCategory = asyncHandler(async (req, res) => {
             })
         }
 
+        const categoryName = await Category.findOne({ _id: { $ne: id }, name: capitalizeFLetter(name) })
+        if (categoryName) {
+            return res.status(200).json({
+                error: true,
+                message: "Category Is Already Existing."
+            })
+        }
+
         const updateCategory = await Category.findByIdAndUpdate({ _id: id }, { name: capitalizeFLetter(name) }, { new: true })
         return res.status(201).json({
             error: false,
