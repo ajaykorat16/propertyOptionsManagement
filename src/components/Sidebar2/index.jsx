@@ -57,7 +57,6 @@ const Sidebar2 = (props) => {
   return (
     <>
       <Sidebar
-        onClick={() => collapseSidebar(!collapsed)}
         className={props.className}
         style={{ position: "fixed", top: 0, left: 0, height: "100%" }}
       >

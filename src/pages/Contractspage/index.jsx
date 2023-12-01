@@ -6,6 +6,7 @@ import { useContract } from "contexts/ContractContext";
 import { useAuth } from "contexts/AuthContext";
 import Sidebar2 from "components/Sidebar2";
 import Loader from "components/Loader/Loader";
+import { Dropdown } from "primereact/dropdown";
 
 const sortOptionList = [
   { label: "Date", value: "createdAt" },
@@ -65,24 +66,8 @@ const ContractspagePage = () => {
                   >
                     Filter
                   </Text>
-                  <SelectBox
-                    className="border border-gray-500_7f border-solid text-base text-left w-[81%] sm:w-full"
-                    placeholderClassName="text-gray-900_01"
-                    indicator={
-                      <Img
-                        className="h-[5px] mr-[0] w-2.5"
-                        src="images/img_vector.svg"
-                        alt="Vector"
-                      />
-                    }
-                    isMulti={false}
-                    name="filter"
-                    options={filterOptionList}
-                    value={filter}
-                    isSearchable={false}
-                    color="white_A700"
-                    onChange={(e) => setFilter(e)}
-                  />
+                  <Dropdown value={filter} options={filterOptionList} onChange={(e) => setFilter(e.target.value)} 
+                    className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[81%] sm:w-full"/>
                 </div>
                 <div className="flex md:flex-1 flex-row gap-4 items-center justify-between mb-0.5 w-[37%] md:w-full">
                   <Text
@@ -91,24 +76,8 @@ const ContractspagePage = () => {
                   >
                     Sort by
                   </Text>
-                  <SelectBox
-                    className="border border-gray-500_7f border-solid text-base text-left w-[81%] sm:w-full"
-                    placeholderClassName="text-gray-900_01"
-                    indicator={
-                      <Img
-                        className="h-[5px] mr-[0] w-2.5"
-                        src="images/img_vector.svg"
-                        alt="Vector"
-                      />
-                    }
-                    isMulti={false}
-                    name="sortBy"
-                    options={sortOptionList}
-                    value={sortBy}
-                    isSearchable={false}
-                    color="white_A700"
-                    onChange={(e) => setSortBy(e)}
-                  />
+                   <Dropdown value={sortBy} options={sortOptionList} onChange={(e) => setSortBy(e.target.value)} 
+                    className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[81%] sm:w-full"/>
                 </div>
               </div>
               <div className="flex flex-col items-center justify-start mb-[329px] mt-12 w-[98%] md:w-full">

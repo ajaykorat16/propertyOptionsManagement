@@ -28,7 +28,7 @@ const ContractfullviewPage = () => {
 
   const moveContractToTrash = async (id) => {
     await moveToTrash(id);
-    navigate('/dashboard/contractspage')
+    navigate('/dashboard/contracts')
   };
 
   const downloadPdf = async () => {
