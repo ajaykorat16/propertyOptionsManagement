@@ -95,7 +95,7 @@ const SigninPage = () => {
               </div>
               <div className="flex flex-col gap-[29px] items-end justify-start mt-[9px] w-full">
                 <Link to="/forgotpassword">
-                  <Text size="txtMontserratRomanBold14">Forgot password?</Text>
+                  <Text size="txtMontserratRomanBold14" className="link">Forgot password?</Text>
                 </Link>
                 <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center" type='submit'>
                   Access

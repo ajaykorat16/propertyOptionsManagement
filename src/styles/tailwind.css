@@ -111,3 +111,7 @@ li:hover{
   justify-content: space-between;
 }
 
+.ps-menu-button:hover {
+  color: white !important;
+}
+

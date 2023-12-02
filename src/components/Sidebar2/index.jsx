@@ -21,7 +21,7 @@ const Sidebar2 = (props) => {
   const sideBarMenu = [
     {
       icon: (
-        <Img className="h-5 w-5" src="/images/img_thumbsup.svg" alt="thumbsup" />
+        <Img className="h-5 w-5" src={window.location.pathname === "/dashboard/finishes" ? "/images/img_television.svg" : "/images/img_thumbsup.svg"} alt="thumbsup" />
       ),
       label: "Finishes",
       to: "/dashboard/finishes",
@@ -31,7 +31,7 @@ const Sidebar2 = (props) => {
       icon: (
         <Img
           className="h-5 mt-[3px] w-5"
-          src="/images/img_claritycontractline.svg"
+          src={window.location.pathname === "/dashboard/contracts" ? "/images/img_claritycontractline_light_blue_500.svg" : "/images/img_claritycontractline.svg"}
           alt="claritycontract"
         />
       ),
@@ -43,7 +43,7 @@ const Sidebar2 = (props) => {
       icon: (
         <Img
           className="h-5 w-5"
-          src="/images/img_materialsymbol_white_a700.svg"
+          src={window.location.pathname === "/dashboard/trash" ? "/images/img_materialsymbol_light_blue_500.svg" : "/images/img_materialsymbol_white_a700.svg"}
           alt="materialsymbol"
         />
       ),
@@ -89,7 +89,7 @@ const Sidebar2 = (props) => {
         >
           {sideBarMenu?.map((menu, i) => (
             <Link to={menu.to} key={`sideBarMenuItem${i}`}>
-              <MenuItem {...menu}>{menu.label}</MenuItem>
+              <MenuItem className="hover:text-white" {...menu}>{menu.label}</MenuItem>
             </Link>
           ))}
         </Menu>
@@ -97,15 +97,15 @@ const Sidebar2 = (props) => {
           <div className="h-[100%] relative w-full">
             <Img
               className="h-[462px] ml-auto my-auto object-cover"
-              src="images/img_clippathgroup.png"
+              src="/images/img_clippathgroup.png"
               alt="clippathgroup"
             />
-            <div className="fixed bottom-5 left-5 flex flex-row gap-4 items-center w-4/5">
-            <Avatar icon="pi pi-user" size="large" shape="circle" className="h-8 w-8 rounded-full" />
-              <div className="flex flex-row items-center justify-between w-[fit-content] cursor-pointer" onClick={handleLogout}>
-                <span className="text-base text-white-A700">{auth.user?.fullName}</span>
+            <div className="fixed bottom-5 left-5 flex flex-row gap-3 items-center w-4/5">
+              <Avatar icon="pi pi-user" size="large" shape="circle" className="h-8 w-8 rounded-full" />
+              <div className="flex flex-row items-center w-[18%] cursor-pointer" onClick={handleLogout}>
+                <span className="text-base text-white-A700 text-[15px]">{auth.user?.fullName}</span>
                 <img
-                  className="h-6 w-6 ml-[20%]"
+                  className="h-6 w-6 ml-[12%]"
                   src="/images/img_linemdlogout.svg"
                   alt="linemdlogout"
                 />

@@ -289,7 +289,7 @@ const FinishespagePage = () => {
                       onClick={() => { setShowCategory(true) }}
                     />
                     <Text
-                      className="text-base text-gray-900_03"
+                      className="text-base text-gray-900_03 mr-[1rem]"
                       size="txtMontserratRomanSemiBold16Gray90003"
                     >
                       Category

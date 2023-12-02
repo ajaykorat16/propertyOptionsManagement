@@ -427,3 +427,12 @@ ul li a {
   height: 600px;
   overflow: scroll;
 }
+
+.link {
+  color: blue; 
+  text-decoration: none; 
+}
+
+.link:hover {
+  color: rgb(69, 75, 167); 
+}

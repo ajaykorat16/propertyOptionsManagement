@@ -41,7 +41,20 @@ const ForgotpasswordPage = () => {
             </Text>
           </div>
         </div>
-        <div className="flex flex-col font-montserrat items-center justify-start w-[27%] md:w-full">
+        <div className="flex flex-col font-montserrat items-center justify-start w-[27%] md:w-full cursor-pointer">
+          <div className="fixed left-[68%] top-[6%] flex flex-row" onClick={() => navigate('/')}>
+            <Img
+              className="h-6 w-6"
+              src="/images/img_arrowleft.svg"
+              alt="lafilecontract"
+            />
+            <Text
+              className="md:text-3xl sm:text-[28px] text-[20px] text-gray-900 ml-[10%]"
+              size="txtMontserratRomanSemiBold32"
+            >
+              Back
+            </Text>
+          </div>
           <Text
             className="md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
             size="txtMontserratRomanSemiBold32"
@@ -66,15 +79,15 @@ const ForgotpasswordPage = () => {
                 <Input
                   name="emailplaceholder"
                   placeholder="Enter your email address"
-                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
+                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left min-w-[334px]"
                   wrapClassName="border border-gray-500 border-solid w-full"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e)}
                 ></Input>
               </div>
-              <div className="flex flex-col items-center justify-start w-full">
-                <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center" type='submit'>
+              <div className="flex flex-col items-center justify-start">
+                <Button className="cursor-pointer font-semibold leading-[normal] min-w-[338px] text-base text-center" type='submit'>
                   Reset password
                 </Button>
               </div>

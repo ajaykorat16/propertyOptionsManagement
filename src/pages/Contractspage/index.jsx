@@ -69,9 +69,9 @@ const ContractspagePage = () => {
                   <Dropdown value={filter} options={filterOptionList} onChange={(e) => setFilter(e.target.value)} 
                     className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[81%] sm:w-full"/>
                 </div>
-                <div className="flex md:flex-1 flex-row gap-4 items-center justify-between mb-0.5 w-[37%] md:w-full">
+                <div className="flex md:flex-1 flex-row gap-2 items-center justify-between mb-0.5 w-[41%]">
                   <Text
-                    className="text-base text-gray-900_03"
+                    className="text-base text-gray-900_03 w-[15%]"
                     size="txtMontserratRomanSemiBold16Gray90003"
                   >
                     Sort by
