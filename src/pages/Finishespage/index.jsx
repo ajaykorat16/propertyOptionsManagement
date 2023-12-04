@@ -328,7 +328,7 @@ const FinishespagePage = () => {
                                 </div>
                               </div>
                             )}
-                            <Text className="text-center w-full" size="txtMontserratRomanRegular14">
+                            <Text className="text-center w-full break-all" size="txtMontserratRomanRegular14">
                               {f?.name}
                             </Text>
                           </div>
