@@ -312,7 +312,7 @@ const FinishespagePage = () => {
                         finishes.map((f) => (
                           <div
                             key={f._id}
-                            className="item relative flex flex-col gap-2 items-center justify-start w-full sm:w-1/2 md:w-1/3"
+                            className="item relative flex flex-col gap-2 items-center justify-start w-full sm:w-1/2 md:w-1/3 mb-[auto]"
                             onMouseEnter={() => setHoveredItemId(f._id)}
                             onMouseLeave={() => setHoveredItemId(null)}
                           >
