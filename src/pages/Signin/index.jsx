@@ -30,21 +30,21 @@ const SigninPage = () => {
   return (
     <>
       <Toast ref={toast} />
-      <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-10 md:gap-10 gap-[71px] items-center mx-auto md:pr-10 sm:pr-5 pr-[71px] w-full">
-        <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full">
+      <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-10 md:gap-10 gap-[71px] items-center mx-auto md:pr-2 sm:pr-5 pr-[71px] w-full main-container">
+        <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full img-layout-container">
           <Img
-            className="h-[100vh] m-auto rounded-br-[100px] rounded-tr-[100px] w-full"
+            className="h-[100vh] m-auto rounded-br-[100px] rounded-tr-[100px] w-full img-layout"
             src="images/img_unsplashjvq0q5ikemm.png"
             alt="unsplashjvq0q5i"
           />
-          <div className="absolute bg-blue_gray-900_90 flex flex-col h-full inset-[0] items-start justify-center m-auto p-[27px] sm:px-5 rounded-br-[100px] rounded-tr-[100px] w-full">
-            <Text
-              className="mb-[667px] text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
-              size="txtOrbitronRegular36"
-            >
-              LOGO
-            </Text>
+          <div className="absolute top-0 bg-blue_gray-900_90 flex flex-col inset-[0] items-start justify-center m-auto p-[27px] sm:px-5 rounded-br-[100px] rounded-tr-[100px] w-full logo-container">
           </div>
+          <Text
+            className="absolute top-[24px] left-[24px] text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
+            size="txtOrbitronRegular36"
+          >
+            LOGO
+          </Text>
         </div>
         <div className="flex flex-col font-montserrat items-center justify-start w-[26%] md:w-full">
           <Text
@@ -54,19 +54,19 @@ const SigninPage = () => {
             Welcome Back
           </Text>
           <Text
-            className="mt-4 text-base text-center text-gray-900_01"
+            className="mt-2 text-base text-center text-gray-900_01"
             size="txtMontserratRomanRegular16"
           >
-            Access the Administraton page{" "}
+            Access the Administraton page
           </Text>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="form-container">
             <div className="flex flex-col items-center justify-start mt-[31px] w-full">
               <div className="flex flex-col gap-1.5 items-start justify-start w-full">
                 <Text
                   className="text-base text-gray-900_02"
                   size="txtMontserratRomanSemiBold16"
                 >
-                  Email{" "}
+                  Email
                 </Text>
                 <Input
                   placeholder="Enter your email address"
@@ -97,7 +97,7 @@ const SigninPage = () => {
                 <Link to="/forgotpassword">
                   <Text size="txtMontserratRomanBold14" className="link">Forgot password?</Text>
                 </Link>
-                <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center" type='submit'>
+                <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center submit-button" type='submit'>
                   Access
                 </Button>
               </div>

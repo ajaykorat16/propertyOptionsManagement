@@ -178,7 +178,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
                     <Button className="min-w-[50px] text-center mr-[15px]" type="submit">
                       Save
                     </Button>
-                    <Button className="min-w-[50px] text-center" type="button" onClick={handleCancel}>
+                    <Button className="min-w-[50px] text-center bg-gray-400" type="button" onClick={handleCancel}>
                       Cancel
                     </Button>
                   </div>
