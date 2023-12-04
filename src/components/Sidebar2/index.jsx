@@ -5,6 +5,7 @@ import { Img, Text } from "components";
 import { Link } from "react-router-dom";
 import { useAuth } from "contexts/AuthContext";
 import { Avatar } from "primereact/avatar";
+import { Icon } from '@iconify/react';
 
 const Sidebar2 = (props) => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Sidebar2 = (props) => {
   const sideBarMenu = [
     {
       icon: (
-        <Img className="h-5 w-5" src={window.location.pathname === "/dashboard/finishes" ? "/images/img_television.svg" : "/images/img_thumbsup.svg"} alt="thumbsup" />
+        <Icon icon="fluent-mdl2:product-catalog" height={20} width={20}/>
       ),
       label: "Finishes",
       to: "/dashboard/finishes",
@@ -29,11 +30,7 @@ const Sidebar2 = (props) => {
     },
     {
       icon: (
-        <Img
-          className="h-5 mt-[3px] w-5"
-          src={window.location.pathname === "/dashboard/contracts" ? "/images/img_claritycontractline_light_blue_500.svg" : "/images/img_claritycontractline.svg"}
-          alt="claritycontract"
-        />
+        <Icon icon="clarity:contract-line" height={20} width={20} />
       ),
       label: "Contracts",
       to: "/dashboard/contracts",
@@ -41,11 +38,7 @@ const Sidebar2 = (props) => {
     },
     {
       icon: (
-        <Img
-          className="h-5 w-5"
-          src={window.location.pathname === "/dashboard/trash" ? "/images/img_materialsymbol_light_blue_500.svg" : "/images/img_materialsymbol_white_a700.svg"}
-          alt="materialsymbol"
-        />
+        <Icon icon="material-symbols:delete-outline" height={20} width={20} />
       ),
       label: "Trash",
       to: "/dashboard/trash",
