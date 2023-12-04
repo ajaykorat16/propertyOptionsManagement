@@ -38,7 +38,7 @@ const ContractProvider = ({ children }) => {
 
     const addContract = async (contractData) => {
         try {
-            const { data } = await axios.post(`${baseURL}/contract/create`, contractData, { headers });
+            const { data } = await axios.post(`${baseURL}/api/contract/create`, contractData);
 
             if (data.error === false) {
                 console.log("Finishes added success")

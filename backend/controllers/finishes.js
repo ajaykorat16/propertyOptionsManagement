@@ -77,7 +77,7 @@ const createFinishes = asyncHandler(async (req, res) => {
 
 const getAllFinishes = asyncHandler(async (req, res) => {
     try {
-        const filter = req.body.filter;
+        const filter = req.query.filter;
         
         let query = {}
         if (filter) {

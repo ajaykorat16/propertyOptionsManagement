@@ -3,11 +3,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { auth } = require("../middleware/auth")
 
-const { createFinishes, updateFinishes, getAllFinishes, getSingleFinishes, delelteFinishes } = require("../controllers/finishes")
-
-router.get("/list", auth, getAllFinishes)
-
-router.post("/search-finishes", auth, getAllFinishes)
+const { createFinishes, updateFinishes, getSingleFinishes, delelteFinishes } = require("../controllers/finishes")
 
 router.post("/create",
     check('name', 'Finishes name is required.').notEmpty(),

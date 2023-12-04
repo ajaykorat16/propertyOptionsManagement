@@ -4,7 +4,7 @@ const auth = function (req, res, next) {
 
     const token = req.headers.authorization
     if (!token) {
-        return res.status(401).json({ msg: 'No token, authorization denied' });
+        return res.status(401).json({ error: true, message: 'No token, authorization denied' });
     }
 
     // Verify token
@@ -12,7 +12,7 @@ const auth = function (req, res, next) {
         jwt.verify(token, process.env.JWT_SECRET_KEY, (error, decoded) => {
             if (error) {
                 console.log(error)
-                return res.status(401).json({ msg: 'Token is not valid' });
+                return res.status(401).json({ error: true, message: 'Token is not valid' });
             } else {
                 req.user = decoded.user;
                 next();

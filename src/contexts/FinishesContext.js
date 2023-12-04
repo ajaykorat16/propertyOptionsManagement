@@ -16,9 +16,9 @@ const FinishesProvider = ({ children }) => {
         try {
             let res;
             if (query) {
-                res = await axios.post(`${baseURL}/finishes/search-finishes`, { filter: query }, { headers });
+                res = await axios.get(`${baseURL}/api/finishes/list?filter=${query}`);
             } else {
-                res = await axios.get(`${baseURL}/finishes/list`, { headers });
+                res = await axios.get(`${baseURL}/api/finishes/list`);
             }
             if (res.data.error === false) {
                 return res.data
