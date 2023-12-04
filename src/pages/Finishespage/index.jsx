@@ -12,6 +12,7 @@ import CIcon from "@coreui/icons-react";
 import Sidebar2 from "components/Sidebar2";
 import CategoryList from "pages/CategoryList"
 import Loader from '../../components/Loader/Loader';
+import { Icon } from "@iconify/react";
 
 const FinishespagePage = () => {
 
@@ -32,6 +33,7 @@ const FinishespagePage = () => {
   const [editFinishes, setEditFinishes] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [finishesId, setFinishesId] = useState(null);
+  const [showSidebar, setShowSidebar] = useState(false)
 
   const fetchFinishes = async () => {
     setIsLoading(true);
@@ -174,9 +176,9 @@ const FinishespagePage = () => {
     setEditFinishes(false)
   }
 
-  const handleRemove = async () =>{
+  const handleRemove = async () => {
     setSelectedImage(null);
-    setFinishesValue({...finishesValue, photo: "" })
+    setFinishesValue({ ...finishesValue, photo: "" })
   }
 
   return (
@@ -263,16 +265,29 @@ const FinishespagePage = () => {
                 </CModalBody>
                 <CModalFooter className="mb-3">
                   {editFinishes && !confirmDelete && <Button className="deleteButton me-5" onClick={() => handleDeleteFinishes(finishesId)}>Delete</Button>}
-                  <Button className="modelButton" type="submit">Submit</Button>
+                  <Button className="modelButton" type="submit">Save</Button>
                 </CModalFooter>
               </CForm>
             </CModal>
           </div>
-          <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
-            <div className="md:px-5 relative w-[17%] md:w-full">
-              <Sidebar2 className="!w-[232px] md:!w-[80px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
+          <div className="topBarForMob">
+            <Text
+              className="text-4xl sm:text-[32px] md:text-[34px] text-black-A700 text-center"
+              size="txtOrbitronRegular36"
+            >
+              LOGO
+            </Text>
+            <div className="hamburgerMenu" onClick={() => {
+              setShowSidebar(prev => !prev);
+            }}>
+              {showSidebar ? <Icon icon="akar-icons:cross" height={30} width={30} /> : <Icon icon="cil:hamburger-menu" height={30} width={30} />}
             </div>
-            <div className="bg-white-A700 flex flex-col font-montserrat items-center justify-start p-10 md:px-5 w-[84%] md:w-full">
+          </div>
+          <div className="bg-white-A700 flex  font-orbitron sm:gap-5 md:gap-5  w-full">
+            <div className={`md:px-5 w-[17%] md:w-[30%] md:w-full mainSidebar ${showSidebar ? "showSidebar" : ""}`}>
+              <Sidebar2 className="!w-[232px] bg-gray-900_03 flex inset-[0] justify-center overflow-auto" />
+            </div>
+            <div className="bg-white-A700 flex flex-col mainFinisherWrapper font-montserrat items-center justify-start p-10 md:px-5 w-[83%] ">
               <div className="flex flex-col justify-start mb-[159px] mt-[18px] w-full">
                 <Text
                   className="md:ml-[0] text-center md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
@@ -280,16 +295,16 @@ const FinishespagePage = () => {
                 >
                   Finishes
                 </Text>
-                <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mt-[76px] w-full">
-                  <div className="flex md:flex-1 sm:flex-col flex-row sm:gap-10 items-center justify-between w-[42%] md:w-full">
+                <div className="flex  md:gap-10 items-center justify-between mt-[76px] sm:flex-col">
+                  <div className="flex  items-center justify-between">
                     <Img
-                      className="h-6 w-6 cursor-pointer"
+                      className="h-6 w-6 cursor-pointer mr-2"
                       src="/images/img_gridiconsadd.svg"
                       alt="gridiconsadd"
                       onClick={() => { setShowCategory(true) }}
                     />
                     <Text
-                      className="text-base text-gray-900_03 mr-[1rem]"
+                      className="text-base text-gray-900_03 mr-4"
                       size="txtMontserratRomanSemiBold16Gray90003"
                     >
                       Category
@@ -299,36 +314,38 @@ const FinishespagePage = () => {
                       placeholder="Select Category"
                       options={categoryOptions}
                       onChange={(e) => setFilter(e.target.value)}
-                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[81%] sm:w-full" />
+                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left" />
                   </div>
                   <Button className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center" onClick={handleModal}>
                     Add new
                   </Button>
                 </div>
-                <div className="container flex flex-col items-center justify-start ml-10 md:ml-[0] mt-14 w-[86%] md:w-full ">
-                  <div className="inner-container flex flex-col gap-4 items-center w-full " orientation="vertical">
+                <div className=" flex flex-col items-center justify-start">
+                  <div className="inner-container flex flex-col gap-4 items-center " orientation="vertical">
                     <div className="items-container">
                       {finishes.length !== 0 ? (
                         finishes.map((f) => (
                           <div
                             key={f._id}
-                            className="item relative flex flex-col gap-2 items-center justify-start w-full sm:w-1/2 md:w-1/3 mb-[auto]"
+                            className="item singleFinisherItem flex flex-col items-center justify-start"
                             onMouseEnter={() => setHoveredItemId(f._id)}
                             onMouseLeave={() => setHoveredItemId(null)}
                           >
-                            <Img
-                              className="finishesImg"
-                              src={f.photo === null ? `/images/noImageAvailable.jpg` : f.photo}
-                              alt={f.name}
-                            />
-                            {hoveredItemId === f._id && (
-                              <div className="edit-icon-container">
-                                <div className="edit-icon-shadow">
-                                  <CIcon icon={cilPencil} className="edit-icon" onClick={() => handleEditFinishes(f._id)} />
+                            <div className="imageContainerForIcon relative">
+                              <Img
+                                className="finishesImg"
+                                src={f.photo === null ? `/images/noImageAvailable.jpg` : f.photo}
+                                alt={f.name}
+                              />
+                              {hoveredItemId === f._id && (
+                                <div className="edit-icon-container">
+                                  <div className="edit-icon-shadow">
+                                    <CIcon icon={cilPencil} className="edit-icon" onClick={() => handleEditFinishes(f._id)} />
+                                  </div>
                                 </div>
-                              </div>
-                            )}
-                            <Text className="text-center w-full break-all" size="txtMontserratRomanRegular14">
+                              )}
+                            </div>
+                            <Text className="text-center finisher_text" size="txtMontserratRomanRegular14">
                               {f?.name}
                             </Text>
                           </div>

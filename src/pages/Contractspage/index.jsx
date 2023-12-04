@@ -7,6 +7,7 @@ import { useAuth } from "contexts/AuthContext";
 import Sidebar2 from "components/Sidebar2";
 import Loader from "components/Loader/Loader";
 import { Dropdown } from "primereact/dropdown";
+import { Icon } from "@iconify/react";
 
 const sortOptionList = [
   { label: "Date", value: "createdAt" },
@@ -27,6 +28,7 @@ const ContractspagePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState('all')
   const [sortBy, setSortBy] = useState('createdAt')
+  const [showSidebar, setShowSidebar] = useState(false)
   const navigate = useNavigate();
 
   const fetchContarcts = async () => {
@@ -47,62 +49,75 @@ const ContractspagePage = () => {
       ) : (
         <>
           <Toast ref={toast} />
-          <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
-            <div className="h-[100vh] md:px-5 relative w-[17%] md:w-full">
-              <Sidebar2 className="w-[232px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
+          <div className="topBarForMob">
+            <Text
+              className="text-4xl sm:text-[32px] md:text-[34px] text-black-A700 text-center"
+              size="txtOrbitronRegular36"
+            >
+              LOGO
+            </Text>
+            <div className="hamburgerMenu" onClick={() => {
+              setShowSidebar(prev => !prev);
+            }}>
+              {showSidebar ? <Icon icon="akar-icons:cross" height={30} width={30} /> : <Icon icon="cil:hamburger-menu" height={30} width={30} />}
             </div>
-            <div className="bg-white-A700 flex flex-col font-montserrat items-center justify-start p-10 md:px-5 w-[84%] md:w-full">
+          </div>
+          <div className="bg-white-A700 flex  font-orbitron sm:gap-5 md:gap-5  w-full">
+            <div className={`md:px-5 w-[17%] md:w-[30%] md:w-full mainSidebar ${showSidebar ? "showSidebar" : ""}`}>
+              <Sidebar2 className="!w-[232px] bg-gray-900_03 flex inset-[0] justify-center overflow-auto" />
+            </div>
+            <div className="bg-white-A700 flex flex-col mainFinisherWrapper font-montserrat items-center justify-start p-10 md:px-5 w-[83%] ">
               <Text
-                className="mt-[19px] md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
+                className="md:ml-[0] mt-[60px] text-center md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
                 size="txtMontserratRomanSemiBold32"
               >
                 Contracts
               </Text>
-              <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mt-[73px] w-full">
-                <div className="flex md:flex-1 flex-row gap-4 items-center justify-between md:mt-0 mt-0.5 w-[35%] md:w-full">
+              <div className="flex flex-row items-center justify-between mt-[76px] w-full sm:flex-col">
+                <div className="flex items-center justify-between">
                   <Text
-                    className="text-base text-gray-900_03"
+                    className="text-base text-gray-900_03 mr-[16px]"
                     size="txtMontserratRomanSemiBold16Gray90003"
                   >
                     Filter
                   </Text>
-                  <Dropdown value={filter} options={filterOptionList} onChange={(e) => setFilter(e.target.value)} 
-                    className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[81%] sm:w-full"/>
+                  <Dropdown value={filter} options={filterOptionList} onChange={(e) => setFilter(e.target.value)}
+                    className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[307px] h-[40px]" />
                 </div>
-                <div className="flex md:flex-1 flex-row gap-2 items-center justify-between mb-0.5 w-[41%]">
+                <div className="flex items-center justify-between">
                   <Text
-                    className="text-base text-gray-900_03 w-[15%]"
+                    className="text-base text-gray-900_03 w-[59px] mr-[8px]"
                     size="txtMontserratRomanSemiBold16Gray90003"
                   >
                     Sort by
                   </Text>
-                   <Dropdown value={sortBy} options={sortOptionList} onChange={(e) => setSortBy(e.target.value)} 
-                    className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[81%] sm:w-full"/>
+                  <Dropdown value={sortBy} options={sortOptionList} onChange={(e) => setSortBy(e.target.value)}
+                    className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[307px] h-[40px]" />
                 </div>
               </div>
-              <div className="flex flex-col items-center justify-start mb-[329px] mt-12 w-[98%] md:w-full">
-                <div className="grid sm:grid-cols-1 md:grid-cols-2 grid-cols-6 justify-center min-h-[auto] w-full gap-4 md:gap-5">
+              <div className="flex flex-col items-center justify-start mb-[329px] mt-[48px] w-[98%] md:w-full">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 grid-cols-6 justify-center w-full gap-x-4 gap-y-6 md:gap-5">
                   {contarcts.length !== 0 ? (
                     contarcts.map((c) => (
                       <div key={c.id} className="flex flex-1 flex-col items-center justify-start w-full md:w-1/2"
                         style={c.isRead === 1 ? ({ opacity: 0.7 }) : null}
                         onClick={() => navigate(`/dashboard/contractfullview/${c._id}`)}
                       >
-                        <div className="flex flex-row items-end justify-evenly w-full cursor-pointer">
+                        <div className="flex flex-row justify-evenly cursor-pointer">
                           <Img
                             className="h-14 w-14"
                             src="/images/img_lafilecontract.svg"
                             alt="lafilecontract"
                           />
-                          <div className="flex flex-col gap-1.5 items-start justify-start mt-[7px]">
+                          <div className="contarct-text flex flex-col items-start justify-start">
                             <Text
-                              className="text-base text-center text-gray-900_03"
+                              className="contract-text-id gap-y-4 text-gray-900_03 w-[87px]"
                               size="txtMontserratRomanRegular16Gray90003"
                             >
                               {`ID ${c.id}`}
                             </Text>
                             <Text
-                              className="text-base text-gray-900_01"
+                              className="contract-text-date text-gray-900_01 w-[87px]"
                               size="txtMontserratRomanRegular16"
                             >
                               {c.createdAt}

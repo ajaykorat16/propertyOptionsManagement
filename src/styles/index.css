@@ -247,10 +247,43 @@ ul li a {
 .items-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px !important;
-  margin-left: 9rem;
+  gap: 16px;
   align-items: center;
   width: 100%;
+  margin-top: 56px;
+}
+
+.items-container .singleFinisherItem {
+  flex: 0 0 150px;
+  min-width: 150px;
+}
+
+.items-container .finisher_text {
+  color: #05202B;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  max-width: 143px;
+  min-width: 143px;
+}
+
+.contarct-text .contract-text-date {
+  color: #00282D;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.contarct-text .contract-text-id {
+  color: #05202B;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
 }
 
 .item {
@@ -329,8 +362,9 @@ ul li a {
 }
 
 .finishesImg {
-  width: 14rem;
-  height: 10rem;
+  width: 89px;
+  height: 89px;
+  margin-bottom: 8px;
 }
 
 .edit-icon-container {
@@ -429,10 +463,109 @@ ul li a {
 }
 
 .link {
-  color: blue; 
-  text-decoration: none; 
+  color: blue;
+  text-decoration: none;
 }
 
 .link:hover {
-  color: rgb(69, 75, 167); 
+  color: rgb(69, 75, 167);
+}
+
+.topBarForMob {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .mainSidebar {
+    display: none;
+  }
+
+  .mainSidebar.showSidebar {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  .topBarForMob {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .mainFinisherWrapper {
+    width: 100% !important;
+  }
+}
+
+.user-name {
+  font-family: 'Montserrat' !important;
+  font-weight: 600 !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .main-container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .img-layout {
+    border-radius: 0px !important;
+    height: 450px !important;
+    width: inherit !important;
+  }
+
+  .img-layout-container {
+    border-radius: 0px !important;
+    height: 450px !important;
+  }
+
+  .logo-container {
+    border-radius: 0px !important;
+  }
+
+  .logo-container p {
+    margin-bottom: 30vh !important;
+    margin-left: 2vh !important;
+  }
+
+  .back-button {
+    top: 25px !important;
+    left: 80% !important;
+  }
+
+  .back-icon {
+    height: 4vh !important;
+    width: 4vh !important;
+    color: white;
+  }
+
+  .back-button-text {
+    font-size: 4vh !important;
+    color: white !important;
+  }
+
+  .form-container {
+    width: 100% !important;
+    padding: 5%;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+}
+
+
+@media only screen and (max-width: 1042px) {
+  .back-button {
+    left: 48%;
+  }
+}
+
+.back-button {
+  position: absolute;
+  top: 6%;
+  left: 100%;
 }
