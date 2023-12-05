@@ -10,7 +10,25 @@ const SigninPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const navigate = useNavigate()
+
+  const handleEmailFocus = () => {
+    setIsEmailFocused(true);
+  }
+
+  const handleEmailBlur = () => {
+    setIsEmailFocused(false);
+  }
+
+  const handlePasswordFocus = () => {
+    setIsPasswordFocused(true);
+  }
+
+  const handlePasswordBlur = () => {
+    setIsPasswordFocused(false);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -40,7 +58,7 @@ const SigninPage = () => {
           <div className="absolute top-0 bg-blue_gray-900_90 flex flex-col inset-[0] items-start justify-center m-auto p-[27px] sm:px-5 rounded-br-[100px] rounded-tr-[100px] w-full logo-container">
           </div>
           <Img
-            className="absolute h-[38px] w-[216px] top-[32px] left-[32px] logo"
+            className="absolute h-[38px] w-[216px] top-[32px] left-[32px] logo cursor-pointer"
             src="/images/logo.png"
             alt="logo"
           />
@@ -60,7 +78,7 @@ const SigninPage = () => {
           </Text>
           <form onSubmit={handleSubmit} className="form-container">
             <div className="flex flex-col items-center justify-start mt-[31px] w-full">
-              <div className="flex flex-col gap-1.5 items-start justify-start w-full">
+              <div className={`flex flex-col gap-1.5 items-start justify-start w-full`}>
                 <Text
                   className="text-base text-gray-900_02"
                   size="txtMontserratRomanSemiBold16"
@@ -70,13 +88,15 @@ const SigninPage = () => {
                 <Input
                   placeholder="Enter your email address"
                   className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
-                  wrapClassName="border border-gray-500 border-solid w-full"
+                  wrapClassName={`border border-gray-500 border-solid w-full ${isEmailFocused ? 'focused' : ''}`}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e)}
+                  onFocus={handleEmailFocus}
+                  onBlur={handleEmailBlur}
                 />
               </div>
-              <div className="flex flex-col gap-[5px] items-start justify-start mt-6 w-full">
+              <div className={`flex flex-col gap-[5px] items-start justify-start mt-6 w-full`}>
                 <Text
                   className="text-base text-gray-900_02"
                   size="txtMontserratRomanSemiBold16"
@@ -86,10 +106,12 @@ const SigninPage = () => {
                 <Input
                   placeholder="Password"
                   className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
-                  wrapClassName="border border-gray-500 border-solid w-full"
+                  wrapClassName={`border border-gray-500 border-solid w-full ${isPasswordFocused ? 'focused' : ''}`}
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e)}
+                  onFocus={handlePasswordFocus}
+                  onBlur={handlePasswordBlur}
                 />
               </div>
               <div className="flex flex-col gap-[29px] items-end justify-start mt-[9px] w-full">
