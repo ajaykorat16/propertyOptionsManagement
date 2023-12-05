@@ -86,7 +86,7 @@ const getAllFinishes = asyncHandler(async (req, res) => {
             }
         }
 
-        const getAllFinishes = await Finishes.find(query).lean();
+        const getAllFinishes = await Finishes.find(query).populate('category').lean();
 
         return res.status(200).json({
             error: false,
