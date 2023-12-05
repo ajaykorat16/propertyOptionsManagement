@@ -59,6 +59,8 @@ const CategoryProvider = ({ children }) => {
             if (data.error === false) {
                 getCategories()
                 toast.current?.show({ severity: 'success', summary: 'Category', detail: data.message, life: 3000 })
+            } else {
+                toast.current?.show({ severity: 'error', summary: 'Category', detail: data.message, life: 3000 })
             }
         } catch (error) {
             console.log(error);

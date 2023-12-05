@@ -1,7 +1,8 @@
 const Category = require('../models/category')
 const asyncHandler = require('express-async-handler')
 const { validationResult } = require('express-validator');
-const { capitalizeFLetter } = require("../helper/helper")
+const { capitalizeFLetter } = require("../helper/helper");
+const Finishes = require('../models/finishes');
 
 const createCategory = asyncHandler(async (req, res) => {
     const errors = validationResult(req);
@@ -69,6 +70,13 @@ const deleteCategory = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params
 
+        const finishes = await Finishes.find({ category: id })
+        if (finishes.length !== 0) {
+            return res.status(200).json({
+                error: true,
+                message: "You can't delete this category as it associates with existing finishes."
+            })
+        }
         const existingCategory = await Category.findById({ _id: id })
         if (!existingCategory) {
             return res.status(200).json({
