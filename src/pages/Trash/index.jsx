@@ -138,7 +138,7 @@ const TrashPage = () => {
                 >
                   File deletes permanently after 7 days{" "}
                 </Text>
-                <div className="flex md:flex-row flex-row gap-2 items-center justify-end md:m-[0] ml-[997px] mr-[86px] mt-6 w-[8%] md:w-full cursor-pointer">
+                <div className="flex md:flex-row flex-row gap-2 items-center justify-end md:m-[0] ml-[997px] mr-[54px] mt-6 md:w-full cursor-pointer">
                   <Text
                     className="text-base text-gray-900_03"
                     size="txtMontserratRomanSemiBold16Gray90003"

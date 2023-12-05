@@ -93,7 +93,7 @@ const Sidebar2 = (props) => {
               src="/images/g382.png"
               alt="clippathgroup"
             />
-            <div className="fixed bottom-5 left-5 flex flex-row gap-3 items-center w-4/5">
+            <div className="fixed bottom-5 left-5 flex flex-row gap-3 items-center ">
               <Avatar icon="pi pi-user" size="large" shape="circle" className="h-8 w-8 rounded-full" />
               <span className="text-base text-white-A700 text-[15px] user-name">{auth.user?.fullName}</span>
               <div className="flex flex-row items-center cursor-pointer" onClick={handleLogout}>
