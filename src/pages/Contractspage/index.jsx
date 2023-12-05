@@ -52,6 +52,7 @@ const ContractspagePage = () => {
           <div className="topBarForMob">
             <Img
               onClick={() => navigate('/dashboard/finishes')}
+              className="cursor-pointer"
               id="logo"
               src="/images/logo_2.png"
               alt="logo"

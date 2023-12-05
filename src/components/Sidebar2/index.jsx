@@ -54,7 +54,7 @@ const Sidebar2 = (props) => {
       >
         <Img
           onClick={() => navigate('/dashboard/finishes')}
-          className="h-[24px] w-[135px] mt-[24px] ml-[24px]"
+          className="cursor-pointer h-[24px] w-[135px] mt-[24px] ml-[24px]"
           src="/images/logo.png"
           alt="logo"
         />
