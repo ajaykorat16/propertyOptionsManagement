@@ -273,16 +273,15 @@ const FinishespagePage = () => {
             </CModal>
           </div>
           <div className="topBarForMob">
-            <Text
-              className="text-4xl sm:text-[32px] md:text-[34px] text-black-A700 text-center"
-              size="txtOrbitronRegular36"
-            >
-              LOGO
-            </Text>
+            <Img
+              id="logo"
+              src="/images/logo_2.png"
+              alt="logo"
+            />
             <div className="hamburgerMenu" onClick={() => {
               setShowSidebar(prev => !prev);
             }}>
-              {showSidebar ? <Icon icon="akar-icons:cross" height={30} width={30} /> : <Icon icon="cil:hamburger-menu" height={30} width={30} />}
+              {showSidebar ? <Icon icon="akar-icons:cross" height={20} width={20} /> : <Icon icon="cil:hamburger-menu" height={20} width={20} />}
             </div>
           </div>
           <div className="bg-white-A700 flex  font-orbitron sm:gap-5 md:gap-5  w-full">

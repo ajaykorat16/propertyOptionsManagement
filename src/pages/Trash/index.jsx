@@ -104,16 +104,15 @@ const TrashPage = () => {
           <Toast ref={toast} id="toast" />
           <ConfirmDialog />
           <div className="topBarForMob">
-            <Text
-              className="text-4xl sm:text-[32px] md:text-[34px] text-black-A700 text-center"
-              size="txtOrbitronRegular36"
-            >
-              LOGO
-            </Text>
+            <Img
+              id="logo"
+              src="/images/logo_2.png"
+              alt="logo"
+            />
             <div className="hamburgerMenu" onClick={() => {
               setShowSidebar(prev => !prev);
             }}>
-              {showSidebar ? <Icon icon="akar-icons:cross" height={30} width={30} /> : <Icon icon="cil:hamburger-menu" height={30} width={30} />}
+              {showSidebar ? <Icon icon="akar-icons:cross" height={20} width={20} /> : <Icon icon="cil:hamburger-menu" height={20} width={20} />}
             </div>
           </div>
           <div className="bg-white-A700 flex font-orbitron sm:gap-5 md:gap-5 w-full">
@@ -143,7 +142,7 @@ const TrashPage = () => {
                 <Checkbox className="border border-gray-500 border-solid h-6 rounded-sm w-6" onClick={handleSelectAll} checked={checked}></Checkbox>
               </div>
               <div className="flex flex-col items-center justify-start">
-                <div className="inner-container flex flex-col gap-4 items-center " orientation="vertical">
+                <div className="inner-container flex flex-col gap-4 items-center mb-[269px]" orientation="vertical">
                   <div className="items-container">
                     {trashList.length !== 0 ? (
                       trashList.map((t) => (
@@ -188,12 +187,10 @@ const TrashPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex sm:flex-col flex-row md:gap-10 items-center justify-between mt-[60px] w-full  ">
-                <div className="flex flex-col items-center justify-end p-[9px] rounded-lg">
+              <div className="flex sm:flex-col md:gap-5 justify-between w-full">
                   <Button className="bg-red-A400 cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center" onClick={handleDeleteContracts}>
                     Delete
                   </Button>
-                </div>
                 <Button className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center" onClick={handleRestoreContracts}>
                   Restore
                 </Button>

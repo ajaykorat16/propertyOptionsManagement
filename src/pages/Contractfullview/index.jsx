@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "components";
+import { Button, Img } from "components";
 import Sidebar2 from "components/Sidebar2";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useContract } from "contexts/ContractContext";
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Toast } from "primereact/toast";
 import { useAuth } from "contexts/AuthContext";
+import { Icon } from "@iconify/react";
 import Loader from "components/Loader/Loader";
 
 const ContractfullviewPage = () => {
   const { id } = useParams()
   const { toast } = useAuth()
+  const { getContractById, moveToTrash } = useContract()
 
   const [contract, setContarct] = useState()
   const [isLoading, setIsLoading] = useState(true);
-  const { getContractById, moveToTrash } = useContract()
+  const [showSidebar, setShowSidebar] = useState(false)
+
   pdfjs.GlobalWorkerOptions.workerSrc =
     `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const navigate = useNavigate();
@@ -53,11 +56,23 @@ const ContractfullviewPage = () => {
       ) : (
         <>
           <Toast ref={toast} id="toast" />
-          <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
-            <div className="h-[100vh] md:px-5 relative w-[17%] md:w-full">
-              <Sidebar2 className="w-[232px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
+          <div className="topBarForMob">
+            <Img
+              id="logo"
+              src="/images/logo_2.png"
+              alt="logo"
+            />
+            <div className="hamburgerMenu" onClick={() => {
+              setShowSidebar(prev => !prev);
+            }}>
+              {showSidebar ? <Icon icon="akar-icons:cross" height={20} width={20} /> : <Icon icon="cil:hamburger-menu" height={20} width={20} />}
             </div>
-            <div className="bg-white-A700 flex flex-col md:gap-10 gap-[71px] items-center justify-end p-10 md:px-5 w-[84%] md:w-full">
+          </div>
+          <div className="bg-white-A700 flex  font-orbitron sm:gap-5 md:gap-5  w-full">
+            <div className={`md:px-5 w-[17%] md:w-[30%] md:w-full mainSidebar ${showSidebar ? "showSidebar" : ""}`}>
+              <Sidebar2 className="!w-[232px] bg-gray-900_03 flex inset-[0] justify-center overflow-auto" />
+            </div>
+            <div className="bg-white-A700 flex flex-col font-montserrat mainFinisherWrapper items-center w-[83%] document-container ">
               <Document file={contract.pdf}>
                 <Page pageNumber={1} />
               </Document>
