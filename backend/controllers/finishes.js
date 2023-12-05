@@ -95,6 +95,7 @@ const getAllFinishes = asyncHandler(async (req, res) => {
                 return {
                     ...finish,
                     photo: !finish.photo ? null : `${DOMAIN}/images/${finish.photo}`,
+                    category: finish.category.name,
                 }
             }),
         });
