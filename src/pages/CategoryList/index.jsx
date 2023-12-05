@@ -111,6 +111,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
       <CModal
         alignment="center"
         visible={showCategory}
+        size = "sm"
         onClose={() => setShowCategory(false)}
         className="mainBody"
         backdrop="static"

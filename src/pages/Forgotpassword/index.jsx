@@ -41,7 +41,7 @@ const ForgotpasswordPage = () => {
           >
             LOGO
           </Text>
-          <div className="md:padding-10 flex flex-row back-button cursor-pointer" onClick={() => navigate('/')}>
+          <div className=" flex flex-row back-button cursor-pointer" onClick={() => navigate('/')}>
           <Icon icon="akar-icons:arrow-back" className="back-icon" style={{height:"4vh",width: "4vh"}} />
             <Text
               className="text-[2.8vh] text-gray-900 ml-[10%] back-button-text"
