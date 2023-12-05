@@ -7,6 +7,7 @@ import { useAuth } from "contexts/AuthContext";
 import { Toast } from "primereact/toast";
 import Sidebar2 from "components/Sidebar2";
 import Loader from "components/Loader/Loader";
+import { Icon } from "@iconify/react";
 
 const TrashPage = () => {
   const { getAllTrashContract, restoreContracts, deleteContracts } = useContract()
@@ -21,6 +22,7 @@ const TrashPage = () => {
     border: "2px solid transparent",
     backgroundColor: "transparent",
   });
+  const [showSidebar, setShowSidebar] = useState(false)
 
   const handleItemClick = (id) => {
     const isSelected = seleteDocuments.includes(id);
@@ -101,24 +103,37 @@ const TrashPage = () => {
         <>
           <Toast ref={toast} />
           <ConfirmDialog />
-          <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
-            <div className="h-[100vh] md:px-5 relative w-[17%] md:w-full">
-              <Sidebar2 className="w-[232px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />
+          <div className="topBarForMob">
+            <Text
+              className="text-4xl sm:text-[32px] md:text-[34px] text-black-A700 text-center"
+              size="txtOrbitronRegular36"
+            >
+              LOGO
+            </Text>
+            <div className="hamburgerMenu" onClick={() => {
+              setShowSidebar(prev => !prev);
+            }}>
+              {showSidebar ? <Icon icon="akar-icons:cross" height={30} width={30} /> : <Icon icon="cil:hamburger-menu" height={30} width={30} />}
             </div>
-            <div className="bg-white-A700 flex flex-col font-montserrat justify-end p-10 md:px-5 w-[84%] md:w-full">
+          </div>
+          <div className="bg-white-A700 flex font-orbitron sm:gap-5 md:gap-5 w-full">
+            <div className={`md:px-5 w-[17%] md:w-[30%] md:w-full mainSidebar ${showSidebar ? "showSidebar" : ""}`}>
+              <Sidebar2 className="!w-[232px] bg-gray-900_03 flex inset-[0] justify-center overflow-auto" />
+            </div>
+            <div className="bg-white-A700 flex flex-col mainFinisherWrapper font-montserrat items-center justify-start p-10 md:px-5 w-[83%]">
               <Text
-                className="md:ml-[0] mt-[19px] mx-[482px] md:text-3xl sm:text-[28px] text-[32px] text-gray-900 text-center"
+                className="md:ml-[0] text-center md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
                 size="txtMontserratRomanSemiBold32"
               >
                 Trash
               </Text>
               <Text
-                className="md:ml-[0] ml-[381px] mr-[378px] mt-[11px] text-base text-center text-gray-900_01"
+                className="md:m-[0] ml-[376px] mr-[375px] mt-[11px] text-base text-center text-gray-900_01"
                 size="txtMontserratRomanRegular16"
               >
                 File deletes permanently after 7 days{" "}
               </Text>
-              <div className="flex md:flex-col flex-row gap-2 items-center justify-end md:ml-[0] ml-[957px] mr-3.5 mt-6 w-[8%] md:w-full cursor-pointer">
+              <div className="flex md:flex-row flex-row gap-2 items-center justify-end md:m-[0] ml-[997px] mr-[86px] mt-6 w-[8%] md:w-full cursor-pointer">
                 <Text
                   className="text-base text-gray-900_03"
                   size="txtMontserratRomanSemiBold16Gray90003"
@@ -127,13 +142,13 @@ const TrashPage = () => {
                 </Text>
                 <Checkbox className="border border-gray-500 border-solid h-6 rounded-sm w-6" onClick={handleSelectAll} checked={checked}></Checkbox>
               </div>
-              <div className="flex flex-col items-center justify-start mt-6 mx-auto w-[98%] md:w-full">
-                <div className="flex flex-col items-center justify-start mb-[329px] mt-12 w-[98%] md:w-full">
-                  <div className="grid sm:grid-cols-1 md:grid-cols-2 grid-cols-6 justify-center min-h-[auto] w-full gap-4 md:gap-5">
+              <div className="flex flex-col items-center justify-start">
+                <div className="inner-container flex flex-col gap-4 items-center " orientation="vertical">
+                  <div className="items-container">
                     {trashList.length !== 0 ? (
                       trashList.map((t) => (
                         <div key={t._id}
-                          className="flex flex-1 flex-col items-center justify-start w-full md:w-1/2"
+                          className="item singleFinisherItem flex flex-col items-center justify-start"
                           onClick={() => handleItemClick(t._id)}
                           style={{
                             ...selectedItemStyle,
@@ -144,21 +159,21 @@ const TrashPage = () => {
                               ? "#E0E0E0"
                               : "transparent",
                           }}>
-                          <div className="flex flex-row items-end justify-evenly w-full cursor-pointer">
+                          <div className="flex flex-row justify-evenly cursor-pointer">
                             <Img
                               className="h-14 w-14"
                               src="/images/img_lafilecontract.svg"
                               alt="lafilecontract"
                             />
-                            <div className="flex flex-col gap-1.5 items-start justify-start mt-[7px]">
+                            <div className="contarct-text flex flex-col items-start justify-start">
                               <Text
-                                className="text-base text-center text-gray-900_03"
+                                className="contract-text-id gap-y-4 text-gray-900_03 w-[87px]"
                                 size="txtMontserratRomanRegular16Gray90003"
                               >
                                 {`ID ${t.id}`}
                               </Text>
                               <Text
-                                className="text-base text-gray-900_01"
+                                className="contract-text-date text-gray-900_01 w-[87px]"
                                 size="txtMontserratRomanRegular16"
                               >
                                 {t.createdAt}
