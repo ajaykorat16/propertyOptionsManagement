@@ -39,7 +39,7 @@ const ResetPasswordPage = () => {
 
   return (
     <>
-      <Toast ref={toast} />
+      <Toast ref={toast} id="toast" />
       <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-10 md:gap-10 gap-[71px] items-center mx-auto md:pr-2 sm:pr-5 pr-[71px] w-full main-container">
         <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full img-layout-container">
           <Img

@@ -189,7 +189,7 @@ const FinishespagePage = () => {
         <Loader />
       ) : (
         <>
-          <Toast ref={toast} />
+          <Toast ref={toast} id="toast" />
           {editFinishes && confirmDelete && !showCategory && <ConfirmDialog />}
           <CategoryList showCategory={showCategory} setShowCategory={setShowCategory} />
           <div>

@@ -101,7 +101,7 @@ const TrashPage = () => {
         <Loader />
       ) : (
         <>
-          <Toast ref={toast} />
+          <Toast ref={toast} id="toast" />
           <ConfirmDialog />
           <div className="topBarForMob">
             <Text

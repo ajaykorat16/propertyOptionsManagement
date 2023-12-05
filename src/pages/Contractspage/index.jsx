@@ -48,7 +48,7 @@ const ContractspagePage = () => {
         <Loader />
       ) : (
         <>
-          <Toast ref={toast} />
+          <Toast ref={toast} id="toast" />
           <div className="topBarForMob">
             <Text
               className="text-4xl sm:text-[32px] md:text-[34px] text-black-A700 text-center"

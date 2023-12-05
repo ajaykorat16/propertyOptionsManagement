@@ -52,7 +52,7 @@ const ContractfullviewPage = () => {
         <Loader />
       ) : (
         <>
-          <Toast ref={toast} />
+          <Toast ref={toast} id="toast" />
           <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-5 md:gap-5 items-center mx-auto w-full">
             <div className="h-[100vh] md:px-5 relative w-[17%] md:w-full">
               <Sidebar2 className="w-[232px] bg-gray-900_03 flex md:hidden inset-[0] justify-center overflow-auto" />

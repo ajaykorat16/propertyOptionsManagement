@@ -48,6 +48,8 @@ const AuthProvider = ({ children }) => {
                     token: data.token
                 })
                 localStorage.setItem('auth', JSON.stringify(data))
+            } else {
+                toast.current?.show({ severity: 'error', summary: 'Login', detail: data.message, life: 3000 })
             }
         } catch (error) {
             if (error.response) {

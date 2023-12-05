@@ -106,7 +106,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
 
   return (
     <>
-      <Toast ref={toast} />
+      <Toast ref={toast} id="toast" />
       <ConfirmDialog />
       <CModal
         alignment="center"

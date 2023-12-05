@@ -256,6 +256,7 @@ ul li a {
   align-items: center;
   width: 100%;
   margin-top: 56px;
+  justify-content: center;
 }
 
 .items-container .singleFinisherItem {
@@ -481,6 +482,20 @@ ul li a {
 }
 
 @media only screen and (max-width: 600px) {
+  #toast {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    width: 19rem;
+    height: 2rem;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+  .p-toast .p-toast-message .p-toast-message-content {
+    padding: 8px;
+  }
+
   .mainSidebar {
     display: none;
   }
