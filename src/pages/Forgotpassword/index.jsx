@@ -27,7 +27,7 @@ const ForgotpasswordPage = () => {
     <>
       <Toast ref={toast} />
       <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-10 md:gap-10 gap-16 items-center mx-auto md:pr-2 pr-16 w-full main-container">
-      <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full img-layout-container">
+        <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full img-layout-container">
           <Img
             className="h-[100vh] m-auto rounded-br-[100px] rounded-tr-[100px] w-full img-layout"
             src="images/img_unsplashjvq0q5ikemm.png"
@@ -35,26 +35,24 @@ const ForgotpasswordPage = () => {
           />
           <div className="absolute top-0 bg-blue_gray-900_90 flex flex-col inset-[0] items-start justify-center m-auto p-[27px] sm:px-5 rounded-br-[100px] rounded-tr-[100px] w-full logo-container">
           </div>
-          <Text
-            className="absolute top-[24px] left-[24px] text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
-            size="txtOrbitronRegular36"
-          >
-            LOGO
-          </Text>
+          <Img
+            className="absolute h-[38px] w-[216px] top-[32px] left-[32px] logo"
+            src="/images/logo.png"
+            alt="logo"
+          />
           <div className=" flex flex-row back-button cursor-pointer" onClick={() => navigate('/')}>
-          <Icon icon="akar-icons:arrow-back" className="back-icon" style={{height:"4vh",width: "4vh"}} />
+            <Icon icon="akar-icons:arrow-back" className="back-icon w-[20px] h-[20px]" />
             <Text
-              className="text-[2.8vh] text-gray-900 ml-[10%] back-button-text"
+              className="text-base text-gray-900 ml-[11px] back-button-text"
               size="txtMontserratRomanSemiBold32"
             >
               Back
             </Text>
           </div>
         </div>
-        <div className="flex flex-col font-montserrat items-center justify-start w-[27%] md:w-full cursor-pointer">
-          
+        <div className="flex flex-col font-montserrat items-center justify-start w-[27%] md:w-full cursor-pointer forgot-password-body">
           <Text
-            className="md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
+            className="md:text-3xl sm:text-[28px] text-[32px] text-gray-900 title"
             size="txtMontserratRomanSemiBold32"
           >
             Forgot Password?

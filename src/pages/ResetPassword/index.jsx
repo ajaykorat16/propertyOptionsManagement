@@ -49,12 +49,11 @@ const ResetPasswordPage = () => {
           />
           <div className="absolute top-0 bg-blue_gray-900_90 flex flex-col inset-[0] items-start justify-center m-auto p-[27px] sm:px-5 rounded-br-[100px] rounded-tr-[100px] w-full logo-container">
           </div>
-          <Text
-            className="absolute top-[24px] left-[24px] text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
-            size="txtOrbitronRegular36"
-          >
-            LOGO
-          </Text>
+          <Img
+            className="absolute h-[38px] w-[216px] top-[32px] left-[32px] logo"
+            src="/images/logo.png"
+            alt="logo"
+          />
         </div>
         <div className="flex flex-col font-montserrat items-center justify-start w-[26%] md:w-full">
           <Text
