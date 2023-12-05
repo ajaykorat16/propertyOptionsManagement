@@ -488,6 +488,15 @@ ul li a {
   min-height: 0 !important;
 }
 
+.focused {
+  box-shadow: 0 0 5px rgba(0, 68, 255, 0.952);
+}
+
+.submit-button:hover {
+  background-color: #0581b3;
+  color: #fff;
+}
+
 @media only screen and (max-width: 600px) {
 
   #toast {
