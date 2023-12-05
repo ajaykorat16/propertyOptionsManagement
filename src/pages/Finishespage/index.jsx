@@ -298,7 +298,7 @@ const FinishespagePage = () => {
                   Finishes
                 </Text>
                 <div className="flex  md:gap-10 items-center justify-between mt-[76px] sm:flex-col">
-                  <div className="flex  items-center justify-between">
+                  <div className="flex  items-center">
                     <Img
                       className="h-6 w-6 cursor-pointer mr-2"
                       src="/images/img_gridiconsadd.svg"
@@ -316,7 +316,7 @@ const FinishespagePage = () => {
                       placeholder="Select Category"
                       options={categoryOptions}
                       onChange={(e) => setFilter(e.target.value)}
-                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left" />
+                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]" />
                   </div>
                   <Button className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center" onClick={handleModal}>
                     Add new
