@@ -135,6 +135,17 @@ ul li a {
   display: flex;
 }
 
+.category-container .category-name {
+  color: #00282D;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  max-width: 175px;
+  max-height:100px ;
+}
+
 @media only screen and (min-width: 200px) and (max-width: 550px) {
   .mobile-menu {
     display: block;
@@ -493,6 +504,7 @@ ul li a {
     width: 100% !important;
   }
 
+   /* Signin, Forgot Password and Reset Password style begin */
   .main-container {
     display: flex !important;
     flex-direction: column !important;
@@ -526,13 +538,13 @@ ul li a {
   }
 
   .back-icon {
-    height: 4vh !important;
+    height: 2.5vh !important;
     width: 4vh !important;
     color: white;
   }
 
   .back-button-text {
-    font-size: 3vh !important;
+    font-size: 2.3vh !important;
     color: white !important;
     margin-left: 4% !important;
   }
@@ -545,6 +557,7 @@ ul li a {
   .submit-button {
     width: 100%;
   }
+  /* Signin, Forgot Password and Reset Password style end */
 }
 
 @media only screen and (max-width: 1042px) {
