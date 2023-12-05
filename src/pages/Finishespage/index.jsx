@@ -159,8 +159,10 @@ const FinishespagePage = () => {
   }, [filter]);
 
   useEffect(() => {
-    getCategory()
-  }, []);
+    if (!showCategory) {
+      getCategory()
+    }
+  }, [showCategory]);
 
   const handleModal = async () => {
     setVisible(true)
@@ -196,7 +198,7 @@ const FinishespagePage = () => {
               visible={visible}
               onClose={handleClose}
               backdrop="static"
-            >``
+            >
               <div className="modelCloseButton">
                 <CIcon
                   icon={cilXCircle}

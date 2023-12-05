@@ -111,7 +111,6 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
       <CModal
         alignment="center"
         visible={showCategory}
-        size = "sm"
         onClose={() => setShowCategory(false)}
         className="mainBody"
         backdrop="static"
@@ -124,24 +123,23 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
           />
         </div>
         <CModalHeader closeButton={false}>
-          <CModalTitle className="text-center">
+          <CModalTitle className="text-center text-2xl">
             Category
           </CModalTitle>
         </CModalHeader>
         <CModalBody>
           {categories && categories.map((c) => {
             return (
-              <div className="d-flex justify-content-between mb-[20px]" key={c._id}>
+              <div className="category-container d-flex justify-content-between mb-[20px]" key={c._id}>
                 <div>
                   <Text
-                    size="xxl"
-                  >
+                    className="category-name break-all">
                     {c.name}
                   </Text>
                 </div>
                 <div className="d-flex cursor-pointer">
                   <CIcon icon={cilPencil}
-                    size="xl"
+                    className="h-[30px] w-[30px]"
                     style={{
                       color: 'black',
                       marginRight: "10px"
@@ -149,7 +147,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
                     onClick={() => handleEditCategory(c._id)}
                   />
                   <CIcon icon={cilTrash}
-                    size="xl"
+                    className="h-[30px] w-[30px]"
                     style={{
                       color: 'black',
                     }}

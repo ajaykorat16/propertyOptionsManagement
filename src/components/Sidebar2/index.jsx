@@ -22,7 +22,7 @@ const Sidebar2 = (props) => {
   const sideBarMenu = [
     {
       icon: (
-        <Icon icon="fluent-mdl2:product-catalog" height={20} width={20}/>
+        <Icon icon="fluent-mdl2:product-catalog" height={20} width={20} />
       ),
       label: "Finishes",
       to: "/dashboard/finishes",
@@ -52,12 +52,11 @@ const Sidebar2 = (props) => {
         className={props.className}
         style={{ position: "fixed", top: 0, left: 0, height: "100%" }}
       >
-        <Text
-          className="text-4xl sm:text-[32px] md:text-[34px] text-white-A700 mb-[2rem] text-center mt-10"
-          size="txtOrbitronRegular36"
-        >
-          LOGO
-        </Text>
+        <Img
+          className="h-[24px] w-[135px] mt-[24px] ml-[24px]"
+          src="/images/logo.png"
+          alt="logo"
+        />
         <Menu
           menuItemStyles={{
             button: {
