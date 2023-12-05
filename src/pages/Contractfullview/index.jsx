@@ -70,17 +70,17 @@ const ContractfullviewPage = () => {
               {showSidebar ? <Icon icon="akar-icons:cross" height={20} width={20} /> : <Icon icon="cil:hamburger-menu" height={20} width={20} />}
             </div>
           </div>
-          <div className="bg-white-A700 flex  font-orbitron sm:gap-5 md:gap-5  w-full">
-            <div className={`md:px-5 w-[17%] md:w-[30%] md:w-full mainSidebar ${showSidebar ? "showSidebar" : ""}`}>
+          <div className="bg-white-A700 flex font-orbitron md:gap-5 w-full">
+            <div className={`md:px-5 w-[12.1%] md:w-[30%] md:w-full mainSidebar ${showSidebar ? "showSidebar" : ""}`}>
               <Sidebar2 className="!w-[232px] bg-gray-900_03 flex inset-[0] justify-center overflow-auto" />
             </div>
-            <div className="bg-white-A700 flex flex-col font-montserrat mainFinisherWrapper items-center w-[83%] document-container ">
-              <div className="flex flex-col items-center justify-start mb-[71px]">
+            <div className="bg-white-A700 flex flex-col mainFinisherWrapper font-montserrat items-center justify-start md:px-5 w-[87.9%] h-[100vh]">
+              <div className="flex flex-col items-center justify-start mt-[103px] mb-[5.8%] border border-indigo-600">
                 <Document file={contract.pdf}>
                   <Page pageNumber={1} />
                 </Document>
               </div>
-              <div className="mr-[40px] flex sm:flex-col font-montserrat md:gap-5 items-center justify-between w-full">
+              <div className="flex sm:flex-col font-montserrat items-center justify-between w-full pl-[40px] pr-[40px] md:gap-5">
                 <Button
                   className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center"
                   onClick={() => moveContractToTrash(contract._id)}
