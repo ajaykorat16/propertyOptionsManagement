@@ -88,8 +88,8 @@ const Sidebar2 = (props) => {
         <div className="mt-[141px] overflow-x-auto w-full">
           <div className="h-[100%] w-full">
             <Img
-              className="h-[462px] ml-auto my-auto object-cover"
-              src="/images/img_clippathgroup.png"
+              className="fixed bottom-5 left-0 ml-auto my-auto object-cover fixed bottom-5 left-5 z-[-1]"
+              src="/images/g382.png"
               alt="clippathgroup"
             />
             <div className="fixed bottom-5 left-5 flex flex-row gap-3 items-center w-4/5">
