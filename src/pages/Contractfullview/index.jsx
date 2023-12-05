@@ -74,18 +74,18 @@ const ContractfullviewPage = () => {
               <Sidebar2 className="!w-[232px] bg-gray-900_03 flex inset-[0] justify-center overflow-auto" />
             </div>
             <div className="bg-white-A700 flex flex-col font-montserrat mainFinisherWrapper items-center w-[83%] document-container ">
-              <Document file={contract.pdf}>
-                <Page pageNumber={1} />
-              </Document>
-              <div className="flex sm:flex-col flex-row font-montserrat md:gap-10 items-center justify-between w-full">
-                <div className="bg-light_blue-500 flex flex-col items-center justify-end rounded-lg">
-                  <Button
-                    className="cursor-pointer font-semibold leading-[normal] text-base text-center"
-                    onClick={() => moveContractToTrash(contract._id)}
-                  >
-                    Move To Trash
-                  </Button>
-                </div>
+              <div className="flex flex-col items-center justify-start mb-[71px]">
+                <Document file={contract.pdf}>
+                  <Page pageNumber={1} />
+                </Document>
+              </div>
+              <div className="mr-[40px] flex sm:flex-col font-montserrat md:gap-5 items-center justify-between w-full">
+                <Button
+                  className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center"
+                  onClick={() => moveContractToTrash(contract._id)}
+                >
+                  Move To Trash
+                </Button>
                 <Button
                   className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center"
                   onClick={() => downloadPdf()}
