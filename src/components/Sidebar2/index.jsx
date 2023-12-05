@@ -53,6 +53,7 @@ const Sidebar2 = (props) => {
         style={{ position: "fixed", top: 0, left: 0, height: "100%" }}
       >
         <Img
+          onClick={() => navigate('/dashboard/finishes')}
           className="h-[24px] w-[135px] mt-[24px] ml-[24px]"
           src="/images/logo.png"
           alt="logo"
@@ -88,7 +89,7 @@ const Sidebar2 = (props) => {
         <div className="mt-[141px] overflow-x-auto w-full">
           <div className="h-[100%] w-full">
             <Img
-              className="fixed bottom-5 left-0 ml-auto my-auto object-cover fixed bottom-5 left-5 z-[-1]"
+              className="fixed bottom-5 left-0 ml-auto my-auto object-cover fixed bottom-5 z-[-1]"
               src="/images/g382.png"
               alt="clippathgroup"
             />

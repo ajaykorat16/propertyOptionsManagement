@@ -7,6 +7,8 @@ import { useAuth } from "contexts/AuthContext";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { cilImage, cilPencil, cilXCircle } from "@coreui/icons";
 import { Toast } from "primereact/toast";
+import { useNavigate } from "react-router-dom";
+
 import { Dropdown } from "primereact/dropdown";
 import CIcon from "@coreui/icons-react";
 import Sidebar2 from "components/Sidebar2";
@@ -34,6 +36,8 @@ const FinishespagePage = () => {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [finishesId, setFinishesId] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false)
+
+  const navigate = useNavigate()
 
   const fetchFinishes = async () => {
     setIsLoading(true);
@@ -274,6 +278,7 @@ const FinishespagePage = () => {
           </div>
           <div className="topBarForMob">
             <Img
+              onClick={() => navigate('/dashboard/finishes')}
               id="logo"
               src="/images/logo_2.png"
               alt="logo"

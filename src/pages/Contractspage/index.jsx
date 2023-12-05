@@ -51,6 +51,7 @@ const ContractspagePage = () => {
           <Toast ref={toast} id="toast" />
           <div className="topBarForMob">
             <Img
+              onClick={() => navigate('/dashboard/finishes')}
               id="logo"
               src="/images/logo_2.png"
               alt="logo"

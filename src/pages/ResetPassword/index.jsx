@@ -50,6 +50,7 @@ const ResetPasswordPage = () => {
           <div className="absolute top-0 bg-blue_gray-900_90 flex flex-col inset-[0] items-start justify-center m-auto p-[27px] sm:px-5 rounded-br-[100px] rounded-tr-[100px] w-full logo-container">
           </div>
           <Img
+            onClick={() => navigate('/')}
             className="absolute h-[38px] w-[216px] top-[32px] left-[32px] logo"
             src="/images/logo.png"
             alt="logo"
