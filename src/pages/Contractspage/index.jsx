@@ -73,8 +73,8 @@ const ContractspagePage = () => {
               >
                 Contracts
               </Text>
-              <div className="flex flex-row items-center justify-between mt-[76px] w-full sm:flex-col">
-                <div className="flex items-center justify-between">
+              <div className="flex md:gap-5 items-center justify-between mt-[76px] w-full sm:flex-col">
+                <div className="flex items-center justify-between sm:flex-col items-baseline">
                   <Text
                     className="text-base text-gray-900_03 mr-[16px]"
                     size="txtMontserratRomanSemiBold16Gray90003"
@@ -84,7 +84,7 @@ const ContractspagePage = () => {
                   <Dropdown value={filter} options={filterOptionList} onChange={(e) => setFilter(e.target.value)}
                     className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left w-[307px] h-[40px]" />
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between sm:flex-col items-baseline">
                   <Text
                     className="text-base text-gray-900_03 w-[59px] mr-[8px]"
                     size="txtMontserratRomanSemiBold16Gray90003"
