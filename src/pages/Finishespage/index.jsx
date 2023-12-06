@@ -30,7 +30,6 @@ const FinishespagePage = () => {
   const [finishesValue, setFinishesValue] = useState({ category: "", name: "", photo: "" });
   const [selectedImage, setSelectedImage] = useState(null);
   const [showCategory, setShowCategory] = useState(false);
-  const [hoveredItemId, setHoveredItemId] = useState(null);
   const [createFinishes, setCreateFinishes] = useState(false);
   const [editFinishes, setEditFinishes] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -336,8 +335,7 @@ const FinishespagePage = () => {
                           <div
                             key={f._id}
                             className="item singleFinisherItem flex flex-col items-center justify-start"
-                            onMouseEnter={() => setHoveredItemId(f._id)}
-                            onMouseLeave={() => setHoveredItemId(null)}
+                           
                           >
                             <div className="imageContainerForIcon relative">
                               <Img
@@ -345,13 +343,11 @@ const FinishespagePage = () => {
                                 src={f.photo === null ? `/images/noImageAvailable.jpg` : f.photo}
                                 alt={f.name}
                               />
-                              {hoveredItemId === f._id && (
                                 <div className="edit-icon-container">
                                   <div className="edit-icon-shadow">
                                     <CIcon icon={cilPencil} className="edit-icon" onClick={() => handleEditFinishes(f._id)} />
                                   </div>
                                 </div>
-                              )}
                             </div>
                             <Text className="text-center finisher_text break-all" size="txtMontserratRomanRegular14">
                               {f?.name}

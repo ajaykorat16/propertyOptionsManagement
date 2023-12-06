@@ -259,6 +259,22 @@ ul li a {
 .items-container .singleFinisherItem {
   flex: 0 0 150px;
   min-width: 150px;
+  position: relative ;
+}
+
+.items-container .edit-icon-container {
+  position: absolute ;
+  top: 5px ;
+  right: 5px ;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.items-container .singleFinisherItem:hover .edit-icon-container {
+  opacity: 1;
+  visibility: visible ;
 }
 
 .items-container .finisher_text {
@@ -369,11 +385,11 @@ ul li a {
   margin-bottom: 8px;
 }
 
-.edit-icon-container {
+/* .edit-icon-container {
   position: absolute;
   top: 5px;
   right: 5px;
-}
+} */
 
 .edit-icon {
   color: white;
@@ -656,3 +672,5 @@ ul li a {
 .custom-input:focus {
   box-shadow: 0 0 5px rgba(0, 68, 255, 0.952) !important;
 }
+
+
