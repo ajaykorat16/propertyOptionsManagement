@@ -349,7 +349,7 @@ const FinishespagePage = () => {
                                   </div>
                                 </div>
                             </div>
-                            <Text className="text-center finisher_text break-all" size="txtMontserratRomanRegular14">
+                            <Text className="text-center finisher_text break-words" size="txtMontserratRomanRegular14">
                               {f?.name}
                             </Text>
                           </div>
