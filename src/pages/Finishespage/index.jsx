@@ -252,7 +252,7 @@ const FinishespagePage = () => {
                     />
                   </div>
                   <div className="d-flex align-items-center justify-content-center ">
-                    <div className="border mb-2 w-75">
+                    <div className="border mb-2">
                       <div className="d-flex justify-content-center">
                         {selectedImage ? (
                           <img
@@ -270,7 +270,7 @@ const FinishespagePage = () => {
                   </div>
                 </CModalBody>
                 <CModalFooter className="mb-3">
-                  {editFinishes && !confirmDelete && <Button className="deleteButton me-5" onClick={() => handleDeleteFinishes(finishesId)}>Delete</Button>}
+                  {editFinishes && !confirmDelete && <Button className="deleteButton" onClick={() => handleDeleteFinishes(finishesId)}>Delete</Button>}
                   <Button className="modelButton" type="submit">Save</Button>
                 </CModalFooter>
               </CForm>
@@ -287,7 +287,7 @@ const FinishespagePage = () => {
             <div className="hamburgerMenu" onClick={() => {
               setShowSidebar(prev => !prev);
             }}>
-              {showSidebar ? <Icon icon="akar-icons:cross" height={20} width={20} /> : <Icon icon="cil:hamburger-menu" height={20} width={20} />}
+              {showSidebar ? <Icon icon="akar-icons:cross" height={35} width={35} /> : <Icon icon="cil:hamburger-menu" height={35} width={35} />}
             </div>
           </div>
           <div className="bg-white-A700 flex  font-orbitron sm:gap-5 md:gap-5  w-full">
@@ -321,7 +321,8 @@ const FinishespagePage = () => {
                       placeholder="Select Category"
                       options={categoryOptions}
                       onChange={(e) => setFilter(e.target.value)}
-                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]" />
+                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
+                    />
                   </div>
                   <Button className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center" onClick={handleModal}>
                     Add new
@@ -352,7 +353,7 @@ const FinishespagePage = () => {
                                 </div>
                               )}
                             </div>
-                            <Text className="text-center finisher_text" size="txtMontserratRomanRegular14">
+                            <Text className="text-center finisher_text break-all" size="txtMontserratRomanRegular14">
                               {f?.name}
                             </Text>
                           </div>

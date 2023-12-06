@@ -162,18 +162,18 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
           {addNew || (editCategory && editingCategoryId) ? (
             <>
               <form onSubmit={handleSubmit}>
-                <div className="d-flex justify-content-between mb-[15px]">
+                <div className="flex  md:gap-5 items-center justify-between sm:flex-col">                
                   <div>
                     <Input
                       placeholder="Enter category"
-                      className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-left"
+                      className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-left sm:w-[272px]"
                       wrapClassName="border border-gray-500 border-solid w-full"
                       type="text"
                       value={newCategory}
-                      onChange={(e) => setNewCategory(e)} // Ensure to get the value correctly
+                      onChange={(e) => setNewCategory(e)}
                     />
                   </div>
-                  <div className="d-flex ml-[10px]">
+                  <div className="d-flex ml-[10px] sm:m-[0px]">
                     <Button className="min-w-[50px] text-center mr-[15px]" type="submit">
                       Save
                     </Button>
