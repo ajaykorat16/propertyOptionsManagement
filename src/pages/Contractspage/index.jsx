@@ -60,7 +60,7 @@ const ContractspagePage = () => {
             <div className="hamburgerMenu" onClick={() => {
               setShowSidebar(prev => !prev);
             }}>
-              {showSidebar ? <Icon icon="akar-icons:cross" height={20} width={20} /> : <Icon icon="cil:hamburger-menu" height={20} width={20} />}
+              {showSidebar ? <Icon icon="akar-icons:cross" height={35} width={35} /> : <Icon icon="cil:hamburger-menu" height={35} width={35} />}
             </div>
           </div>
           <div className="bg-white-A700 flex  font-orbitron sm:gap-5 md:gap-5  w-full">

@@ -41,7 +41,7 @@ const ForgotpasswordPage = () => {
             src="/images/logo.png"
             alt="logo"
           />
-          <div className="flex flex-row back-button cursor-pointer ml-[46px]" onClick={() => navigate('/')}>
+          <div className="absolute flex flex-row back-button cursor-pointer ml-[46px]" onClick={() => navigate('/')}>
             <Icon icon="akar-icons:arrow-back" className="back-icon w-[20px] h-[20px]" />
             <Text
               className="text-base text-gray-900 ml-[11px] back-button-text"
@@ -51,40 +51,38 @@ const ForgotpasswordPage = () => {
             </Text>
           </div>
         </div>
-        <div className="flex flex-col font-montserrat items-center justify-start w-[27%] md:w-full cursor-pointer forgot-password-body">
+        <div className="flex flex-col font-montserrat items-center justify-start w-[27%] md:w-full cursor-pointer forgot-password-body sm:w-[312px] sm:h-[205px]">
           <Text
             className="md:text-3xl sm:text-[28px] text-[32px] text-gray-900 title"
             size="txtMontserratRomanSemiBold32"
           >
-            Forgot Password?
+            Forgot Password
           </Text>
           <Text
-            className="leading-[24.00px] mt-[9px] text-base text-center text-gray-900_01 w-full"
+            className="leading-[24.00px] mt-[9px] text-base text-center text-gray-900_01 w-full sm:text-[14px]"
             size="txtMontserratRomanRegular16"
           >
             No worries a reset instructions will be sent to your email address
           </Text>
-          <form onSubmit={handleSubmit} className="form-container">
-            <div className="flex flex-col gap-8 items-center justify-start mt-[23px] w-[96%] md:w-full">
+          <form onSubmit={handleSubmit} className="forgot-password-form-container">
+            <div className="flex flex-col gap-8 items-center justify-start mt-[24px] w-full forgot-password-container">
               <div className="flex flex-col gap-1.5 items-start justify-start w-full">
                 <Text
-                  className="text-base text-gray-900_02"
+                  className="text-base text-gray-900_02 email sm:text-[14px]"
                   size="txtMontserratRomanSemiBold16"
                 >
                   Email
                 </Text>
-                <Input
-                  name="emailplaceholder"
-                  placeholder="Enter your email address"
-                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left min-w-[334px]"
-                  wrapClassName="border border-gray-500 border-solid w-full"
+                <input
                   type="email"
+                  placeholder="Enter your email address"
+                  className="custom-input w-full rounded border border-gray-500 min-w-[338px] sm:min-w-[0px]"
                   value={email}
-                  onChange={(e) => setEmail(e)}
-                ></Input>
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
-              <div className="flex flex-col items-center justify-start submit-button">
-                <Button className="cursor-pointer font-semibold leading-[normal] min-w-[338px] text-base text-center submit-button" type='submit'>
+              <div className="flex flex-col items-center justify-start  submit-button">
+                <Button className="cursor-pointer font-semibold leading-[normal]  min-w-[338px] text-base text-center sm:min-w-[0px] w-full submit-button reset-button" type='submit'>
                   Reset password
                 </Button>
               </div>
