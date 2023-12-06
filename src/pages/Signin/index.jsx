@@ -10,25 +10,7 @@ const SigninPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const navigate = useNavigate()
-
-  const handleEmailFocus = () => {
-    setIsEmailFocused(true);
-  }
-
-  const handleEmailBlur = () => {
-    setIsEmailFocused(false);
-  }
-
-  const handlePasswordFocus = () => {
-    setIsPasswordFocused(true);
-  }
-
-  const handlePasswordBlur = () => {
-    setIsPasswordFocused(false);
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -48,7 +30,7 @@ const SigninPage = () => {
   return (
     <>
       <Toast ref={toast} id="toast" />
-      <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-10 md:gap-10 gap-[71px] items-center mx-auto md:pr-2 sm:pr-5 pr-[71px] w-full main-container">
+      <div className="bg-white-A700 flex sm:flex-col md:flex-col flex-row font-orbitron sm:gap-[38px] md:gap-10 gap-[71px] items-center mx-auto md:pr-2 sm:pr-5 pr-[71px] w-full main-container">
         <div className="h-[100vh] relative rounded-br-[100px] rounded-tr-[100px] w-[69%] md:w-full img-layout-container">
           <Img
             className="h-[100vh] m-auto rounded-br-[100px] rounded-tr-[100px] w-full img-layout"
@@ -63,62 +45,58 @@ const SigninPage = () => {
             alt="logo"
           />
         </div>
-        <div className="flex flex-col font-montserrat items-center justify-start w-[26%] md:w-full">
-          <Text
-            className="md:text-3xl sm:text-[28px] text-[32px] text-gray-900"
-            size="txtMontserratRomanSemiBold32"
-          >
-            Welcome Back
-          </Text>
-          <Text
-            className="mt-2 text-base text-center text-gray-900_01"
-            size="txtMontserratRomanRegular16"
-          >
-            Access the Administraton page
-          </Text>
-          <form onSubmit={handleSubmit} className="form-container">
-            <div className="flex flex-col items-center justify-start mt-[31px] w-full">
+        <div className="flex flex-col font-montserrat items-center justify-start w-[26%] md:w-full ">
+          <div className="sm-w-[219px] sm-h-[56px] text-center">
+            <Text
+              className="md:text-3xl sm:text-[20px] text-[32px] text-gray-900 text-center"
+              size="txtMontserratRomanSemiBold32"
+            >
+              Welcome Back
+            </Text>
+            <Text
+              className="mt-0 sm:mt-0 text-base text-center text-gray-900_01 sm:text-[14px]"
+              size="txtMontserratRomanRegular16"
+            >
+              Access the Administraton page
+            </Text>
+          </div>
+          <form onSubmit={handleSubmit} className="form-container sm:pt-0 sm:w-[269px] sm:h-[71px]">
+            <div className="flex flex-col items-center justify-start mt-[31px] sm:mt-[8px] w-full ">
               <div className={`flex flex-col gap-1.5 items-start justify-start w-full`}>
                 <Text
-                  className="text-base text-gray-900_02"
+                  className="text-base text-gray-900_02 sm:text-[14px]"
                   size="txtMontserratRomanSemiBold16"
                 >
                   Email
                 </Text>
-                <Input
-                  placeholder="Enter your email address"
-                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
-                  wrapClassName={`border border-gray-500 border-solid w-full ${isEmailFocused ? 'focused' : ''}`}
+                <input
                   type="email"
+                  placeholder="Enter your email address"
+                  className="custom-input w-full rounded border border-gray-500"
                   value={email}
-                  onChange={(e) => setEmail(e)}
-                  onFocus={handleEmailFocus}
-                  onBlur={handleEmailBlur}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className={`flex flex-col gap-[5px] items-start justify-start mt-6 w-full`}>
+              <div className={`flex flex-col gap-[5px] items-start justify-start mt-6 sm:mt-[8px] w-full`}>
                 <Text
-                  className="text-base text-gray-900_02"
+                  className="text-base text-gray-900_02 sm:text-[14px]"
                   size="txtMontserratRomanSemiBold16"
                 >
                   Password
                 </Text>
-                <Input
-                  placeholder="Password"
-                  className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-base text-left w-full"
-                  wrapClassName={`border border-gray-500 border-solid w-full ${isPasswordFocused ? 'focused' : ''}`}
+                <input
                   type="password"
+                  placeholder="Password"
+                  className="custom-input w-full rounded border border-gray-500"
                   value={password}
-                  onChange={(e) => setPassword(e)}
-                  onFocus={handlePasswordFocus}
-                  onBlur={handlePasswordBlur}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col gap-[29px] items-end justify-start mt-[9px] w-full">
+              <div className="flex flex-col gap-[29px] sm:gap-[16px] items-end justify-start mt-[6px] w-full">
                 <Link to="/forgotpassword">
-                  <Text size="txtMontserratRomanBold14" className="link">Forgot password?</Text>
+                  <Text size="txtMontserratRomanBold14" className="link sm:text-[12px]">Forgot password?</Text>
                 </Link>
-                <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] text-base text-center submit-button" type='submit'>
+                <Button className="cursor-pointer font-semibold leading-[normal] min-w-[334px] sm:min-w-0 text-base text-center submit-button" type='submit'>
                   Access
                 </Button>
               </div>

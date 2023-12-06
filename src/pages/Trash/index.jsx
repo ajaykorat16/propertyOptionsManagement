@@ -117,7 +117,7 @@ const TrashPage = () => {
             <div className="hamburgerMenu" onClick={() => {
               setShowSidebar(prev => !prev);
             }}>
-              {showSidebar ? <Icon icon="akar-icons:cross" height={20} width={20} /> : <Icon icon="cil:hamburger-menu" height={20} width={20} />}
+              {showSidebar ? <Icon icon="akar-icons:cross" height={35} width={35} /> : <Icon icon="cil:hamburger-menu" height={35} width={35} />}
             </div>
           </div>
           <div className="bg-white-A700 flex font-orbitron sm:gap-5 md:gap-5 w-full">
@@ -131,12 +131,6 @@ const TrashPage = () => {
                   size="txtMontserratRomanSemiBold32"
                 >
                   Trash
-                </Text>
-                <Text
-                  className="md:m-[0] ml-[376px] mr-[375px] mt-[11px] text-base text-center text-gray-900_01"
-                  size="txtMontserratRomanRegular16"
-                >
-                  File deletes permanently after 7 days{" "}
                 </Text>
                 <div className="flex md:flex-row flex-row gap-2 items-center justify-end md:m-[0] ml-[997px] mr-[54px] mt-6 md:w-full cursor-pointer">
                   <Text
