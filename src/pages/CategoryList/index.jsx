@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Text } from "components";
-import { CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import { CFormInput, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 import { useCategory } from '../../contexts/CategoryContext'
 import CIcon from "@coreui/icons-react";
 import { cilPencil, cilTrash, cilXCircle } from '@coreui/icons';
@@ -164,13 +164,12 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
               <form onSubmit={handleSubmit}>
                 <div className="flex  md:gap-5 items-center justify-between sm:flex-col">                
                   <div>
-                    <Input
+                    <CFormInput
                       placeholder="Enter category"
-                      className="leading-[normal] p-0 placeholder:text-gray-900_a2 text-left sm:w-[272px]"
-                      wrapClassName="border border-gray-500 border-solid w-full"
-                      type="text"
+                      className="sm:w-[272px]"
+                      type=""
                       value={newCategory}
-                      onChange={(e) => setNewCategory(e)}
+                      onChange={(e) => setNewCategory(e.target.value)}
                     />
                   </div>
                   <div className="d-flex ml-[10px] sm:m-[0px]">
