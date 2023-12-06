@@ -67,14 +67,14 @@ const ContractfullviewPage = () => {
             <div className="hamburgerMenu" onClick={() => {
               setShowSidebar(prev => !prev);
             }}>
-              {showSidebar ? <Icon icon="akar-icons:cross" height={35} width={35} /> : <Icon icon="cil:hamburger-menu" height={35} width={35} />}
+              {showSidebar ? <Icon icon="akar-icons:cross" height={30} width={30} /> : <Icon icon="cil:hamburger-menu" height={30} width={30} />}
             </div>
           </div>
           <div className="bg-white-A700 flex font-orbitron md:gap-5 w-full">
             <div className={`md:px-5 w-[12.1%] md:w-[30%] md:w-full mainSidebar ${showSidebar ? "showSidebar" : ""}`}>
               <Sidebar2 className="!w-[232px] bg-gray-900_03 flex inset-[0] justify-center overflow-auto" />
             </div>
-            <div className="bg-white-A700 flex flex-col mainFinisherWrapper font-montserrat items-center justify-start md:px-5 w-[87.9%] h-[100vh]">
+            <div className="bg-white-A700 flex flex-col mainFinisherWrapper font-montserrat items-center justify-start md:px-5 w-[87.9%] h-[100vh] sm:h-[129vh]">
               <div className="flex flex-col items-center justify-start mt-[103px] mb-[5.8%] border border-indigo-600">
                 <Document file={contract.pdf}>
                   <Page pageNumber={1} />
