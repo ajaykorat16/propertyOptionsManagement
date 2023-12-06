@@ -512,7 +512,7 @@ ul li a {
 
   #toast {
     position: fixed;
-    top: 5px;
+    top: 56px !important;
     right: 5px;
     width: 19rem;
     height: 2rem;
