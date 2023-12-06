@@ -84,7 +84,7 @@ const ContractspagePage = () => {
                       Filter
                     </Text>
                     <Dropdown value={filter} options={filterOptionList} onChange={(e) => setFilter(e.target.value)}
-                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[40px]" />
+                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[36px]" />
                   </div>
                   <div className="flex items-center justify-between sm:flex-col items-baseline">
                     <Text
@@ -94,7 +94,7 @@ const ContractspagePage = () => {
                       Sort by
                     </Text>
                     <Dropdown value={sortBy} options={sortOptionList} onChange={(e) => setSortBy(e.target.value)}
-                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[40px]" />
+                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[36px]" />
                   </div>
                 </div>
                 <div className=" flex flex-col items-center justify-start">
