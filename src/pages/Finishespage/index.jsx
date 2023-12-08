@@ -301,7 +301,7 @@ const FinishespagePage = () => {
                 >
                   Finishes
                 </Text>
-                <div className="flex  md:gap-10 items-center justify-between mt-[76px] sm:flex-col">
+                <div className="flex  md:gap-5 items-center justify-between mt-[76px] sm:flex-col">
                   <div className="flex  items-center">
                     <Img
                       className="h-6 w-6 cursor-pointer mr-2"
@@ -323,6 +323,21 @@ const FinishespagePage = () => {
                       className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
                     />
                   </div>
+                  <div className="flex items-center sm:ml-[10%]">
+                    <Text
+                      className="text-base text-gray-900_03 mr-4"
+                      size="txtMontserratRomanSemiBold16Gray90003"
+                    >
+                      Property
+                    </Text>
+                    <Dropdown
+                      value={filter}
+                      placeholder="Select Property"
+                      options={categoryOptions}
+                      onChange={(e) => setFilter(e.target.value)}
+                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
+                    />
+                  </div>
                   <Button className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center" onClick={handleModal}>
                     Add new
                   </Button>
@@ -335,7 +350,7 @@ const FinishespagePage = () => {
                           <div
                             key={f._id}
                             className="item singleFinisherItem flex flex-col items-center justify-start"
-                           
+
                           >
                             <div className="imageContainerForIcon relative">
                               <Img
@@ -343,11 +358,11 @@ const FinishespagePage = () => {
                                 src={f.photo === null ? `/images/noImageAvailable.jpg` : f.photo}
                                 alt={f.name}
                               />
-                                <div className="edit-icon-container">
-                                  <div className="edit-icon-shadow">
-                                    <CIcon icon={cilPencil} className="edit-icon" onClick={() => handleEditFinishes(f._id)} />
-                                  </div>
+                              <div className="edit-icon-container">
+                                <div className="edit-icon-shadow">
+                                  <CIcon icon={cilPencil} className="edit-icon" onClick={() => handleEditFinishes(f._id)} />
                                 </div>
+                              </div>
                             </div>
                             <Text className="text-center finisher_text break-words" size="txtMontserratRomanRegular14">
                               {f?.name}
