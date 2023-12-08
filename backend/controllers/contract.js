@@ -85,20 +85,34 @@ const createDocuments = asyncHandler(async (req, res) => {
     }
 });
 
+function generateQuery(filter) {
+    const query = {};
+
+    const { readFilter, property } = filter
+
+    if (readFilter) {
+        if (readFilter === "unread") {
+            query.isRead = 0;
+        } else if (readFilter === "read") {
+            query.isRead = 1;
+        }
+    }
+
+    if (property) {
+        query.property = property;
+    }
+
+    return query
+}
+
 const getAllDocuments = asyncHandler(async (req, res) => {
     try {
         const filter = req.body.filter;
         const sortField = req.body.sortField || 'createdAt'
 
         let query = {};
-        if (filter) {
-            if (filter === "unread") {
-                query.isRead = 0;
-            } else if (filter === "read") {
-                query.isRead = 1;
-            } else {
-                query = {}
-            }
+        if (typeof filter !== 'undefined') {
+            query = generateQuery(filter);
         }
 
         const getAllContracts = await Contract.find({ ...query, isTrash: 0 }).sort({ [sortField]: -1 }).lean();

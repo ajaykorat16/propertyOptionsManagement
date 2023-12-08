@@ -99,7 +99,15 @@ const deleteCategory = asyncHandler(async (req, res) => {
 
 const getCategoryList = asyncHandler(async (req, res) => {
     try {
-        const category = await Category.find()
+        const { id } = req.query
+        
+        let category
+        if (id) {
+            category = await Category.find({ property: id })
+        } else {
+            category = await Category.find()
+        }
+
         return res.status(200).json({
             error: false,
             message: "Category retrieved successfully.",

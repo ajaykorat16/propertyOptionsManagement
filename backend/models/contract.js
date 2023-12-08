@@ -6,6 +6,9 @@ const contractSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    property: {
+        type: String
+    },
     pdf: {
         type: String,
         required: true
