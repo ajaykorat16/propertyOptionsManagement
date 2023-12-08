@@ -120,7 +120,7 @@ const FinishespagePage = () => {
   }
 
   const getProperties = async () => {
-    const properties  = await getSpecificBoard()
+    const properties = await getSpecificBoard()
     setProperties(properties)
   }
 
@@ -314,41 +314,43 @@ const FinishespagePage = () => {
                   Finishes
                 </Text>
                 <div className="flex  md:gap-5 items-center justify-between mt-[76px] sm:flex-col">
-                  <div className="flex  items-center">
-                    <Img
-                      className="h-6 w-6 cursor-pointer mr-2"
-                      src="/images/img_gridiconsadd.svg"
-                      alt="gridiconsadd"
-                      onClick={() => { setShowCategory(true) }}
-                    />
-                    <Text
-                      className="text-base text-gray-900_03 mr-4"
-                      size="txtMontserratRomanSemiBold16Gray90003"
-                    >
-                      Category
-                    </Text>
-                    <Dropdown
-                      value={filter}
-                      placeholder="Select Category"
-                      options={categoryOptions}
-                      onChange={(e) => setFilter(e.target.value)}
-                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
-                    />
-                  </div>
-                  <div className="flex items-center sm:ml-[10%]">
-                    <Text
-                      className="text-base text-gray-900_03 mr-4"
-                      size="txtMontserratRomanSemiBold16Gray90003"
-                    >
-                      Property
-                    </Text>
-                    <Dropdown
-                      value={filterProperties}
-                      placeholder="Select Property"
-                      options={propertyOptions}
-                      onChange={(e) => setFilterProperties(e.target.value)}
-                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
-                    />
+                  <div className="flex items-center sm:flex-col md:gap-5">
+                    <div className="flex items-center sm:ml-[14%]">
+                      <Text
+                        className="text-base text-gray-900_03 mr-4"
+                        size="txtMontserratRomanSemiBold16Gray90003"
+                      >
+                        Property
+                      </Text>
+                      <Dropdown
+                        value={filterProperties}
+                        placeholder="Select Property"
+                        options={propertyOptions}
+                        onChange={(e) => setFilterProperties(e.target.value)}
+                        className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
+                      />
+                    </div>
+                    <div className="flex items-center ml-4">
+                      <Img
+                        className="h-6 w-6 cursor-pointer mr-2"
+                        src="/images/img_gridiconsadd.svg"
+                        alt="gridiconsadd"
+                        onClick={() => { setShowCategory(true) }}
+                      />
+                      <Text
+                        className="text-base text-gray-900_03 mr-4"
+                        size="txtMontserratRomanSemiBold16Gray90003"
+                      >
+                        Category
+                      </Text>
+                      <Dropdown
+                        value={filter}
+                        placeholder="Select Category"
+                        options={categoryOptions}
+                        onChange={(e) => setFilter(e.target.value)}
+                        className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
+                      />
+                    </div>
                   </div>
                   <Button className="cursor-pointer font-semibold leading-[normal] min-w-[169px] text-base text-center" onClick={handleModal}>
                     Add new
