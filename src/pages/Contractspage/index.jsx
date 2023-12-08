@@ -8,6 +8,7 @@ import Sidebar2 from "components/Sidebar2";
 import Loader from "components/Loader/Loader";
 import { Dropdown } from "primereact/dropdown";
 import { Icon } from "@iconify/react";
+import { useFinishes } from "contexts/FinishesContext";
 
 const sortOptionList = [
   { label: "Date", value: "createdAt" },
@@ -22,13 +23,16 @@ const filterOptionList = [
 
 const ContractspagePage = () => {
   const { getAllContract } = useContract()
+  const { getSpecificBoard } = useFinishes()
   const { toast } = useAuth()
 
   const [contarcts, setContarcts] = useState()
   const [isLoading, setIsLoading] = useState(true);
-  const [filter, setFilter] = useState('all')
   const [sortBy, setSortBy] = useState('createdAt')
   const [showSidebar, setShowSidebar] = useState(false)
+  const [properties, setProperties] = useState([]);
+  const [filter, setFilter] = useState({ readFilter: null, property: null });
+
   const navigate = useNavigate();
 
   const fetchContarcts = async () => {
@@ -41,6 +45,17 @@ const ContractspagePage = () => {
   useEffect(() => {
     fetchContarcts()
   }, [filter, sortBy]);
+
+  const getProperties = async () => {
+    const properties = await getSpecificBoard()
+    setProperties(properties)
+  }
+
+  useEffect(() => {
+    getProperties();
+  }, []);
+
+  const propertyOptions = properties.map((property) => ({ label: property.project, value: property.id, }));
 
   return (
     <>
@@ -78,13 +93,31 @@ const ContractspagePage = () => {
                 <div className="flex md:gap-5 items-center justify-between mt-[76px] w-full sm:flex-col">
                   <div className="flex items-center justify-between sm:flex-col items-baseline">
                     <Text
+                      className="text-base text-gray-900_03 mr-4"
+                      size="txtMontserratRomanSemiBold16Gray90003"
+                    >
+                      Property
+                    </Text>
+                    <Dropdown
+                      value={filter.property}
+                      placeholder="Select Property"
+                      options={propertyOptions}
+                      onChange={(e) =>setFilter({ ...filter, property: e.target.value })}
+                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[36px]"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between sm:flex-col items-baseline">
+                    <Text
                       className="text-base text-gray-900_03 mr-[16px]"
                       size="txtMontserratRomanSemiBold16Gray90003"
                     >
                       Filter
                     </Text>
-                    <Dropdown value={filter} options={filterOptionList} onChange={(e) => setFilter(e.target.value)}
-                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[36px]" />
+                    <Dropdown value={filter.readFilter} 
+                    placeholder="Select Filter"
+                    options={filterOptionList}
+                    onChange={(e) =>setFilter({ ...filter, readFilter: e.target.value })}
+                    className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[36px]" />
                   </div>
                   <div className="flex items-center justify-between sm:flex-col items-baseline">
                     <Text
