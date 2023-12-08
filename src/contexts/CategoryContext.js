@@ -13,9 +13,9 @@ const CategoryProvider = ({ children }) => {
     };
 
     //Get Category List
-    const getCategories = async () => {
+    const getCategories = async (id) => {
         try {
-            const { data } = await axios.get(`${baseURL}/category/list`, { headers });
+            const { data } = await axios.get(`${baseURL}/category/list?id=${id}`, { headers });
             if (data.error === false) {
                 return data
             }

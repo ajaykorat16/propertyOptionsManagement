@@ -115,7 +115,8 @@ const FinishespagePage = () => {
   }
 
   const getCategory = async () => {
-    const { category } = await getCategories()
+    console.log("filterProperties----", filterProperties)
+    const { category } = await getCategories(filterProperties)
     setCategories(category)
   }
 
@@ -177,7 +178,7 @@ const FinishespagePage = () => {
     if (!showCategory) {
       getCategory()
     }
-  }, [showCategory]);
+  }, [showCategory, filterProperties]);
 
   const handleModal = async () => {
     setVisible(true)
