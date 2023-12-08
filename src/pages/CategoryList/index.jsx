@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Button, Input, Text } from "components";
-import { CFormInput, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import { Button, Text } from "components";
+import { CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 import { useCategory } from '../../contexts/CategoryContext'
 import CIcon from "@coreui/icons-react";
 import { cilPencil, cilTrash, cilXCircle } from '@coreui/icons';
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { useAuth } from "contexts/AuthContext";
-
+import { useFinishes } from "contexts/FinishesContext";
 
 const CategoryList = ({ showCategory, setShowCategory }) => {
   const { getCategories, createCategory, deleteCategory, updateCategory, getSingleCategory } = useCategory()
   const { toast } = useAuth()
+  const { getSpecificBoard } = useFinishes()
   const [categories, setCateories] = useState([])
-  const [newCategory, setNewCategory] = useState("")
+  const [properties, setProperties] = useState([]);
+  const [newCategory, setNewCategory] = useState({ name: "", property: "" })
   const [addNew, setAddNew] = useState(false)
   const [editCategory, setEditCategory] = useState(false);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   let isMounted = true;
+
+  const getProperties = async () => {
+    const properties = await getSpecificBoard()
+    if (isMounted) {
+      setProperties(properties)
+    }
+  }
 
   const fetchCategory = async () => {
     let categoryData = await getCategories();
@@ -28,22 +37,22 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
 
   const fetchSingleCategory = async (id) => {
     let category = await getSingleCategory(id);
-    setNewCategory(category.name)
+    setNewCategory({ ...newCategory, name: category.name, property: category.property })
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (addNew) {
-        const data = await createCategory(newCategory);
+        const data = await createCategory(newCategory);        
         if (typeof data !== 'undefined' && data.error === false) {
-          setNewCategory("")
+          setNewCategory({ name: "", property: "" })
           setAddNew(false);
         }
       } else if (editCategory && editingCategoryId) {
         const data = await updateCategory(newCategory, editingCategoryId);
         if (typeof data !== 'undefined' && data.error === false) {
-          setNewCategory("")
+          setNewCategory({ name: "", property: "" })
           setEditCategory(false);
           setEditingCategoryId(null);
         }
@@ -85,10 +94,10 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
 
   const handleCancel = () => {
     if (addNew) {
-      setNewCategory("")
+      setNewCategory({ name: "", property: "" })
       setAddNew(false)
     } else if (editCategory) {
-      setNewCategory("")
+      setNewCategory({ name: "", property: "" })
       setEditCategory(false)
     }
     fetchCategory()
@@ -96,6 +105,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
 
   useEffect(() => {
     fetchCategory()
+    getProperties();
   }, [])
 
   useEffect(() => {
@@ -104,6 +114,14 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
     };
   }, []);
 
+  const handleClose = async () => {
+    setShowCategory(false)
+    setEditCategory(false)
+    setEditingCategoryId(null)
+    setNewCategory({ name: "", property: "" })
+    setAddNew(false)
+  }
+
   return (
     <>
       <Toast ref={toast} id="toast" />
@@ -111,15 +129,16 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
       <CModal
         alignment="center"
         visible={showCategory}
-        onClose={() => setShowCategory(false)}
+        onClose={handleClose}
         className="mainBody"
+        size="sm"
         backdrop="static"
       >
         <div className="modelCloseButton">
           <CIcon
             icon={cilXCircle}
             size="xl"
-            onClick={() => setShowCategory(false)}
+            onClick={handleClose}
           />
         </div>
         <CModalHeader closeButton={false}>
@@ -162,17 +181,34 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
           {addNew || (editCategory && editingCategoryId) ? (
             <>
               <form onSubmit={handleSubmit}>
-                <div className="flex  md:gap-5 items-center justify-between sm:flex-col">                
+                <div className="md:gap-5 items-center sm:flex-col">
+                  <div>
+                    <CFormSelect
+                      id="inputUserName"
+                      className="mb-2"
+                      value={newCategory.property}
+                      onChange={(e) => setNewCategory({ ...newCategory, property: e.target.value })}
+                    >
+                      <option value="" disabled >
+                        Select Property
+                      </option>
+                      {properties.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.project}
+                        </option>
+                      ))}
+                    </CFormSelect>
+                  </div>
                   <div>
                     <CFormInput
                       placeholder="Enter category"
-                      className="sm:w-[272px]"
+                      className="sm:w-[272px] mb-2"
                       type=""
-                      value={newCategory}
-                      onChange={(e) => setNewCategory(e.target.value)}
+                      value={newCategory.name}
+                      onChange={(e) => setNewCategory({ ...newCategory, name: e.target.value })}
                     />
                   </div>
-                  <div className="d-flex ml-[10px] sm:m-[0px]">
+                  <div className="d-flex justify-content-between sm:m-[0px]">
                     <Button className="min-w-[50px] text-center mr-[15px]" type="submit">
                       Save
                     </Button>
@@ -189,7 +225,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
             </Button>
           )}
         </CModalFooter>
-      </CModal>
+      </CModal >
     </>
   );
 };

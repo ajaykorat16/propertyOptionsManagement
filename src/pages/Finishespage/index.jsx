@@ -115,7 +115,6 @@ const FinishespagePage = () => {
   }
 
   const getCategory = async () => {
-    console.log("filterProperties----", filterProperties)
     const { category } = await getCategories(filterProperties)
     setCategories(category)
   }

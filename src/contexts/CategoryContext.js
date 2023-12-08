@@ -15,9 +15,14 @@ const CategoryProvider = ({ children }) => {
     //Get Category List
     const getCategories = async (id) => {
         try {
-            const { data } = await axios.get(`${baseURL}/category/list?id=${id}`, { headers });
-            if (data.error === false) {
-                return data
+            let res
+            if (id) {
+                res = await axios.get(`${baseURL}/category/list?id=${id}`, { headers });
+            } else {
+                res = await axios.get(`${baseURL}/category/list`, { headers });
+            }
+            if (res.data.error === false) {
+                return res.data
             }
         } catch (error) {
             console.log(error);
@@ -25,9 +30,9 @@ const CategoryProvider = ({ children }) => {
     };
 
     //Create Category
-    const createCategory = async (name) => {
+    const createCategory = async (categoryData) => {
         try {
-            const { data } = await axios.post(`${baseURL}/category/create`, { name }, { headers });
+            const { data } = await axios.post(`${baseURL}/category/create`, categoryData, { headers });
 
             if (data.error === false) {
                 getCategories()
@@ -68,9 +73,9 @@ const CategoryProvider = ({ children }) => {
     }
 
     //Update Category
-    const updateCategory = async (name, id) => {
+    const updateCategory = async (updatedCategory, id) => {
         try {
-            const { data } = await axios.put(`${baseURL}/category/update/${id}`, { name }, { headers })
+            const { data } = await axios.put(`${baseURL}/category/update/${id}`, updatedCategory, { headers })
             if (data.error === false) {
                 getCategories()
                 toast.current?.show({ severity: 'success', summary: 'Category', detail: data.message, life: 3000 })
