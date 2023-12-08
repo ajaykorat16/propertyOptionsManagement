@@ -11,7 +11,7 @@ const createCategory = asyncHandler(async (req, res) => {
     }
 
     try {
-        const { name } = req.body
+        const { name, property } = req.body
 
         const existingCategory = await Category.findOne({ name: capitalizeFLetter(name) })
         if (existingCategory) {
@@ -21,7 +21,7 @@ const createCategory = asyncHandler(async (req, res) => {
             })
         }
 
-        const newCategory = await new Category({ name: capitalizeFLetter(name) }).save()
+        const newCategory = await new Category({ name: capitalizeFLetter(name), property }).save()
         res.status(201).send({
             error: false,
             message: "Category created successfully.",
@@ -36,7 +36,7 @@ const createCategory = asyncHandler(async (req, res) => {
 const updateCategory = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params
-        const { name } = req.body
+        const { name, property } = req.body
 
         const existingCategory = await Category.findById({ _id: id })
         if (!existingCategory) {
@@ -54,7 +54,12 @@ const updateCategory = asyncHandler(async (req, res) => {
             })
         }
 
-        const updateCategory = await Category.findByIdAndUpdate({ _id: id }, { name: capitalizeFLetter(name) }, { new: true })
+        let updateData = {
+            name: name ? capitalizeFLetter(name) : existingCategory.name,
+            property: property ? property : existingCategory.property
+        }
+
+        const updateCategory = await Category.findByIdAndUpdate({ _id: id }, updateData, { new: true })
         return res.status(201).json({
             error: false,
             message: "Category updated successfully.",
@@ -100,7 +105,7 @@ const deleteCategory = asyncHandler(async (req, res) => {
 const getCategoryList = asyncHandler(async (req, res) => {
     try {
         const { id } = req.query
-        
+
         let category
         if (id) {
             category = await Category.find({ property: id })

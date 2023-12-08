@@ -16,6 +16,7 @@ router.post(
     [
         check('id', 'Id is required.').notEmpty(),
         check('pdf', 'Document is required.').notEmpty(),
+        check('property', 'Property is required.').notEmpty(),
         upload.single('pdf'),
     ],
     createDocuments

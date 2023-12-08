@@ -27,9 +27,9 @@ const createDocuments = asyncHandler(async (req, res) => {
     }
 
     try {
-        const { id, pdf } = req.body;
+        const { id, pdf, property } = req.body;
 
-        const documentObj = { id };
+        const documentObj = { id, property };
 
         if (pdf) {
             const decodedDoc = decodeBase64File(pdf);
