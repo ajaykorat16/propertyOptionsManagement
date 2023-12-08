@@ -8,9 +8,41 @@ const FinishesContext = createContext()
 const FinishesProvider = ({ children }) => {
     const { auth, toast } = useAuth();
 
+    const API_KEY = `eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI5OTg3MzAxMSwiYWFpIjoxMSwidWlkIjozMDc4MDQxOCwiaWFkIjoiMjAyMy0xMS0zMFQyMjoxNDowNy4zODlaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MjUwMjg1OSwicmduIjoidXNlMSJ9.NoCjKRfIsn9ZHq953yQv_YRjUDB7ah2_t8E9AVGx8bY`
+    const API_URL = 'https://api.monday.com/v2';
+
     const headers = {
         Authorization: auth?.token,
     };
+
+    const getSpecificBoard = async () => {
+        try {
+            const query = `query { boards(ids: 5605135736) { id name columns { id title type } items { id name column_values { id text value} } } }`;
+
+            const { data } = await axios.post(API_URL, {
+                query
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': API_KEY
+                }
+            });
+
+            const boardData = data.data.boards[0].items
+            const project = boardData.map((item) => {
+                const { id, column_values } = item
+
+                return {
+                    id,
+                    project: column_values[3].text
+                }
+            })
+
+            return project
+        } catch (error) {
+            toast.current?.show({ severity: 'error', summary: 'Properties', detail: 'An error occurred. Please try again later.', life: 3000 })
+        }
+    }
 
     const getAllFinishes = async (query) => {
         try {
@@ -99,7 +131,7 @@ const FinishesProvider = ({ children }) => {
     };
 
     return (
-        <FinishesContext.Provider value={{ getAllFinishes, addFinishes, updateFinishes, getFinishesById, deleteFinishes }}>
+        <FinishesContext.Provider value={{ getAllFinishes, addFinishes, updateFinishes, getFinishesById, deleteFinishes, getSpecificBoard }}>
             {children}
         </FinishesContext.Provider>
     )

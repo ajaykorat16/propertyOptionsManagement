@@ -18,14 +18,16 @@ import { Icon } from "@iconify/react";
 
 const FinishespagePage = () => {
 
-  const { getAllFinishes, addFinishes, getFinishesById, updateFinishes, deleteFinishes } = useFinishes()
+  const { getAllFinishes, addFinishes, getFinishesById, updateFinishes, deleteFinishes, getSpecificBoard } = useFinishes()
   const { getCategories } = useCategory();
   const { toast } = useAuth()
 
   const [isLoading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [filter, setFilter] = useState(null);
+  const [filterProperties, setFilterProperties] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [properties, setProperties] = useState([]);
   const [finishes, setFinishes] = useState([])
   const [finishesValue, setFinishesValue] = useState({ category: "", name: "", photo: "" });
   const [selectedImage, setSelectedImage] = useState(null);
@@ -117,7 +119,13 @@ const FinishespagePage = () => {
     setCategories(category)
   }
 
+  const getProperties = async () => {
+    const properties  = await getSpecificBoard()
+    setProperties(properties)
+  }
+
   const categoryOptions = categories.map((category) => ({ label: category.name, value: category._id, }));
+  const propertyOptions = properties.map((property) => ({ label: property.project, value: property.id, }));
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -160,6 +168,10 @@ const FinishespagePage = () => {
   useEffect(() => {
     fetchFinishes();
   }, [filter]);
+
+  useEffect(() => {
+    getProperties();
+  }, []);
 
   useEffect(() => {
     if (!showCategory) {
@@ -331,10 +343,10 @@ const FinishespagePage = () => {
                       Property
                     </Text>
                     <Dropdown
-                      value={filter}
+                      value={filterProperties}
                       placeholder="Select Property"
-                      options={categoryOptions}
-                      onChange={(e) => setFilter(e.target.value)}
+                      options={propertyOptions}
+                      onChange={(e) => setFilterProperties(e.target.value)}
                       className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
                     />
                   </div>
