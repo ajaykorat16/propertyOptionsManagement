@@ -42,7 +42,12 @@ const FinishespagePage = () => {
 
   const fetchFinishes = async () => {
     setIsLoading(true);
-    const finishes = await getAllFinishes(filter);
+    let finishes
+    if (filter) {
+      finishes = await getAllFinishes(!Array.isArray(filter) ? [filter] : filter);
+    } else {
+      finishes = await getAllFinishes();
+    }
     setFinishes(finishes.finishes);
     setIsLoading(false);
   };
@@ -115,17 +120,22 @@ const FinishespagePage = () => {
   }
 
   const getCategory = async () => {
-    const { category } = await getCategories(filterProperties)
-    setCategories(category)
+    if (createFinishes || editFinishes) {
+      const { category } = await getCategories()
+      setCategories(category)
+    } else {
+      const { category } = await getCategories(filterProperties)
+      setCategories(category)
+    }
   }
+
+  const categoryOptions = categories.map((category) => ({ label: category.name, value: category._id, }));
+  const propertyOptions = properties.map((property) => ({ label: property.project, value: property.id, }));
 
   const getProperties = async () => {
     const properties = await getSpecificBoard()
     setProperties(properties)
   }
-
-  const categoryOptions = categories.map((category) => ({ label: category.name, value: category._id, }));
-  const propertyOptions = properties.map((property) => ({ label: property.project, value: property.id, }));
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -165,19 +175,33 @@ const FinishespagePage = () => {
     }
   }
 
+  const fetchPropertiesFinishes = async () => {
+    if (filterProperties) {
+      await getCategory()
+      const { category } = await getCategories(filterProperties)
+      const categoryArr = category.map((category) => category._id);
+      setFilter(categoryArr)
+      // fetchFinishes();
+    }
+  }
+
   useEffect(() => {
-    fetchFinishes();
-  }, [filter]);
+    fetchPropertiesFinishes()
+  }, [filterProperties]);
 
   useEffect(() => {
     getProperties();
   }, []);
 
   useEffect(() => {
+    fetchFinishes();
+  }, [filter]);
+
+  useEffect(() => {
     if (!showCategory) {
       getCategory()
     }
-  }, [showCategory, filterProperties]);
+  }, [showCategory, createFinishes, editFinishes]);
 
   const handleModal = async () => {
     setVisible(true)
@@ -196,6 +220,10 @@ const FinishespagePage = () => {
   const handleRemove = async () => {
     setSelectedImage(null);
     setFinishesValue({ ...finishesValue, photo: "" })
+  }
+
+  const handleFetchProperties = async (value) => {
+    setFilterProperties(value)
   }
 
   return (
@@ -326,7 +354,7 @@ const FinishespagePage = () => {
                         value={filterProperties}
                         placeholder="Select Property"
                         options={propertyOptions}
-                        onChange={(e) => setFilterProperties(e.target.value)}
+                        onChange={(e) => handleFetchProperties(e.target.value)}
                         className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
                       />
                     </div>

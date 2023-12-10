@@ -47,16 +47,19 @@ const FinishesProvider = ({ children }) => {
     const getAllFinishes = async (query) => {
         try {
             let res;
-            if (query) {
-                res = await axios.get(`${baseURL}/api/finishes/list?filter=${query}`);
+            if (Array.isArray(query)) {
+                res = await axios.get(`${baseURL}/api/finishes/list?filter=${JSON.stringify(query)}`,);
             } else {
                 res = await axios.get(`${baseURL}/api/finishes/list`);
             }
+
             if (res.data.error === false) {
                 return res.data
+            } else {
+                toast.current?.show({ severity: 'error', summary: 'Finishes', detail: res.data.error.message, life: 3000 })
             }
         } catch (error) {
-            console.log(error);
+            toast.current?.show({ severity: 'error', summary: 'Finishes', detail: 'An error occurred. Please try again later.', life: 3000 })
         }
     };
 
