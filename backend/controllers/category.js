@@ -13,14 +13,6 @@ const createCategory = asyncHandler(async (req, res) => {
     try {
         const { name, property } = req.body
 
-        const existingCategory = await Category.findOne({ name: capitalizeFLetter(name) })
-        if (existingCategory) {
-            return res.status(200).json({
-                error: true,
-                message: "Category Is Already Existing."
-            })
-        }
-
         const newCategory = await new Category({ name: capitalizeFLetter(name), property }).save()
         res.status(201).send({
             error: false,
@@ -43,14 +35,6 @@ const updateCategory = asyncHandler(async (req, res) => {
             return res.status(200).json({
                 error: true,
                 message: "Category is not existing."
-            })
-        }
-
-        const categoryName = await Category.findOne({ _id: { $ne: id }, name: capitalizeFLetter(name) })
-        if (categoryName) {
-            return res.status(200).json({
-                error: true,
-                message: "Category Is Already Existing."
             })
         }
 
