@@ -8,13 +8,12 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { cilImage, cilPencil, cilXCircle } from "@coreui/icons";
 import { Toast } from "primereact/toast";
 import { useNavigate } from "react-router-dom";
-
 import { Dropdown } from "primereact/dropdown";
+import { Icon } from "@iconify/react";
 import CIcon from "@coreui/icons-react";
 import Sidebar2 from "components/Sidebar2";
 import CategoryList from "pages/CategoryList"
 import Loader from '../../components/Loader/Loader';
-import { Icon } from "@iconify/react";
 
 const FinishespagePage = () => {
 
@@ -42,12 +41,7 @@ const FinishespagePage = () => {
 
   const fetchFinishes = async () => {
     setIsLoading(true);
-    let finishes
-    if (filter) {
-      finishes = await getAllFinishes(!Array.isArray(filter) ? [filter] : filter);
-    } else {
-      finishes = await getAllFinishes();
-    }
+    const finishes = await getAllFinishes(filter);
     setFinishes(finishes.finishes);
     setIsLoading(false);
   };
@@ -120,22 +114,17 @@ const FinishespagePage = () => {
   }
 
   const getCategory = async () => {
-    if (createFinishes || editFinishes) {
-      const { category } = await getCategories()
-      setCategories(category)
-    } else {
-      const { category } = await getCategories(filterProperties)
-      setCategories(category)
-    }
+    const { category } = await getCategories(filterProperties)
+    setCategories(category)
   }
-
-  const categoryOptions = categories.map((category) => ({ label: category.name, value: category._id, }));
-  const propertyOptions = properties.map((property) => ({ label: property.project, value: property.id, }));
 
   const getProperties = async () => {
     const properties = await getSpecificBoard()
     setProperties(properties)
   }
+
+  const categoryOptions = categories.map((category) => ({ label: category.name, value: category._id, }));
+  const propertyOptions = properties.map((property) => ({ label: property.project, value: property.id, }));
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -175,33 +164,19 @@ const FinishespagePage = () => {
     }
   }
 
-  const fetchPropertiesFinishes = async () => {
-    if (filterProperties) {
-      await getCategory()
-      const { category } = await getCategories(filterProperties)
-      const categoryArr = category.map((category) => category._id);
-      setFilter(categoryArr)
-      // fetchFinishes();
-    }
-  }
-
   useEffect(() => {
-    fetchPropertiesFinishes()
-  }, [filterProperties]);
+    if (filter && filterProperties) fetchFinishes();
+  }, [filter, filterProperties]);
 
   useEffect(() => {
     getProperties();
   }, []);
 
   useEffect(() => {
-    fetchFinishes();
-  }, [filter]);
-
-  useEffect(() => {
     if (!showCategory) {
       getCategory()
     }
-  }, [showCategory, createFinishes, editFinishes]);
+  }, [showCategory, filterProperties]);
 
   const handleModal = async () => {
     setVisible(true)
@@ -220,10 +195,6 @@ const FinishespagePage = () => {
   const handleRemove = async () => {
     setSelectedImage(null);
     setFinishesValue({ ...finishesValue, photo: "" })
-  }
-
-  const handleFetchProperties = async (value) => {
-    setFilterProperties(value)
   }
 
   return (
@@ -354,7 +325,7 @@ const FinishespagePage = () => {
                         value={filterProperties}
                         placeholder="Select Property"
                         options={propertyOptions}
-                        onChange={(e) => handleFetchProperties(e.target.value)}
+                        onChange={(e) => { setFilterProperties(e.target.value); setFilter(null) }}
                         className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left sm:w-[30vh] w-[38.3vh]"
                       />
                     </div>
@@ -387,7 +358,7 @@ const FinishespagePage = () => {
                 <div className=" flex flex-col items-center justify-start">
                   <div className="inner-container flex flex-col gap-4 items-center " orientation="vertical">
                     <div className="items-container">
-                      {finishes.length !== 0 ? (
+                      {finishes.length !== 0 && filter ? (
                         finishes.map((f) => (
                           <div
                             key={f._id}

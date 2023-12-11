@@ -29,7 +29,7 @@ const FinishesProvider = ({ children }) => {
             });
 
             const boardData = data.data.boards[0].items
-            const project = boardData.map((item) => {
+            const projects = boardData.map((item) => {
                 const { id, column_values } = item
 
                 return {
@@ -38,28 +38,29 @@ const FinishesProvider = ({ children }) => {
                 }
             })
 
-            return project
+            const uniqueProjects = projects.filter((project, index, array) => {
+                const isUnique = !array.slice(0, index).some((prevProject) => prevProject.project === project.project);
+                return isUnique;
+              });
+                      
+            return uniqueProjects
         } catch (error) {
             toast.current?.show({ severity: 'error', summary: 'Properties', detail: 'An error occurred. Please try again later.', life: 3000 })
         }
     }
-
     const getAllFinishes = async (query) => {
         try {
             let res;
-            if (Array.isArray(query)) {
-                res = await axios.get(`${baseURL}/api/finishes/list?filter=${JSON.stringify(query)}`,);
+            if (query) {
+                res = await axios.get(`${baseURL}/api/finishes/list?filter=${query}`);
             } else {
                 res = await axios.get(`${baseURL}/api/finishes/list`);
             }
-
             if (res.data.error === false) {
                 return res.data
-            } else {
-                toast.current?.show({ severity: 'error', summary: 'Finishes', detail: res.data.error.message, life: 3000 })
             }
         } catch (error) {
-            toast.current?.show({ severity: 'error', summary: 'Finishes', detail: 'An error occurred. Please try again later.', life: 3000 })
+            console.log(error);
         }
     };
 

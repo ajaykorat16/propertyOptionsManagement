@@ -133,7 +133,7 @@ const ContractspagePage = () => {
                 <div className=" flex flex-col items-center justify-start">
                   <div className="inner-container flex flex-col gap-4 items-center " orientation="vertical">
                     <div className="items-container">
-                      {contarcts.length !== 0 ? (
+                      {contarcts.length !== 0 && filter.property ? (
                         contarcts.map((c) => (
                           <div key={c.id}
                             className="item singleFinisherItem flex flex-col items-center justify-start"

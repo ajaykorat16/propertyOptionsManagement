@@ -80,10 +80,10 @@ const getAllFinishes = asyncHandler(async (req, res) => {
         const filter = req.query.filter;
         
         let query = {}
-        if (filter) {            
+        if (filter) {
             query = {
-                category: { $in: JSON.parse(filter) }
-            };
+                category: filter
+            }
         }
 
         const getAllFinishes = await Finishes.find(query).populate('category').lean();
