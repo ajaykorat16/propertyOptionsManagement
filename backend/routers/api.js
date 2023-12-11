@@ -8,8 +8,12 @@ const upload = multer({ storage: storage });
 
 const { getAllFinishes } = require("../controllers/finishes")
 const { createDocuments } = require('../controllers/contract');
+const { getCategoryList } = require('../controllers/category');
+
 
 router.get("/finishes/list", getAllFinishes)
+
+router.get("/category/list", getCategoryList)
 
 router.post(
     '/contract/create',
