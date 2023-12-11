@@ -14,7 +14,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
   const { toast } = useAuth()
   const { getSpecificBoard } = useFinishes()
   const [categories, setCateories] = useState([])
-  const [properties, setProperties] = useState([]);
+  const [propertyOptions, setPropertyOptions] = useState([])
   const [newCategory, setNewCategory] = useState({ name: "", property: "" })
   const [addNew, setAddNew] = useState(false)
   const [editCategory, setEditCategory] = useState(false);
@@ -24,7 +24,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
   const getProperties = async () => {
     const properties = await getSpecificBoard()
     if (isMounted) {
-      setProperties(properties)
+      setPropertyOptions(properties)
     }
   }
 
@@ -44,7 +44,7 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
     e.preventDefault();
     try {
       if (addNew) {
-        const data = await createCategory(newCategory);        
+        const data = await createCategory(newCategory);
         if (typeof data !== 'undefined' && data.error === false) {
           setNewCategory({ name: "", property: "" })
           setAddNew(false);
@@ -192,9 +192,9 @@ const CategoryList = ({ showCategory, setShowCategory }) => {
                       <option value="" disabled >
                         Select Property
                       </option>
-                      {properties.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.project}
+                      {propertyOptions.map((p) => (
+                        <option key={p.value} value={p.value}>
+                          {p.label}
                         </option>
                       ))}
                     </CFormSelect>

@@ -30,7 +30,7 @@ const ContractspagePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState('createdAt')
   const [showSidebar, setShowSidebar] = useState(false)
-  const [properties, setProperties] = useState([]);
+  const [propertyOptions, setPropertyOptions] = useState([])
   const [filter, setFilter] = useState({ readFilter: null, property: null });
 
   const navigate = useNavigate();
@@ -48,14 +48,12 @@ const ContractspagePage = () => {
 
   const getProperties = async () => {
     const properties = await getSpecificBoard()
-    setProperties(properties)
+    setPropertyOptions(properties)
   }
 
   useEffect(() => {
     getProperties();
   }, []);
-
-  const propertyOptions = properties.map((property) => ({ label: property.project, value: property.id, }));
 
   return (
     <>
@@ -102,7 +100,7 @@ const ContractspagePage = () => {
                       value={filter.property}
                       placeholder="Select Property"
                       options={propertyOptions}
-                      onChange={(e) =>setFilter({ ...filter, property: e.target.value })}
+                      onChange={(e) => setFilter({ ...filter, property: e.target.value })}
                       className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[36px]"
                     />
                   </div>
@@ -113,11 +111,11 @@ const ContractspagePage = () => {
                     >
                       Filter
                     </Text>
-                    <Dropdown value={filter.readFilter} 
-                    placeholder="Select Filter"
-                    options={filterOptionList}
-                    onChange={(e) =>setFilter({ ...filter, readFilter: e.target.value })}
-                    className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[36px]" />
+                    <Dropdown value={filter.readFilter}
+                      placeholder="Select Filter"
+                      options={filterOptionList}
+                      onChange={(e) => setFilter({ ...filter, readFilter: e.target.value })}
+                      className="rounded-md text-xs bg-fill text-white_A700 border border-gray-500_7f shadow-bs  border-solid text-base text-left  w-[38.3vh] h-[36px]" />
                   </div>
                   <div className="flex items-center justify-between sm:flex-col items-baseline">
                     <Text

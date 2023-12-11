@@ -26,7 +26,7 @@ const FinishespagePage = () => {
   const [filter, setFilter] = useState(null);
   const [filterProperties, setFilterProperties] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [properties, setProperties] = useState([]);
+  const [propertyOptions, setPropertyOptions] = useState([])
   const [finishes, setFinishes] = useState([])
   const [finishesValue, setFinishesValue] = useState({ category: "", name: "", photo: "" });
   const [selectedImage, setSelectedImage] = useState(null);
@@ -120,11 +120,10 @@ const FinishespagePage = () => {
 
   const getProperties = async () => {
     const properties = await getSpecificBoard()
-    setProperties(properties)
+    setPropertyOptions(properties)
   }
 
   const categoryOptions = categories.map((category) => ({ label: category.name, value: category._id, }));
-  const propertyOptions = properties.map((property) => ({ label: property.project, value: property.id, }));
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
