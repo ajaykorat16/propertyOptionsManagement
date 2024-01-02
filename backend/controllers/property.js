@@ -25,9 +25,9 @@ const getProperties = async (req, res) => {
         });
 
         console.log(data.data.boards[0].columns[0].settings_str);
-        console.log(data.data.boards[0].columns[0].settings_str.lables);
-        console.log(JSON.parse(data.data.boards[0].columns[0].settings_str.lables));
-        const projects = JSON.parse(data.data.boards[0].columns[0].settings_str.lables)
+        let settingsObj = JSON.parse(data.data.boards[0].columns[0].settings_str);
+        console.log(settingsObj.labels);
+        const projects = settingsObj.labels
         // const projects = boardData.map((item) => {
         //     const { id, column_values } = item
 
