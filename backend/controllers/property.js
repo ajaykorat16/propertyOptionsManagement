@@ -5,25 +5,15 @@ const API_URL = 'https://api.monday.com/v2';
 const getProperties = async (req, res) => {
     try {
         const query = `query {
-    boards(ids: 5605135736) {
-        id 
-        name 
-        columns { 
-            id 
-            title 
-            type 
-        } 
-        items { 
-            id 
-            name 
-            column_values { 
-                id 
-                text 
-                value
-            } 
-        } 
-    } 
-}`;
+    boards(ids: ${boardId}) {
+      columns(ids: ["dropdown"]) {
+        id
+        title
+        type
+        settings_str
+      }
+    }
+  }`;
 
         const { data } = await axios.post(API_URL, {
             query
@@ -34,7 +24,7 @@ const getProperties = async (req, res) => {
             }
         });
 
-        const boardData = data.data.boards[0].items
+        const boardData = data.data.boards[0].columns[0].labels
         const projects = boardData.map((item) => {
             const { id, column_values } = item
 
