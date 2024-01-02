@@ -25,7 +25,7 @@ const getProperties = async (req, res) => {
         });
 
 
-        const projects = data.data.boards[0].columns[0].settings_str.labels
+        const projects = data.data.boards[0].columns[0].settings_str
         // const projects = boardData.map((item) => {
         //     const { id, column_values } = item
 
@@ -35,7 +35,7 @@ const getProperties = async (req, res) => {
         //     }
         // })
 
-       console.log(JSON.stringify(projects));
+       console.log(projects);
 
         const uniqueProjects = projects.filter((name, index, array) => {
             const isUnique = !array.slice(0, index).some((prevProject) => prevProject.name === name.name);
