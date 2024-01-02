@@ -5,7 +5,7 @@ const API_URL = 'https://api.monday.com/v2';
 const getProperties = async (req, res) => {
     try {
         const query = `query {
-    boards(ids:["5605135736"]) {
+    boards(ids:[5605135736]) {
       columns(ids: ["dropdown"]) {
         id
         title
