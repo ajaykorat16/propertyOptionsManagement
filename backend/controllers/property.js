@@ -4,7 +4,7 @@ const API_URL = 'https://api.monday.com/v2';
 
 const getProperties = async (req, res) => {
     try {
-        const query = `query { boards(ids: 5605135736) { id name dropdown columns { id title type } items { id name dropdown column_values { id text value} } } }`;
+        const query = `query { boards(ids: 5605135736) { id name columns { id title type } items { id name column_values { id text value} } } }`;
 
         const { data } = await axios.post(API_URL, {
             query
